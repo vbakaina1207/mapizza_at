@@ -1,0 +1,83 @@
+@import '../../../shared/styles/fonts';
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+
+
+.desktop{
+    background-image: url('./../../../../assets/banners/banner-img.jpg');
+}
+
+.bg{
+    
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.banner-align {
+    display: table-cell;
+    vertical-align: bottom;
+    position: relative;
+    overflow: hidden;
+    width: 10000px;
+    padding: 30px 0;
+    height: 500px;
+    z-index: 1;
+    border-radius: 16px;
+}
+
+.opacity:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),to(rgba(0,0,0,.6)));
+    background: -o-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,.6) 100%);
+    background: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.6) 100%);
+    border-radius: 16px;
+}
+
+.banner-info {
+    position: relative;
+    z-index: 10;
+}
+
+
+@media screen and (max-width: 1730px){
+    .banner-align {
+        height: 400px;
+    }
+}
+
+
+@media screen and (max-width: 1400px){
+    .banner-align {
+    height: 320px;
+    }
+}
+
+@media (max-width: 991px){
+    .banner-align {
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .bg.desktop, .opacity {
+        display: none;
+    }
+}
+
+@media (min-width: 992px){
+    .banner-info>* {
+        color: $clr-white;
+    }
+}

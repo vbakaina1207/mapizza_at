@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4>Нова адреса</h4>          
+</div> 
+<form [formGroup]="authFormAddress" class="form"(ngSubmit)="addAddress()">  
+  <input matInput formControlName="typeAddress" name="typeAddress" type="text"  id="typeAddress" placeholder="*Postal code">                    
+  <input matInput formControlName="city" name="city" type="text" id="city" placeholder="*Enter the city">            
+  <input matInput formControlName="street" name="street" type="text" id="street" placeholder="*Enter the delivery street">            
+  <div class="flex mobile">
+    <div>
+      <input matInput formControlName="house" name="house" type="text"  id="house" placeholder="*House">                    
+      <input matInput formControlName="entrance" name="entrance" type="number" id="entrance" placeholder="Entrance">                    
+    </div>
+    <div>
+      <input matInput formControlName="floor" name="floor" type="number" id="floor" placeholder="Floor">                    
+    <input matInput formControlName="flat" name="flat" type="number" id="flat" placeholder="*Flat">            
+    </div>
+  </div>          
+  <button [disabled]="authFormAddress.invalid" mat-raised-button color="primary"  type="submit" class="btn btn-login w-100"  mat-dialog-close>Save</button>  
+</form>  
+
+
+<button class="btn-close-modal close-popup close" mat-dialog-close data-dismiss="modal" aria-label="Close">
+<span></span>
+</button>

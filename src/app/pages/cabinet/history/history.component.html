@@ -1,0 +1,45 @@
+<p>history works!</p>
+<div class="col-12 d-flex justify-center table-width">
+    <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
+      <thead class="table-category">
+      <tr>
+        <th scope="col" class="th-title">№</th>
+        <th scope="col">Date and time</th>
+        <th scope="col">Address</th>
+        <th scope="col">Sum</th>
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+  
+  
+      <tbody>
+  
+      <tr *ngFor="let order of userOrders; let i=index">
+        <td><b> {{ order.order_number }}</b></td>
+        <td>{{ order.date_order | formatDates: 'yyyy/MM/dd h:mm:ss a' }}
+          <tr *ngFor="let product of order ? order.product : products; let i=index">
+            <td class="th-title"><b>{{ product.name }}</b>
+            <tr colspan="2" *ngFor="let prod of product.selected_addition" class="addition">
+              <td>{{ prod.name}} </td>
+            </tr>
+            </td>
+          </tr>
+        </td>
+  
+        <td>{{order.delivery_method =='local_pickup' ? 'Pickup' : order.street +' ,'+ order.house  }}
+          <tr *ngFor="let product of order ? order.product : products; let i=index">
+            <td> {{ product.count }}</td>
+          </tr>
+        </td>
+        <td><b>{{ order.total }}</b> €</td>
+        <td class="td-color th-title status" [ngClass]="{'btn-status': !order.status}"> {{ order.status ?  'done' : 'not done'}}
+          <p>
+          </p>
+        </td>
+      </tr>
+  
+      </tbody>
+    </table>
+  </div>
+  
+  

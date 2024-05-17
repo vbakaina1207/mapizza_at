@@ -1,0 +1,37 @@
+
+@import './../../../shared/styles/fonts';
+@import './../../../shared/styles/variables';
+@import './../../../shared/styles/mixins';
+
+
+.status{
+    white-space: nowrap;
+}
+
+.addition{
+    font-size: 13px;
+}
+
+
+.btn-status{
+    color: $clr-secondary;
+}
+
+
+@media screen and (max-width: 598px) {
+    td button{
+        font-size: 12px;
+    }
+    tbody{
+        font-size: 14px;
+    }
+    .table-category {
+        font-size: 14px;
+    }
+    td img{
+        height: 25px;
+    }
+    
+}
+
+

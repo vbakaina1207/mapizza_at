@@ -1,0 +1,53 @@
+
+
+<div class="col-12 d-flex justify-center table-width">
+    <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
+      <thead class="table-category">
+      <tr>
+        <th scope="col" class="th-ttitle">Order No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Date and time</th>
+        <th scope="col">Address</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+  
+  
+      <tbody>
+  
+      <tr *ngFor="let order of userOrders; let i=index">
+        <td><b>№ {{ order.order_number }}</b></td>
+        <td>{{ order.name }}</td>
+        <td>{{ order.phone }}</td>
+        <td>{{ order.date_order | formatDates: 'yyyy/MM/dd h:mm:ss a' }}
+          <tr *ngFor="let product of order ? order.product : products; let i=index">
+            <td colspan="2">{{ product.name }} </td>
+            <td colspan="2" *ngFor="let prod of product.selected_addition" class="addition">
+              {{ prod.name}} 
+            </td>
+          </tr>
+          
+        </td>
+        <td><b class="b th-title">{{order.delivery_method =='local_pickup' ? 'Pickup' : order.street +' ,'+ order.house  }}</b>
+          <tr  *ngFor="let product of order ? order.product : products; let i=index">
+            <td> {{ product.count }}</td>
+          </tr>
+        </td>
+        <td><b>{{ order.summa }}</b> € </td>
+        <td class="td-color">
+          <form [formGroup]="orderForm" (ngSubmit)="changeOrder(order)">              
+          <p class="status" [ngClass]="{'btn-status': !order?.status}">{{ order.status ?  'done' : 'not done'}} </p>
+          <button type="submit">change</button>
+          </form>       
+        </td>
+      </tr>
+  
+      </tbody>
+    </table>
+  </div>
+  
+  
+  
+  

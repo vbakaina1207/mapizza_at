@@ -1,0 +1,44 @@
+<div class="section promotions">
+    <img class="decor-img rellax" src="assets/decor/decor-6.svg" style="top: 23%; right: -40px; transform: translate3d(0px, -28px, 0px) scaleX(-1);">
+    <img class="decor-img rellax" src="assets/decor/decor-5.svg" style="top: 45%; left: -40px; transform: translate3d(0px, -101px, 0px) scaleX(-1);">
+    <img class="decor-img rellax" src="assets/decor/decor-7.svg" style="top: 65%; right: -40px; transform: translate3d(0px, -165px, 0px) scaleX(-1);">
+    <div class="spacer-sm"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-xl-10 text-center">
+          <div class="title title-decor h2">
+            <span>Offers</span>
+          </div>
+        </div>
+        <div class="spacer-sm">        
+        </div>
+      </div>
+      
+      <div class="row news-row promotions justify-content-center">
+        <div class="col-12 col-xl-10">
+          <div class="news-item" *ngFor="let discount of userDiscounts; let id=index">        
+            <a class="news-img" [routerLink]="[ '/discount', discount.id ]">          
+              <img  [src]="discount.imagePath" alt="">
+            </a>
+            <div class="news-content">
+              <div class="title h3 text-cut-3">
+                <a [routerLink]="[ '/discount', discount.id ]">
+                  {{ discount.name }}                                    
+                </a>
+              </div>
+              <div class="text text-cut-5">
+                <p>{{ discount.description | slice:0:280 }} <span *ngIf="discount.description.length > 280">...</span>               
+                </p>
+              </div>
+              <a [routerLink]="[ '/discount', discount.id ]" class="btn-link">
+                <span>Learn more</span>
+                <i></i>
+              </a>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

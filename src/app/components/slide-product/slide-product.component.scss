@@ -1,0 +1,162 @@
+
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+.p-carousel-item {
+    padding: 10px;
+
+}
+
+.p-carousel-item .card{
+    border: none;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev,
+.p-carousel .p-carousel-content .p-carousel-next{
+    border: 1px solid $clr-border;
+}
+
+.p-carousel-next .pi-chevron-right {
+    background-image: url('/assets/banners/right-arrow.svg')  !important;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev .pi-chevron-left{
+    background-image: url('/assets/banners/right-arrow.svg')  !important;
+    transform: rotate(180deg);
+}
+.p-carousel .p-carousel-content .p-carousel-prev-icon, .p-carousel .p-carousel-content .p-carousel-next-icon {
+    background-repeat: no-repeat;
+    height: 55px;
+    width: 55px;
+    background-position: center;
+    box-shadow: none;
+}
+
+.p-carousel .p-carousel-content .p-carousel-prev:enabled:hover .pi-chevron-left, .p-carousel-next:enabled:hover .pi-chevron-right{
+	background-image: url('/assets/banners/prev-hover.svg') !important;  
+    box-shadow: none;    
+}
+
+
+.p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $clr-primary;
+    stroke: white;
+}
+.p-carousel .p-carousel-content .p-carousel-prev:focus {
+    box-shadow: none; 
+} 
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: $clr-secondary;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid $clr-secondary;
+}
+
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    background-color: white;
+    width: 10px;
+    height: 10px;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 50%;
+    border: 1px solid $clr-border;
+}
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator button:focus{
+    box-shadow: none;
+}
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator:not(.p-highlight) button:hover{
+    background-color: $clr-white;
+}
+
+.product_controls-price{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.product_price-wrap {
+    // font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bonus_calculate {
+    @include bonus_calculate;
+}
+
+.btn-product-info{
+    text-align: center;
+}
+.product_controls{
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+}
+
+
+
+.fav-btn {
+    width: 20px;
+    height: 20px;
+    line-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: $clr-white;
+    background: rgba(1, 183, 255, 0);
+
+    & svg {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &.active .fill-anime {
+        fill: $clr-secondary;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .p-carousel-next, .p-carousel-prev {
+        display: none !important;
+    }
+
+    .product_controls{
+        justify-content: space-between;
+    }
+}  
+
+@media screen and (min-width: 1200px) {
+    .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+        display: none;
+    }
+
+    
+    .btn-product-info{
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .product_price-wrap {
+        font-size: 12px;
+    }
+}

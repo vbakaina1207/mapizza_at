@@ -1,0 +1,76 @@
+
+<div class="row ms-3">
+    <ng-container *ngIf="isAdd">
+        <div class="col-10">
+            <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+                <button [disabled]="categoryForm.invalid"  type="submit" class="btn-add">
+                    {{ editStatus ? 'Change category' : 'Add category' }}
+                </button>
+                <div class=" row">
+                    <div class="col mb-3">
+                        <label for="name" class="form-label">*Name</label>
+                        <input formControlName="name" name="name" type="text" class="form-control" id="name">
+                    </div>
+                    <div class="col mb-3">
+                        <label for="path" class="form-label">*Path</label>
+                        <input formControlName="path" name="path" type="text" class="form-control" id="path">
+                        <div class="invalid-feedback">Path is required</div>
+                    </div>
+
+                </div>
+                <ng-container *ngIf="!isUploaded">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        <input class="form-control" type="file" id="formFile" (change)="upload($event)">
+                    </div>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                            [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isUploaded">
+                    <div>
+                    <img [src]="valueByControl('imagePath')" width="100px" alt="">
+                    </div>
+                    <div>
+                    <button type="button" class="btn-exit mt-3" (click)="deleteImage()">delete</button>
+                    </div>
+                </ng-container>
+            </form>
+        </div>
+    </ng-container>
+
+    <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Add category</button>
+    <div class="table-responsive col-12 d-flex justify-center" *ngIf="!isAdd">
+        <table class="table">
+            <thead class="table-category">
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Path</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of adminCategories; let id=index">
+                    <td>№ {{ id+1 }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.path }}</td>
+                    <td>
+                        <img [src]="category.imagePath" alt="" height="50px">
+                    </td>
+                    <td>
+                        <button (click)="editCategory(category)" type="button" class="btn">Edit</button>
+                        <p>
+                            <button [disabled]="editStatus" (click)="deleteCategory(category)" type="button" class="btn">Delete</button>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

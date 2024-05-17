@@ -1,0 +1,99 @@
+<div class="row ms-3">
+    <ng-container *ngIf="isAdd">    
+        <div class="col-10">
+            <form [formGroup]="typeAdditionForm" (ngSubmit)="addAdditionProduct()">
+                <button [disabled]="typeAdditionForm.invalid"  type="submit" class="btn-add">
+                    {{ editStatus ? 'Change additional product' : 'Add additional product' }}
+                </button>
+                <div class="row">
+                    <div class="col-5 mb-3">
+                        <label for="name" class="form-label">*Name</label>
+                        <input formControlName="name" name="name" type="text" class="form-control" id="name">
+                    </div>
+                    <div class="col-1 mb-3">
+                        <label for="isSauce" class="form-label">Sauce</label>
+                        <input formControlName="isSauce" name="isSauce" type="checkbox" class="form-control" id="isSauce">                      
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="path" class="form-label">*Path</label>
+                        <input formControlName="path" name="path" type="text" class="form-control" id="path">
+                        <div class="invalid-feedback">Path is required</div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="weight" class="form-label">*Weight, g</label>
+                        <input formControlName="weight" name="weight" type="text" class="form-control" id="weight">
+                        <div class="invalid-feedback">Path is required</div>
+                    </div>
+                    <div class="col mb-3">
+                        <label for="price" class="form-label">*Price, €</label>
+                        <input formControlName="price" name="price" type="text" class="form-control" id="prtce">
+                        <div class="invalid-feedback">Path is required</div>
+                    </div>
+                
+                    <div class="mb-3">
+                      <textarea formControlName="description" name="description" type="text" class="form-control" placeholder="*Description"></textarea>
+                    </div>  
+                                  
+                </div>  
+                <ng-container *ngIf="!isUploaded">
+                      <div class="mb-3">
+                          <label for="formFile" class="form-label">Default file input example</label>
+                          <input class="form-control" type="file" id="formFile" (change)="upload($event)">
+                      </div>
+                      <div class="progress mb-3">
+                          <div class="progress-bar progress-bar-striped" role="progressbar"
+                              [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100">
+                          </div>
+                      </div>
+                  </ng-container>
+                  <ng-container *ngIf="isUploaded">
+                      <div>
+                      <img [src]="valueByControl('imagePath')" width="100px" alt="">
+                      </div>
+                      <div>
+                      <button type="button" class="btn-exit mt-3" (click)="deleteImage()">delete</button>
+                      </div>
+                  </ng-container>                                   
+            </form>
+        </div>
+    </ng-container>
+  
+    <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Add ingredient</button>
+    <div class="table-responsive col-12 d-flex justify-center" *ngIf="!isAdd">
+        <table class="table">
+            <thead class="table-category">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Path</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let additionProduct of adminAdditionProducts; let id=index">
+                    <td>№ {{ id+1 }}</td>
+                    <td>{{ additionProduct.name }}</td>
+                    <td>{{ additionProduct.description }}</td>
+                    <td>{{ additionProduct.weight }}</td>
+                    <td>{{ additionProduct.price }}</td>
+                    <td>{{ additionProduct.path }}</td>  
+                    <td>
+                          <img [src]="additionProduct.imagePath" alt="" height="50px">
+                      </td>                
+                    <td>
+                        <button (click)="editAdditionProduct(additionProduct)" type="button" class="btn">Edit</button>
+                        <p>
+                            <button [disabled]="editStatus" (click)="deleteAdditionProduct(additionProduct)" type="button" class="btn">Delete</button>
+                        </p>                      
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>

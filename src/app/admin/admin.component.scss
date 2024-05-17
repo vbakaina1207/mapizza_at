@@ -1,0 +1,47 @@
+@import './../shared/styles/variables';
+@import './../shared/styles/mixins';
+@import './../shared/styles/fonts';
+
+body{
+    font-family: 'MontBlanc' , sans-serif ;
+}
+
+.admin-block{
+    margin-top:130px;
+
+    .nav{
+        max-width: 130px;
+    }
+}
+
+
+.list-group-item{
+    height: 60px;
+    // color:$main-color;
+}
+
+.active-route {
+    background-color: white;
+    // color: $text-color;
+    font-weight: bold;
+    border-top: 3px solid $clr-primary;
+    border-bottom: 2px solid  rgba(0, 0, 0, 0.125);
+    // font-family: 'RotondaCBold' , sans-serif ;
+    font-size: 16px;
+    margin-top: 0;   
+}
+
+.btn-exit{   
+    @include btn-exit;
+}
+.btn-exit:hover{
+    border: 2px solid $clr-primary;
+    background-color: $clr-primary;
+}
+
+
+@media screen and (max-width: 1400px) {
+    .tab-content{
+        width: calc(100% - 450px);
+    }
+}

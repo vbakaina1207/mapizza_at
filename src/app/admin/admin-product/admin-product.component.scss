@@ -1,0 +1,62 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+body{
+    @include body($clr-black, 'MontBlanc', 400);
+    font-size: 16px;
+}
+
+thead{
+    border-bottom: 2px solid $clr-primary;  
+    font-size: 16px;
+    padding: 0;
+}
+
+
+tbody{
+    font-size: 16px;
+}
+
+tr{
+    vertical-align: middle;
+}
+
+td button {
+    @include btn-save;
+}
+
+.btn-add {    
+    @include btn-detail;
+}
+
+.btn-add:hover,
+.btn-exit:hover {
+    border-color: $clr-primary; 
+    background-color: $clr-primary;
+}
+
+.btn-exit{   
+    @include btn-exit;
+}
+
+textarea {
+    height: 150px;
+}
+
+@media screen and (max-width: 598px) {
+    td button{
+        font-size: 12px;
+    }
+    tbody{
+        font-size: 14px;
+    }
+    .table-category {
+        font-size: 14px;
+    }
+    td img{
+        height: 25px;
+    }
+    
+}

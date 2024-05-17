@@ -1,0 +1,46 @@
+<ng-container *ngIf="!isRegister">
+  <div class="modal-header">
+    <h4>Login</h4>
+  </div>
+    <form [formGroup]="authForm" class="form"(ngSubmit)="loginUser()">
+      <input matInput ="email" formControlName="email" name="email" type="text"  id="email" placeholder="*Your email">
+      <input matInput formControlName="password" name="password" type="password" id="password" placeholder="*Password">      
+      <button   type="submit" class="butn btn-primar w-100"   mat-dialog-close>Login</button>
+  </form>
+  <div class="d-flex justify-content-center">
+    <a class="open-popup btn" (click)="openRegisterDialog()">Register</a>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isRegister">
+
+  <div class="modal-header">
+    <h4>Login</h4>
+  </div>
+    <form *ngIf="regForm" [formGroup]="regForm" class="form"(ngSubmit)="loginUser()" >
+      <div class="flex mobile">
+        <input matInput formControlName="firstName" name="firstName" type="text"  id="firstName" placeholder="*Your name">
+        <input matInput formControlName="lastName" name="lastName" type="text" id="lastName" placeholder="*Your surname">
+      </div>
+      <input matInput formControlName="phoneNumber" name="phoneNumber" type="text"  id="phoneNumber" placeholder="*Your phone">
+      <input matInput formControlName="email" name="email" type="email"  id="email" placeholder="*Your email">
+      <div class="flex mobile">
+        <input (input)="checkConfirmPassword()" matInput formControlName="password" name="password" type="password" id="password" placeholder="*Password">
+        <input (input)="checkConfirmPassword()" matInput formControlName="confirmPassword" name="confirmPassword" type="password" id="confirmPassword" placeholder="*Rrepeat the password">
+      </div>
+      <mat-error *ngIf="checkVisibilityError('confirmPassword', 'matchError')">Confirmed password is required</mat-error>
+      <button mat-raised-button color="primary"  type="submit" [disabled]="regForm.invalid"  class="btn btn-login w-100"   (click)="registerUser()" mat-dialog-close>Register</button>
+  </form>
+
+  <div class="d-flex justify-content-center mobile">
+    <span class="text-bottom">Already registered?</span>
+    <a class="open-popup btn" (click)="openLoginDialog()">
+      Login
+    </a>
+  </div>
+</ng-container>
+<button class="btn-close-modal close-popup close" mat-dialog-close data-dismiss="modal" aria-label="Close">
+  <span></span>
+</button>
+
+

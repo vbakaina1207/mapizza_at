@@ -1,0 +1,89 @@
+
+<div class="cart">
+    <div class="cart_title">
+      <div class="h4 title title-decor">
+              Basket
+      </div>
+    </div>
+    <ng-container >     
+          <div id="cart-popup-out" class="cart-popup-out">
+            <div class="cart_items" *ngIf="basket.length>0">
+  
+            <div class="prod_horiz js-product cart-product" *ngFor="let product of basket">              
+              <a class="prod_horiz-img" [routerLink]="[ '/product/', product ? product.category.path : undefined ,  product ? (product.type_product? product.type_product.path : 'other') : undefined, product.id ]">
+                <img class="img" [src]="product ? product.imagePath : undefined">
+              </a>
+              <div class="prod_horiz-desc">
+                <div class="prod-title-wrap">
+                  <a class="title" [routerLink]="[ '/product/', product ? product.category.path : undefined ,  product ? (product.type_product? product.type_product.path : 'other') : undefined, product.id ]">
+                  {{ product ? product.name : undefined }}
+                  </a>
+                  <button class="btn-close remove-product" (click)="removeFromBasket(product)"></button>
+
+                  <ng-container *ngIf="product.selected_addition.length">                  
+                    <div class="added_ing-wrap">                    
+                      <div class="ing_output-inner">                  
+                        <div class="ing_control" *ngFor="let addProduct of product.selected_addition; let id = index">
+                          <div class="ing_control-title">
+                            1 Х{{ addProduct?.name }} {{ addProduct ? addProduct.description ? '('+addProduct.description +')': '' : undefined }}
+                          </div>
+                          <button class="cart-dropdown-delete" (click)="additionDeleteClick(product, addProduct.name)"></button>                          
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>  
+                  
+                </div>            
+                <div class="prod_horiz-controls">
+                <div class="price_default">
+                  <b>{{ product.price }}</b> €                
+                </div>
+
+                <div class="thumb-input-number">
+                  <button type="button" class="decrement in-cart" (click)="productCount(product, false)" >-</button>
+                  <input matInput class="product-qty" readonly="" tabindex="-1" max="999" value="{{ product ? product.count : undefined }}">
+                  <button type="button" class="increment in-cart" (click)="productCount(product, true)" >+</button>
+                </div>
+
+                <div class="price-wrap">
+                  <b class="price"> {{ (product) ? (product.price*product.count + (product.addition_price ? product.addition_price*product.count : 0)) :  0  }} </b> 
+                  € 
+                </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+
+            <div class="cart_items" *ngIf="basket.length === 0">
+              <div class="cart-empty-message">              
+              <div class="title">The basket is empty</div>
+                <a  [routerLink]="[ '/' ]"class="butn btn-primar" mat-dialog-close>Go to the product catalog</a>
+              </div>
+            </div>
+          </div>  
+
+    </ng-container> 
+
+  <div class="cart_bottom">
+    <div class="cart_bottom_flex">
+        <div class="cart_price-wrap">
+            Sum: 
+            <b class="card-total-price">{{ total.toFixed(2) }}</b> €        
+        </div>        
+        <a [routerLink]="[ '/checkout']" class="butn btn-primar" *ngIf="currentUser  && basket.length" [class.disabled]="!total && !basket.length" mat-dialog-close>
+            PLACE ORDER
+            <!-- {{ currentUser ? 'PLACE ORDER' : 'LOG IN' }}  -->
+        </a>        
+        <a (click)="openLoginDialog()" class="butn btn-primar" *ngIf="!currentUser"  mat-dialog-close>
+            LOG IN
+            <!-- {{ currentUser ? 'PLACE ORDER' : 'LOG IN' }} -->
+        </a>
+    </div>
+    <div class="cart_bonus-wrap">
+        Bonuses are accrued: <b>{{ bonus }} </b>
+    </div>
+    <button class="btn-close cart-close" mat-dialog-close></button>    
+    
+  </div>  
+

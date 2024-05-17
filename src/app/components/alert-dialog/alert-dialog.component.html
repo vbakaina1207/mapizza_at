@@ -1,0 +1,29 @@
+<div class="popup-container size-2">
+    <mat-dialog-content>
+
+        <div class="popup-align text-center">
+            <div class="popup-info-wrapper">
+                <div class="popup-img">
+                    <img src="assets/popup/popup-1.svg" alt="">
+                </div>
+                <div class="popup-title title h4">{{ icon }}</div>
+                <div class="text">{{ message }}</div>
+            </div>
+        </div>
+        <button class="btn-close close-popup" mat-dialog-close></button>
+        <div class="decor left">
+            <img src="assets/decor/decor-11.svg" alt="">
+        </div>
+        <div class="decor right">
+            <img src="assets/decor/decor-1.svg" alt="">
+        </div>
+        <div *ngIf="isError" class="popup-align ">
+            <button class="butn btn-primar me-2" [mat-dialog-close]="true">
+                <span data-value="true">{{ btnOkText }}</span>
+          </button>
+          <button class="butn btn-secondary close-popup ms-2" mat-dialog-close>
+              <span data-value="false">{{ btnCancelText }}</span>
+          </button>
+        </div>
+    </mat-dialog-content>
+</div>

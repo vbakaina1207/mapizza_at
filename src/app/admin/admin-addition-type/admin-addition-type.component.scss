@@ -1,0 +1,66 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+body{
+    @include body($clr-black, 'MontBlanc', 400);
+    font-size: 16px;
+}
+
+thead{
+    border-bottom: 2px solid $clr-primary;  
+    font-size: 16px;
+    //@include body($clr-black, 'MontBlancBold', 700);
+    padding: 0;
+}
+
+
+tbody{
+    //@include body($clr-black, 'MontBlanc', 400);
+    font-size: 16px;
+}
+
+tr{
+    vertical-align: middle;
+}
+
+td button {
+    @include btn-save;
+}
+
+.btn-add {    
+    @include btn-detail;
+}
+
+.btn-add:hover,
+.btn-exit:hover {
+    border-color: $clr-primary; 
+    background-color: $clr-primary;
+}
+
+.btn-exit{   
+    @include btn-exit;
+}
+
+input[type='checkbox']{
+    width: 18px;
+    margin-top: 12px;    
+    appearance: auto;
+    accent-color: $clr-primary;
+}
+@media screen and (max-width: 598px) {
+    td button{
+        font-size: 12px;
+    }
+    tbody{
+        font-size: 14px;
+    }
+    .table-category {
+        font-size: 14px;
+    }
+    td img{
+        height: 25px;
+    }
+    
+}

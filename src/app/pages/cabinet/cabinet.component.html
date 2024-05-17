@@ -1,0 +1,48 @@
+<div class="section cabinet-section">
+    <img class="decor-img rellax" src="assets/decor/decor-6.svg" alt="" style="top: 0px; left: -40px; transform: translate3d(0px, -22px, 0px);">
+    <img class="decor-img rellax" src="assets/decor/decor-5.svg" alt="" style="bottom: 8%; right: -40px; transform: translate3d(0px, -132px, 0px);">
+    <div class="spacer-sm"></div>
+    <div class="spacer-sm"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8 col-xxl-6 text-center">
+          <h1 class="title title-decor h2">Personal account</h1>
+        </div>
+      </div>
+  
+      <div class="spacer-xs"></div>
+      <div class="categories-menu" (click)="openMenu()" [class.active-block]="isOpen">
+                  
+      <div class="category-title">{{title}}</div>
+      <ul class="categories-list" [class.active-block]="isOpen" >
+          <li class="categories-list-item" >
+            <a [routerLink]="[ 'personal' ]" routerLinkActive="route-active" >
+              <button (click)="closeMenu($event)" value="Personal data">Personal data</button>
+            </a>          
+          </li>
+          <li class="categories-list-item ">
+            <a [routerLink]="[ 'history' ]" routerLinkActive="route-active">           
+              <button (click)="closeMenu($event)" value="Order history">Order history</button>
+            </a>
+          </li>
+          <li class="categories-list-item ">          
+            <a [routerLink]="[ 'password' ]" routerLinkActive="route-active">           
+              <button (click)="closeMenu($event)" value="Password change">Password change</button>
+            </a>
+          </li>
+          <li class="categories-list-item ">
+            <a [routerLink]="[ 'favorite' ]" routerLinkActive="route-active">           
+              <button (click)="closeMenu($event)" value="Favorites">Favorites</button>
+            </a>
+          </li>
+      </ul>
+      </div>
+      <div id="barcode" style="padding: 0px; overflow: auto; width: 121px;">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjEyMSIgaGVpZ2h0PSI1MCI+PHJlY3Qgd2lkdGg9IjEyMSIgaGVpZ2h0PSI1MCIgeD0iMCIgeT0iMCIgZmlsbD0iI0ZGRkZGRiIgLz48cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgeD0iMTAiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iNTAiIHg9IjEzIiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjUwIiB4PSIxNiIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSI1MCIgeD0iMjEiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjIiIGhlaWdodD0iNTAiIHg9IjI1IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjUwIiB4PSIzMCIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSI1MCIgeD0iMzIiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjIiIGhlaWdodD0iNTAiIHg9IjM1IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjUwIiB4PSIzOSIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSI1MCIgeD0iNDMiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iNTAiIHg9IjQ2IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjUwIiB4PSI1MSIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSI1MCIgeD0iNTQiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iNTAiIHg9IjU3IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjUwIiB4PSI2MSIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgeD0iNjUiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iNTAiIHg9IjcwIiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjUwIiB4PSI3MiIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgeD0iNzYiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iNTAiIHg9Ijc5IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjUwIiB4PSI4MyIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgeD0iODciIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iNTAiIHg9IjkxIiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjUwIiB4PSI5NSIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI1MCIgeD0iOTgiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iNTAiIHg9IjEwMyIgeT0iMCIgZmlsbD0iIzAwMDAwMCIgLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSI1MCIgeD0iMTA3IiB5PSIwIiBmaWxsPSIjMDAwMDAwIiAvPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjUwIiB4PSIxMDkiIHk9IjAiIGZpbGw9IiMwMDAwMDAiIC8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjAgMCkiPjwvZz48L3N2Zz4=">
+      </div>
+  
+      <router-outlet></router-outlet>
+    </div>  
+    <div class="spacer-lg"></div>
+  </div>
+  

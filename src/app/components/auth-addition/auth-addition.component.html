@@ -1,0 +1,177 @@
+<div class="popup-container">
+<div class="popup-align js-product ing-out">
+  <div class="ing_body" >
+    <div class="ing_body-product">
+        <div class="product">
+            <div class="product_image-wrap">
+              <div class="product_image">                
+                  <img
+                      [src]="currentProduct ? currentProduct.imagePath : undefined"
+                      class="img"
+                      [alt]="">                
+              </div>
+              <div class="product_top-right">
+                <button class="fav-btn " (click)="buttonFavoriteClick(currentProduct)" [ngClass]="{'active': isFavorite}">
+                  <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="fill-anime" d="M10.5167 16.3416C10.2334 16.4416 9.76675 16.4416 9.48342 16.3416C7.06675 15.5166 1.66675 12.075 1.66675 6.24165C1.66675 3.66665 3.74175 1.58331 6.30008 1.58331C7.81675 1.58331 9.15842 2.31665 10.0001 3.44998C10.8417 2.31665 12.1917 1.58331 13.7001 1.58331C16.2584 1.58331 18.3334 3.66665 18.3334 6.24165C18.3334 12.075 12.9334 15.5166 10.5167 16.3416Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="product_info-wrapper">
+              <div class="product_controls">
+                <div class="product_price-wrap">
+                  <span class="woocommerce-Price-amount amount">
+                    <bdi>
+                      {{ currentProduct ? currentProduct.price : undefined }}
+                      <span class="woocommerce-Price-currencySymbol">
+                        €
+                      </span>
+                    </bdi>
+                  </span>                    
+                </div>
+                <div class="product_size">
+                  / 
+                  <span class="size">
+                    {{ currentProduct ? currentProduct.weight : undefined }}
+                  </span>
+                    g
+                  </div>
+                </div>
+
+                <div class="product_title-wrap">
+                    <div class="product_title" itemprop="name">
+                      <b>{{ currentProduct ? currentProduct.name : undefined | titlecase }}</b>
+                        <i>
+                          <img src="{{  currentProduct ? ( currentProduct.type_product ? currentProduct.type_product.imgPath : undefined) : undefined  }}"  alt="">
+                        </i>                    
+                    </div>
+                </div>
+
+                <div class="product_desc">
+                    {{ currentProduct ? currentProduct.ingredients : undefined }}                
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="ing_body-additional">
+        <div class="ing_group inc_calc-group">
+            <div class="d-sm-flex justify-content-sm-between">
+                <div class="title h6">Additional ingredients</div>
+                <div class="total_ing-prise">
+                  The cost of additives: 
+                  <span>
+                    <b>{{ additionPrice.toFixed(2) }}</b>
+                    €
+                  </span>
+                </div>
+            </div>
+
+            <!-- <div class="ing_output" [ngClass]="{'active': isAddition}">
+                <div class="ing_output-inner"  *ngFor="let addProduct of additionProduct; let id = index">
+                    <div class="ing_control" data-ing="1" data-price="8">
+                        <div class="ing_control-title">
+                          {{ addProduct.name }} {{ addProduct ? addProduct.description ? '('+addProduct.description +')': '' : undefined }}
+                        </div>
+                        <button class="btn-close" (click)="additionDeleteClick(addProduct.name)"></button>
+                    </div>
+                </div>
+                <button class="ing_output-clean-all" (click)="additionDeleteAllClick()">
+                    <b>Clear everything</b>
+                    <i></i>
+                </button>
+            </div> -->
+
+            <div class="ing_output" [ngClass]="{'active': isAddition}">
+              <div class="ing_output-inner" *ngFor="let addProduct of additionProduct; let id = index">
+                  <div class="ing_control" data-ing="1" data-price="8">
+                      <div class="ing_control-title">
+                          {{ addProduct.name }} {{ addProduct ? addProduct.description ? '('+addProduct.description +')': '' : undefined }}
+                      </div>
+                      <button class="btn-close" (click)="additionDeleteClick(addProduct.name)"></button>
+                  </div>
+              </div>
+              <button class="ing_output-clean-all" (click)="additionDeleteAllClick()">
+                  <b>Clear everything</b>
+                  <i></i>
+              </button>
+          </div>
+          
+            
+            <div class="tabs-i">
+              <div class="tab-i-nav">
+                <div class="tab-i-toggle">
+                  <div class="nav-item" [ngClass]="{'active' : isTabSouce}" (click)="tabSouceClick()">                                                                
+                    <b>Sauces</b>
+                  </div>
+                  <div class="nav-item" [ngClass]="{'active' : !isTabSouce}" (click)="tabAdditionClick()">
+                    <b>Supplements</b>
+                  </div>
+                </div>
+              </div>
+
+
+            
+              <div class="tab-i active">
+                <div class="ing_row">                                                        
+                <div class="ingredient addition" *ngFor="let addition of additionProducts; let id = index" (click)="additionClick(addition.name)">
+                  <div class="ingredient_img">
+                    <img class="img imgLoaded"
+                      [src]="addition ? addition.imagePath : undefined"
+                      class=" img-fluid rounded-start">                
+                  </div>
+                  <div class="ingredient_title">
+                    {{ addition ? addition.name : undefined }} {{ addition ? addition.description ? '('+addition.description +')': '' : undefined }}                                                 
+                  </div>
+                  <div class="ingredient_bottom">
+                    <span>{{ addition ? addition.weight : undefined }}  g</span>
+                    <span>{{ addition ? addition.price : undefined }}  €</span>
+                  </div>
+                  <div class="ingredient_action"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+
+        </div>
+                                                                                                            </div>
+    </div>
+    <!-- </div> -->
+
+  <div class="ing_footer">
+    <div class="ing_footer-controls">
+        Amount:
+        <div class="thumb-input-number">
+            <button type="button" class="decrement" (click)="productCount(currentProduct, false)"></button>
+            <input class="product-qty" [value]="currentProduct ? currentProduct.count : 1" readonly="" tabindex="-1">
+            <button type="button" class="increment" (click)="productCount(currentProduct, true)"></button>
+        </div>
+        <div class="price-wrap">
+            Sum: <span><b class="price">{{ (currentProduct) ? (currentProduct.price*currentProduct.count + additionPrice*currentProduct.count) :  0 }}</b> € </span>
+        </div>
+
+    </div>
+
+    <button class="btn-product order-btn add-to-cart-btn-ing"  [ngClass]="{'primary': isOrder}" (click)="addToBasket(currentProduct)"  >
+        <span>{{btnName}}</span>
+        <i [ngClass]="{'hide': isOrder}">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.25 6.39167V5.58334C6.25 3.70834 7.75833 1.86667 9.63333 1.69167C11.8667 1.47501 13.75 3.23334 13.75 5.42501V6.57501" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M7.5001 18.3333H12.5001C15.8501 18.3333 16.4501 16.9917 16.6251 15.3583L17.2501 10.3583C17.4751 8.32499 16.8918 6.66666 13.3334 6.66666H6.66677C3.10843 6.66666 2.5251 8.32499 2.7501 10.3583L3.3751 15.3583C3.5501 16.9917 4.1501 18.3333 7.5001 18.3333Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12.9128 10H12.9203" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M7.07884 10H7.08632" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </i>
+    </button>
+  </div>
+
+</div>
+</div>
+<button class="btn-close-modal close-popup close" mat-dialog-close data-dismiss="modal" aria-label="Close">
+<span></span>
+</button>
+    <!-- </div> -->
+<!-- </div> -->

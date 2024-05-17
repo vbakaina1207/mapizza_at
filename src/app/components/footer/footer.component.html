@@ -1,0 +1,155 @@
+<div class="container">
+    <div class="footer-top">
+                  <img class="decor-img left" src="assets/footer/decor1.svg" alt="">
+                  <img class="decor-img right" src="assets/footer/decor2.svg" alt="">
+  
+                  <div class="row">
+                      <div class="col-md-12 col-xl-3">
+                        <div class="footer-info">
+                          <a class="footer-logo" [routerLink]="[ '' ]" routerLinkActive="route-active">
+                              <img src="assets/header/logo-pizza-red.svg" alt="">
+                          </a>                        
+                          <div class="footer-phone">
+                              <a href="tel:+380971830618">+38 097 18 306 18 </a>                            
+                              <p>Sun - Thurs 09:30 − 21:00 <br> Fri - Sat 09:30 − 22:00 <br></p>                          
+                          </div>                                                    
+                          <ul class="social">                                                                    
+                            <li>
+                              <a href="https://www.facebook.com/pizza.mammaitaliana" rel="nofollow">
+                                <img src="assets/footer/i-facebook.svg" alt="">
+                              </a>
+                            </li>
+                            <li>
+                              <a href="https://www.instagram.com/_mapizza_/?igshid=NmNmNjAwNzg%3D" rel="nofollow">
+                                <img src="assets/footer/i-instagram.svg" alt="">
+                              </a>
+                            </li>
+                            <li>
+                              <a href="https://www.youtube.com/watch?v=EkfysYf80Ak" rel="nofollow">
+                                <img src="assets/footer/i-you-tube.svg" alt="">
+                              </a>
+                            </li>
+                          </ul>
+                          
+  
+                          <div class="title_download_app">
+                            Download the app                            
+                          </div>
+                              <ul class="items_download_app">
+                                <li>
+                                  <a href="https://apps.apple.com/us/app/ma-pizza/id1596914596" rel="nofollow">
+                                    <img src="assets/footer/app-store-download.svg" alt="">
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="https://play.google.com/store/apps/details?id=com.mamaitaliano.app" rel="nofollow">
+                                    <img src="assets/footer/google-play-download.svg" alt="">
+                                  </a>
+                                </li>
+                              </ul>
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-xl-3">
+                          <div class="footer-caption">
+                            Menu:
+                          </div>
+                          <ul class="footer-menu-list">
+                            <li *ngFor="let category of userCategories" class="nav-item menu-item">
+                              <a [routerLink]="[ '/product/', category.path, '' ]" routerLinkActive="route-active" class="nav-link" aria-current="page">                        
+                                <span>{{category.name}}</span>
+                              </a>
+                            </li>                          
+                          </ul>                    
+                          </div>
+                      <div class="col-md-4 col-xl-3">
+                          <div class="footer-caption">
+                            About the company:
+                          </div>
+                          <ul class="footer-links">
+                            <li id="menu-item-375" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-375">                          
+                              <a [routerLink]="[ '/about' ]" routerLinkActive="route-active">About us</a>
+                            </li>
+                            <li id="menu-item-373" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-373">
+                              <a [routerLink]="[ '/delivery' ]" routerLinkActive="route-active">Delivery and payment</a>
+                            </li>
+                            <li id="menu-item-378" class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions menu-item-378">
+                              <a [routerLink]="[ '/discount' ]" routerLinkActive="route-active">Actions</a>
+                            </li>
+                            <li id="menu-item-374" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-374">
+                              <a [routerLink]="[ '/contact' ]" routerLinkActive="route-active">Contacts</a>
+                            </li>                            
+                            <li id="menu-item-372" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-372">
+                              <a [routerLink]="[ '/faq' ]" routerLinkActive="route-active">FAQ</a>
+                            </li>
+                          </ul>                    
+                        </div>
+                      <div class="col-md-4 col-xl-3">
+                          <div class="footer-caption">
+                              Vienna:
+                          </div>
+                            <ul class="footer-address">
+                              <li>
+                                <p>Ringstrasse, 181 </p>
+                              </li>
+                              <li>
+                                <p>Sweden Square, 60 </p>
+                              </li>
+                              <li>
+                                <p>Landstrasse, 12</p>
+                              </li>
+                              <li>
+                                <p>Bennogasse, 16</p>
+                              </li>
+                              <li>
+                                <p>Alserstrasse, 10</p>
+                              </li>
+                              <li>
+                                <p>Otto-Wagner-Platz, 71</p>
+                              </li>
+                              <li>
+                                <p>Friedrich-Schmidt-Platz, 19</p>
+                              </li>
+                            </ul>
+                        </div>
+                  </div>
+    </div>
+    <div class="footer-bottom">
+                  <div class="row  align-items-center">
+                      <div class="col-lg-4 col-md-6 text-md-start text-sm-center text-center pe-md-0">
+                        <div class="footer-item copy ">
+                          <p>©2024 MA Pizza All rights reserved</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 text-lg-center text-md-end text-sm-center text-center">
+                            <div class="footer-item">                            
+                            <!-- <a [routerLink]="[ '/privacy-policy' ]" routerLinkActive="route-active"  target="_blank">Політика конфіденційності</a>                                                    -->
+                                Privacy Policy
+                            </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 text-lg-center text-md-end text-sm-center text-center">
+                          <div class="footer-item">                          
+                            <!-- <a [routerLink]="[ '/offerta' ]" routerLinkActive="route-active"  target="_blank">Оферта</a>                           -->
+                            Offer
+                          </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 text-sm-center text-center">
+                          <div class="footer-item cards">
+                              <img src="assets/footer/visa-card.svg" alt="">
+                              <img src="assets/footer/master-card.svg" alt="">
+                          </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 text-md-end text-sm-center text-center">
+                          <!-- <div class="footer-item develope">
+                              <a href="http://redstone.media/" target="_blank">
+                                  <span>Розробка сайтів</span> 
+                                  <img src="assets/footer/redstone.svg" alt="REDSTONE">
+                              </a>
+                          </div> -->
+                      </div>
+                  </div>
+              </div>
+  
+  </div>
+  
+  

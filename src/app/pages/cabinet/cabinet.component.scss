@@ -1,0 +1,241 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+body{
+    font-family: 'MontBlanc', sans-serif ;
+}
+
+
+
+.cabinet-section {
+    position: relative;
+
+    & .decor-img {
+        position: absolute;
+        max-width: 230px;
+        max-height: 230px;
+    }
+
+}
+
+
+
+.categories-menu {
+    position: relative;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-title {
+    display: none;
+}
+
+.categories-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    border: 1px solid $clr-border;
+    border-radius: 12px;
+    margin: -1px;
+    padding: 0;
+
+    
+}
+
+.categories-list-item {
+    &:not(.route-active) button:hover {
+        color: $clr-primary;
+    }
+
+    & .route-active button:hover {
+        color: white;
+    }
+    
+
+    & .route-active  {
+        background-color: $clr-secondary;
+        color: $clr-white;
+
+    &:hover {
+        opacity: .8;
+    }
+ }
+}
+
+.categories-list-item a{
+    position: relative;
+    display: block;
+    min-width: 186px;
+    padding: 17px 15px;
+    margin: -1px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1em;
+    color: $clr-grey;
+    border-radius: 12px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;    
+    transition: $transition;
+}
+
+#barcode {
+    display: flex;
+    width: 100% !important;
+    max-width: 835px;
+    height: 50px;
+    margin: -20px auto 20px auto;
+
+    & img {
+        width: 320px;
+        margin: 0 auto;
+    }
+}
+
+
+button{
+    border: none;
+    background-color: $clr-white;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1em;
+    color: $clr-grey;
+    border-radius: 12px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;    
+    transition: $transition;
+
+}
+
+
+@media screen and (max-width: 1730px) {
+    .categories-menu {
+        margin-bottom: 30px;
+    }
+
+    .categories-list-item a {
+        min-width: 156px;
+        padding: 14px 15px;
+        font-size: 12px;
+        height: 38px;
+    }
+
+    #barcode {
+        margin: -10px auto 20px auto;
+    }
+
+    .route-active button{
+        background-color: $clr-secondary;
+        color: $clr-white;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    
+    
+    
+}
+
+@media screen and (max-width: 1199px){
+
+    .cabinet-section .decor-img {
+        display: none;
+    }  
+    
+
+}
+
+@media screen and (max-width: 767px) {
+    
+    .categories-menu {
+        margin-bottom: 15px;
+
+        &.active-block .categories-list {
+            transform: scaleY(1);
+        }
+    }
+
+    .category-title {
+        position: relative;
+        z-index: 11;
+        display: block;
+        border: 1px solid $clr-border;
+        border-radius: 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        color: $clr-black;
+        background: $clr-white;
+        line-height: 1em;
+        padding: 10px 15px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border: solid $clr-black;
+            border-width: 0 2px 2px 0;
+            transform: translateY(-50%) rotate(45deg);
+            margin-top: -2px;
+            transition: $transition;
+        }
+
+        
+    }
+
+    .categories-list {
+        position: absolute;
+        z-index: 10;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding-top: 10px;
+        border-radius: 0 0 12px 12px;
+        margin: -8px 0 0 0;
+        border: none;    
+        flex-direction: column;
+        background: $clr-white;
+        box-shadow: 0px 0px 10px rgb(0 0 0 / 60%);
+        transition: $transition;
+        transform-origin: top center;
+        transform: scaleY(0);
+    }
+
+    .categories-list-item {
+        width: 100%;
+
+        & a {
+            padding: 10px 15px;
+            width: 100%;
+        }
+    }
+
+    
+    .categories-list-item .route-active  {
+            background-color: $clr-white;
+            color: $clr-secondary;
+        }
+
+    #barcode {
+        margin: 0px auto 15px auto;
+    }
+    .active-block:before {
+            margin-top: 2px;
+            transform: translateY(-50%) rotate(225deg);
+        }
+    
+    
+    .active-block{
+        display: block;
+    }
+
+    .route-active button{
+        color: $clr-secondary;
+        background-color: $clr-white;
+    }
+}

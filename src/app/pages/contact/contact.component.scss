@@ -1,0 +1,646 @@
+@import "../../shared/styles/fonts";
+@import "../../shared/styles/variables";
+@import "../../shared/styles/mixins";
+
+.contacts-wrapper {
+    position: relative;
+    padding: 30px 50px 40px;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+.contact-item {
+    padding: 15px 0;
+}
+
+.contact-item:first-child {
+    padding-top: 0;
+}
+
+.contact-item .caption {
+    margin-bottom: 15px;
+}
+
+.contact-link {
+    display: flex;
+}
+
+.contact-link-img {
+    margin-right: 15px;
+
+    & img {
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.contact-link-info {
+    font-size: 16px;
+    line-height: 1.5em;
+    color: $clr-grey;
+
+    &>* {
+        display: block;
+    }
+
+    & a {
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+}
+
+.contact-link+.contact-link {
+    margin-top: 15px;
+}
+
+
+.faq-form {
+  position: relative;
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background: $clr-white;
+  border: 1px solid $clr-border;
+  border-radius: 16px;
+  padding: 30px 40px 40px;
+}
+
+.screen-reader-response,
+.wpcf7-not-valid-tip,
+.wpcf7-response-output {
+  display: none !important;
+}
+
+.faq-form .row {
+  --bs-gutter-x: 15px;
+}
+
+.faq-form .input {
+  margin-bottom: 15px;
+}
+
+.input {
+  position: relative;
+  font-size: 16px;
+  height: 54px;
+  line-height: 54px;
+  background: $clr-white;
+  border: 1px solid $clr-border;
+  border-radius: 12px;
+  padding: 0 15px;
+  text-overflow: ellipsis;
+  transition: $transition;
+  width: 100%;
+}
+
+textarea.input {
+  height: 102px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  line-height: 1.5em;
+}
+
+.faq-form .input:last-of-type:is(textarea) {
+  margin-bottom: 25px;
+  margin-top: 15px;
+}
+
+.faq-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upload-wrapper {
+  position: relative;
+  font-size: 0;
+  display: inline-block;
+  align-self: center;
+  text-align: left;
+  padding: 0 35px;
+
+  & p {
+    margin-bottom: 0;
+  }
+
+  & input {
+    display: none;
+    padding: 0;
+  }
+
+  & .file-name {
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    font-size: 16px;
+    line-height: 1.3em;
+    color: $clr-secondary;
+    font-weight: 400;
+    transition: $transition;
+  }
+
+  & .allowed {
+    font-size: 12px;
+    line-height: 1.3em;
+    color: $clr-grey;
+  }
+
+  & .remove-file {
+    position: absolute;
+    cursor: pointer;
+    z-index: 5;
+    right: 0;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.upload-wrapper .remove-file:before {
+  content: "\02715";
+  font-size: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: $clr-secondary;
+}
+
+.upload-icon {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+
+  & path {
+    transition: $transition;
+  }
+}
+
+.faq-btn-wrapper .butn {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-left: 10px;
+}
+
+form input[type="submit"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  font-size: 0px;
+  cursor: pointer;
+}
+
+input, textarea, select {
+    border-radius: 0;
+    background: 0 0;
+    border: none;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.butn svg {
+  margin-left: 15px;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.input-empty {
+  border: 1px solid $clr-secondary;
+  margin-bottom: 0 !important;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+form .input:focus {
+  outline: none;
+  border-color: $clr-primary;
+}
+
+.not-valid-tip {
+  color: $clr-secondary;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+// .contact-item:first-child {
+//     padding-top: 0;
+// }
+
+// .contact-item {
+//     padding: 15px 0;
+// }
+
+// .contact-link {
+//     display: flex;
+// }
+
+// .contact-link-img {
+//     margin-right: 15px;
+
+//     & img {
+//       display: block;
+//       width: 24px;
+//       height: 24px;
+//     }
+// }
+
+// .contact-link-info {
+//     font-size: 16px;
+//     line-height: 1.5em;
+//     color: $clr-grey;
+
+//     & a {
+//       white-space: pre-wrap;
+//       word-break: break-all;
+//     }
+
+//     &>* {
+//       display: block;
+//     }
+// }
+
+// .contact-link+.contact-link {
+//     margin-top: 15px;
+// }
+
+.contact-item+.contact-item {
+    border-top: 1px solid $clr-border;
+}
+
+
+.social {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+
+    & li {
+        margin-right: 15px;
+    }
+
+    & a {
+        display: block;
+        position: relative;
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+
+        &:before {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;    
+            transform: translate(-50%,-50%) scale(0);
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background: $clr-primary;    
+            transition: $transition;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%) scale(1);
+            background: $clr-secondary;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;    
+            transition: $transition;
+}
+
+        & img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 5;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    & li:last-child {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 1730px) {
+  // .banner-align {
+  //   height: 400px;
+  // }
+
+  // .benefits-wrapper {
+  //   padding: 30px;
+  // }
+
+  // .benefits-row {
+  //   --bs-gutter-x: 30px;
+  //   margin-bottom: -30px;
+  // }
+
+  // .benefits-row > [class*="col"] {
+  //   margin-bottom: 30px;
+  // }
+}
+
+@media screen and (max-width: 1400px) {
+  // .banner-align {
+  //   height: 320px;
+  // }
+
+  // .benefits-info {
+  //   font-size: 16px;
+  // }
+
+  .text.text-lg {
+    font-size: 18px;
+  }
+
+  .social {
+    & li {
+      margin-right: 10px;
+    }
+
+    & a {
+      width: 26px;
+      height: 26px;
+
+      & img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .faq-form {
+    padding: 20px 30px 30px;
+  }
+
+  .upload-wrapper {
+    padding: 0 25px;
+
+    & .file-name {
+      font-size: 14px;
+    }
+
+    & .allowed {
+      font-size: 10px;
+    }
+
+    & .remove-file {
+      top: 6px;
+    }
+  }
+
+  .upload-icon {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-primar svg {
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .upload-wrapper .remove-file:before {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  // .benefits-wrapper .decor-img {
+  //   display: none;
+  // }
+
+  .contacts-block {
+    box-shadow: none;
+
+    & .decor-img {
+      display: none;
+    }
+  }
+
+  .contacts-wrapper {
+    padding: 20px 30px 30px;
+    max-width: 680px;
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    border-radius: 16px;
+  }
+
+  .faq-form {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .contacts-block {
+    position: relative;
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    border-radius: 16px;
+    padding: 50px 0;
+
+    & .decor-img {
+      position: absolute;
+      z-index: -1;
+      max-width: 230px;
+      max-height: 230px;
+    }
+
+    & .faq-form {
+      max-width: 100%;
+      position: relative;
+      border: none;
+      padding: 30px 60px 40px;
+      border-radius: 0;
+    }
+  }
+
+  .contacts-block .row > [class*="col"] + [class*="col"] .faq-form {
+    border-left: 1px solid $clr-border;
+  }
+
+  .social a:hover:before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .social a:hover:after {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  .file-name:hover {
+    color: $clr-primary;
+  }
+
+  .upload-wrapper .remove-file:hover:before {
+    color: $clr-black;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 1200px) {
+  .contacts-block {
+    padding: 30px 0;
+
+    & .faq-form {
+      padding: 20px 40px;
+    }
+  }
+
+  .contacts-wrapper {
+    padding: 20px 30px;
+  }
+
+  .contacts-section .row > .col-xl-10 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  // .spacer-mobile-off {
+  //   display: none;
+  // }
+
+  // .banner-align {
+  //   height: auto;
+  //   padding: 15px 0;
+  // }
+
+  // .bg.desktop,
+  // .opacity {
+  //   display: none;
+  // }
+
+  // .bg.mobile {
+  //   display: block;
+  //   position: relative !important;
+  //   padding-top: 57%;
+  //   border-radius: 16px;
+  //   height: 188px;
+  // }
+
+  // .banner-info {
+  //   margin-top: 10px;
+  // }
+
+  // .block-wrapper {
+  //   flex-direction: column;
+  // }
+
+  // .block-info {
+  //   max-width: 100%;
+  //   padding: 10px 0 0;
+
+  //   & .title {
+  //     margin-bottom: 5px;
+  //   }
+  // }
+
+  // .block-img {
+  //   border-radius: 16px;
+  //   padding-top: 57%;
+  //   width: 100%;
+  //   order: -1;
+  // }
+}
+
+@media (min-width: 992px) {
+  // .banner-info > * {
+  //   color: $clr-white;
+  // }
+}
+
+@media (max-width: 767px) {
+  // .hide-on-desktop {
+  //   display: block;
+  // }
+
+  // .hide-on-mobile {
+  //   display: none;
+  // }
+
+  // .carousel-indicators {
+  //   bottom: -30px;
+  // }
+  .b-shadow {
+    box-shadow: none;
+  }
+
+  .text.text-lg {
+    font-size: 16px;
+  }
+
+  .faq-form {
+    margin-top: 30px;
+  }
+
+  .input {
+    font-size: 14px;
+    height: 44px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 575px) {
+  // .swiper-container {
+  //   overflow: visible;
+  // }
+
+  .contacts-wrapper {
+    padding: 15px;
+  }
+
+  .faq-form {
+    padding: 15px;
+
+    & .input {
+      margin-bottom: 10px;
+    }
+  }
+
+  .faq-form .input:last-of-type:is(textarea) {
+    margin-bottom: 15px;
+  }
+
+  .faq-btn-wrapper {
+    display: block;
+  }
+
+  .upload-wrapper {
+    width: 100%;
+  }
+
+  .faq-btn-wrapper .butn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .faq-btn-wrapper .butn {
+    margin: 15px 0 0;
+    width: 100%;
+}
+}

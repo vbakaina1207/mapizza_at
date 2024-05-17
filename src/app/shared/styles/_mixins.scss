@@ -1,0 +1,302 @@
+
+@mixin a{
+    text-decoration: none;
+    transition: $transition;
+    color: inherit;
+
+    &:hover{
+        color: $clr-primary;
+    }
+}
+
+@mixin btn-exit {
+    margin: 20px auto;
+    background-color: $clr-secondary;
+    color: $clr-white;
+    font-weight: bold;
+    border: 2px solid transparent;
+    font-family: 'MontBlanc' , sans-serif ;
+    font-size: 16px;
+    border-radius: 7px;
+    width: 70px;
+    height: 50px;
+}
+
+@mixin btn-detail {
+    margin-bottom: 50px;
+    color:$clr-white;
+    width: 250px;
+    // height: 50px;
+    border-radius: 10px;
+    background-color: $clr-secondary;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid transparent;
+    font-family: 'MontBlanc' , sans-serif ;
+    text-transform: uppercase;
+    line-height: 34px;
+
+    &:hover{
+        border: 2px solid $clr-primary;
+        background-color: $clr-primary;
+    }
+}
+
+@mixin btn-save{
+    color: $clr-black;
+    border: none;
+    // font-weight: bold;
+    text-decoration: none;
+    background: linear-gradient(to bottom, transparent 0%, transparent 90%, $clr-primary 100%);
+    background-size: 200% 100%;
+    background-position: 200% 0;
+    background-repeat: no-repeat;
+    transition: all 0.5s linear;
+
+    &:hover{
+        background-position: 100% 0;
+        color:$clr-primary;
+    }
+}
+
+
+@mixin body($color, $font, $fontWeight) {
+    font-family: $font , sans-serif ;
+    color: $color;
+    font-weight: $fontWeight;
+}
+
+
+@mixin section{
+    position: relative;
+}
+
+
+// @mixin fav-btn {
+//     width: 20px;
+//     height: 20px;
+//     line-height: 30px;
+//     display: inline-flex;
+//     align-items: center;
+//     justify-content: center;
+//     cursor: pointer;
+//     margin: 0;
+//     padding: 0;
+//     border: 0;
+//     background-color: $clr-white;
+//     background: rgba(1, 183, 255, 0);
+
+//     & svg {
+//         display: block;
+//         max-width: 100%;
+//         max-height: 100%;
+//     }
+// }
+
+// @mixin fill-anime {
+//     fill: transparent;
+//     stroke: $clr-secondary;
+//     transition: $transition;
+// }
+
+// .fill-anime {
+//     transition: $transition;
+// }
+
+@mixin bonus_calculate {
+    font-size: 14px;
+    color: $clr-primary;
+    font-weight: 600;
+}
+
+@mixin title {
+    font-weight: 600;
+    color: $clr-black;
+}
+
+@mixin btn {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: none;
+    font-size: 14px;
+    line-height: 1.45em;
+    font-weight: 600;
+    padding: 14px 30px;
+    text-transform: uppercase;
+    transition: $transition;
+
+    & svg {
+        margin-left: 15px;
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    @media (max-width: 1400px){
+        & {
+            font-size: 12px;
+            padding: 12px 25px;
+        }
+    }   
+    
+    @media (max-width: 767px){
+        & {
+            padding: 10px 20px;
+        }
+    }    
+}
+
+@mixin btn-secondary {
+    color: $clr-secondary;
+    background: $clr-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px solid $clr-secondary;
+    font-size: 12px;
+    padding: 8px 30px;
+
+    & svg path {
+        transition: $transition;
+    }
+    @media screen and (max-width: 1400px){
+    & {
+        font-size: 12px;
+        padding: 8px 20px;
+
+        & svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 10px;
+        }
+    }
+    }   
+}
+
+@mixin btn-primary {
+    color: $clr-white;
+    background: $clr-secondary;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+
+    @media screen and (min-width: 1200px){
+    &:not(.disabled):hover {
+        background: $clr-primary;
+        }
+    }
+}
+
+@mixin thumb-input-number {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    color: $clr-black;
+    font-size: 16px;
+    line-height: 1;
+    border: 1px solid $clr-border;
+    border-radius: 12px;
+
+    & button {
+        position: relative;
+        width: 46px;
+        height: 46px;
+        cursor: pointer;
+        background: none;
+        font-size: 0;
+        transition: $transition;
+        border: none;
+    }
+
+    & input {
+        width: 46px;
+        height: 28px;
+        font-weight: 400;
+        text-align: center;
+        border-left: 1px solid $clr-border;
+        border-right: 1px solid $clr-border;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    & button.decrement::before,
+    & button.increment::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 2px;
+        background-color: $clr-grey;
+        transition: $transition;
+    }
+
+    & button.increment::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2px;
+        height: 10px;
+        background: $clr-grey;
+        transition: $transition;
+    }
+
+    // .thumb-input-number {
+    @media screen and (max-width: 1400px) {    
+        & button {
+            width: 42px;
+            height: 40px;
+        }
+
+        & input {
+            width: 42px;
+            height: 26px;
+        }
+    }
+
+    @media screen and (max-width: 767px){ 
+
+        & button {
+        width: 36px;
+        height: 34px;
+        }
+
+        & input {
+            width: 36px;
+        height: 24px;
+        }
+    }
+
+}
+
+@mixin product_price-wrap {    
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    font-size: 20px;
+    line-height: 1em;
+
+    @media (max-width: 1730px){
+        & {
+            font-size: 18px;
+        }
+    }
+}
+
+@mixin product_price {    
+    flex-shrink: 0;
+    color: #212721;
+    font-weight: 600;
+    line-height: 1em;
+}

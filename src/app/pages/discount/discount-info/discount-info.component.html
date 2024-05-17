@@ -1,0 +1,54 @@
+<div class="section">
+    <div class="container banner">
+      <ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+        <ul class="">
+          <li>
+            <a [routerLink]="[ '/' ]">
+            <span itemprop="name">Pizza Vienna</span>        
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/discount/' ]">
+              <span itemprop="name">Offers</span>
+            </a>
+          </li>
+          <li>
+            <span>{{discount.name | titlecase }}</span>
+          </li>
+        </ul>
+      </ul>
+      <div class="banner-align">
+        <div class="bg desktop rellax">
+        </div>
+        <div class="bg mobile">
+        </div>
+        <div class="opacity">
+  
+        </div>
+        <div class="row justify-content-center ">
+          <div class="col-lg-10 col-xl-8">
+          <div class="banner-info">
+            <h1 class="h2 title text-center">
+              {{discount.name | titlecase }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="section prom-detail-section">
+    <img class="decor-img rellax" data-rellax-speed="-1" src="assets/decor/decor-6.svg" alt="" style="top: 0px; left: -40px; transform: translate3d(0px, -7px, 0px);">
+    <img class="decor-img rellax" data-rellax-speed="-1" src="assets/decor/decor-5.svg" alt="" style="bottom: 4%; right: -40px; transform: translate3d(0px, -12px, 0px);">
+    <div class="spacer-sm spacer-mobile-off"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+          <div class="text text-lg" >          
+            <p  *ngFor="let descrip of description" >{{descrip}} </p>           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spacer-lg"></div>
+  </div>

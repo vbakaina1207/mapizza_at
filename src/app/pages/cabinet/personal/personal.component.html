@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    
+    <div class="col-lg-10 col-xl-8 col-xxl-6">        
+        <form class="form-cabinet" id="user-edit-form" [formGroup]="authFormData" (ngSubmit)="updateUser()">
+            <div class="form-group">
+                <div class="form-title title h4">Personal data</div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input formControlName="firstName"  type="text" class="input" name="firstName" value="" placeholder="*Your name" value="" required="">
+                    </div>
+                    <div class="col-md-6">
+                        <input formControlName="lastName"  type="text" class="input" name="lastName" value="" placeholder="*Your surname" value="" required="">
+                    </div>
+                </div>
+                
+                <div>                                                  
+                    <div class="input-popup-wrapper">
+                        <input formControlName="birthday"  type="date" name="birthday" class="input birthday" placeholder="Date of birth" id="birthday" >                        
+                    </div>
+                    <p>If this field is not filled in, you will not be able to receive additional bonuses for your birthday</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input formControlName="email" type="email" name="email" class="input" placeholder="*Your email" required="">
+                    </div>
+                    <div class="col-md-6">
+                        <input formControlName="phoneNumber"  class="input inputmask" name="phoneNumber" type="text" inputmode="numeric" data-inputmask="'mask': '+38 (999) 999 99 99'" data-inputmask-placeholder="x" placeholder="*Your phone number" value="" required="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-title title h4">Delivery address</div>
+                <ng-container *ngIf="dataUser.length > 0">            
+                <div class="cabinet_address-wrap">
+                    <table class="cabinet_address">
+                        <tbody>
+                            <tr class="js-address-item" data-i="0" *ngFor="let addressDetail of dataUser; let id=index" >    
+                                <!-- <td>        
+                                    <div class="js-address-name">{{addressDetail.typeAddress}}</div>    
+                                </td>  -->   
+                                <td>        
+                                    <div class="cabinet_address-detail">  
+                                        <span class="js-street">{{ addressDetail?.typeAddress }} {{ addressDetail.city }}</span>,          
+                                        <span class="js-street">{{ addressDetail.street }}</span>,            
+                                        <span class="js-house">{{ addressDetail.house }}</span>/            
+                                        <span class="js-apartment">{{ addressDetail.flat }}</span>        
+                                    </div>    
+                                </td>    
+                                <td>        
+                                    <button class="link-icon js-edit-address open-popup" data-rel="address" type="button" (click)="editAddress(id)">
+                                        edit
+                                    </button>    
+                                <!-- </td>    
+                                    <td>        
+                                        <button class="btn" type="button" (click)="deleteAddress(id)">видалити</button>    
+                                </td> -->
+                                <td>
+                                    <div class="btn-close" (click)="deleteAddress(id)"></div>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+                </ng-container>
+            </div>
+
+            <div class="cabinet_address-buttons">
+                <button class="btn btn-secondary open-popup js-clear-address-fields" data-rel="address" type="button" (click)="openAddressDialog()">
+                    <span>Add another address</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.0003 18.3333C14.5837 18.3333 18.3337 14.5833 18.3337 9.99996C18.3337 5.41663 14.5837 1.66663 10.0003 1.66663C5.41699 1.66663 1.66699 5.41663 1.66699 9.99996C1.66699 14.5833 5.41699 18.3333 10.0003 18.3333Z" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M6.66699 10H13.3337" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10 13.3333V6.66663" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+                <div class="spacer-xs"></div>
+                <button  type="submit" class="btn btn-primary btn-block" type="submit">
+                    <span>Save changes</span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
