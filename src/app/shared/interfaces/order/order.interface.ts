@@ -19,7 +19,7 @@ export interface IOrderRequest {
   isWithoutRest: boolean;
   at_time: boolean;
   delivery_date: string;
-  delivery_time: string;
+  delivery_time: Date;
   self_delivery_address: string;
   city: string;
   street: string;

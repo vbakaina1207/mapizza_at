@@ -1,0 +1,637 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+
+.checkout-section .decor-img {
+    position: absolute;
+    max-width: 230px;
+    max-height: 230px;
+}
+
+.thank-total-bonus-product {
+    font-size: 14px;
+    color: $clr-primary;
+    font-weight: bold;
+}
+
+.cart_bonus-wrap {
+    font-size: 14px;
+    color: $clr-primary;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+.checkout-products .prod_horiz:last-child {
+    border: none;
+}
+
+.delivery-form {
+    position: relative;
+    z-index: 1;
+    border: 1px solid $clr-border;
+    background: $clr-white;
+    border-radius: 16px;
+    padding: 30px 40px 40px;
+
+    & .form-group {
+        margin-bottom: 25px;
+    }
+
+    & .form-title {
+        margin-bottom: 15px;
+    }
+
+    & .checkbox-entry span {
+        color: #111111;
+    }
+
+}
+
+.delivery-form .row [class*=col-] {
+    margin-top: 15px;
+}
+
+.b-shadow {
+    box-shadow: 20px 20px 0px #f2faf2;
+}
+
+.input {
+    position: relative;
+    font-size: 16px;
+    height: 54px;
+    line-height: 54px;
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    border-radius: 12px;
+    padding: 0 15px;
+    text-overflow: ellipsis;
+    transition: $transition;
+    width: 100%;
+}
+
+.checkbox-entry-wrap > * {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.checkbox-entry-wrap {
+    margin-top: -10px;
+    margin-bottom: 15px;
+
+    & > *:last-child {
+        margin-right: 0;
+    }
+}
+
+.checkbox-entry input {
+    display: none;
+}
+
+.checkbox-entry span {
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.25em;
+    padding-left: 30px;
+    display: block;
+    color: #5c5752;
+    transition: $transition;
+}
+
+.checkbox-entry span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $clr-border;
+    border-radius: 2px;
+    transition: $transition;
+}
+
+.checkbox-entry.radio span:before {
+    border-radius: 100%;
+}
+
+.checkbox-entry span:after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 6px;
+    height: 10px;
+    border-right: 2px solid $clr-secondary;
+    border-bottom: 2px solid $clr-secondary;
+    z-index: 1;
+    transform: scale(0) rotate(45deg);
+    backface-visibility: hidden;
+    transition: $transition;
+}
+
+.checkbox-entry.radio span:after {
+    left: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border: none;
+    background: $clr-secondary;
+    border-radius: 100%;
+}
+
+
+.SumoSelect {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    z-index: 3;
+    position: relative;
+    outline: 0;
+}
+
+.SelectClass, .SumoSelect.open .search-txt, .SumoUnder {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.SelectClass, .SumoUnder {
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+.SelectBox {
+    font-size: 16px;
+    line-height: 1;
+    color: $clr-black;
+    padding: 14px 40px 14px 20px;
+}
+
+.SumoSelect.open {
+    z-index: 4 !important;
+}
+.delivery-form .row {
+    --bs-gutter-x: 15px;
+    margin-top: -15px;
+}
+
+.SumoSelect>.CaptionCont {
+    position: relative;
+    border: 1px solid #A4A4A4;
+    min-height: 14px;
+    background-color: $clr-white;
+    border-radius: 2px;
+    margin: 0;
+}
+
+.SumoSelect > .CaptionCont {
+    z-index: 10;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1px solid $clr-border;
+    background: $clr-white;
+    transition: $transition;
+
+    & > span {
+        padding-right: 0;
+        cursor: pointer;
+        line-height: 1.5em;
+        font-weight: 400;
+        font-size: 16px;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    & > span.placeholder {
+        font-size: 16px;
+        font-weight: 400;
+        font-style: normal;
+        color: $clr-grey;
+        backface-visibility: hidden;
+    }
+
+    & > label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        cursor: pointer;
+        width: 40px;
+    }
+
+    &>label>i {
+        // background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wMdBhAJ/fwnjwAAAGFJREFUKM9jYBh+gBFKuzEwMKQwMDB8xaOWlYGB4T4DA0MrsuapDAwM//HgNwwMDDbYTJuGQ8MHBgYGJ1xOYGNgYJiBpuEpAwODHSF/siDZ+ISBgcGClEDqZ2Bg8B6CkQsAPRga0cpRtDEAAAAASUVORK5CYII=);
+        background-position: center center;
+        background-image: none;
+        opacity: 1;
+        width: 32px;
+        height: 32px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        background-repeat: no-repeat;
+        opacity: .8;
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            margin-top: -1px;
+            border-color: transparent;
+            transform: translate(-50%, -50%) rotate(45deg);
+            border-right: 1px solid $clr-black;
+            border-bottom: 1px solid $clr-black;   
+            transition: $transition;
+        }
+    }
+}
+
+.SumoSelect > .optWrapper {
+    background-color: $clr-white;
+    border-radius: 0;
+    padding: 0;
+    overflow: auto;
+    top: 100%;
+    z-index: 2;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    border: none;
+    border-top-width: 0;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 6%);
+    border-radius: 0 0 12px 12px;
+    margin-top: -10px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    box-sizing: border-box;    
+
+    & ul {
+        list-style: none;
+        display: block;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+    }
+}
+
+.SumoSelect > .optWrapper > .options {
+    max-height: 220px;
+    border-radius: 0;
+    padding: 20px 0 10px;
+    position: relative;
+
+    & > li.opt:first-child {
+        border-radius: 0;
+    }
+
+    & li.opt.disabled {
+        background-color: inherit;
+        pointer-events: none;
+    }
+
+    & li.opt {
+        padding: 0;
+        border-bottom: 0;
+        position: relative;
+    }
+
+    & li label {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+        cursor: pointer;
+
+        padding: 5px 20px;
+        font-size: 16px;
+        line-height: 1.5em;
+        font-weight: 400;
+        color: $clr-black;
+        transition: $transition;
+    }
+
+    & li.opt.disabled * {
+        opacity: .5;
+    }
+}
+
+.SumoSelect.open > .CaptionCont, .SumoSelect:focus > .CaptionCont, .SumoSelect:hover > .CaptionCont {
+    box-shadow: none;
+    border-color: $clr-primary;
+}
+
+.input:not(.calendar):focus,
+.input:not(.calendar):focus-visible {
+    border-color: $clr-primary;
+}
+
+.input:focus {
+    outline: none;;
+    z-index: 21;
+}
+
+.options > .opt.disabled:first-child {
+    display: none;
+}
+
+.SumoSelect:hover {
+    z-index: 4;
+}
+
+.SumoSelect.open > .CaptionCont, .SumoSelect:focus > .CaptionCont, .SumoSelect:hover > .CaptionCont {
+    box-shadow: none;
+    border-color: $clr-primary;
+}
+
+.checkbox-entry-wrap.time_wrapper {
+    margin: 10px 0 0;
+}
+
+.checkbox-entry-wrap > * {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+.checkbox-entry-wrap > *:last-child {
+    margin-right: 0;
+}
+
+.checkbox-entry {
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    min-width: 30px;
+    min-height: 20px;
+}
+
+.checkbox-entry input:checked + span:after {
+    transform: scale(1) rotate(45deg);
+}
+
+// .delivery-form .form-group {
+//     margin-bottom: 25px;
+// }
+
+.moneychange-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+
+    & > * {
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    & .input {
+        max-width: 260px;
+    }
+
+    & > * {
+        margin-right: 15px;    
+        flex-shrink: 0;
+    }
+
+    & > *:last-child {
+        margin-right: 0;
+    }
+}
+
+.checkbox-entry {
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    min-width: 30px;
+    min-height: 20px;
+}
+
+.text {
+    font-size: 16px;
+    line-height: 1.5em;
+    color: $clr-grey;
+    font-weight: 400;
+}
+
+.btn_check_user_bonus {
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.bonus_wrapper_block {
+    margin-bottom: 5px;
+}
+
+.checkbox-entry.bonus {
+    margin-bottom: 10px;
+
+    & span b {
+        color: $clr-primary;
+        font-weight: 600;
+    }
+}
+
+.wrapper_not_bonus {
+    margin-top: 10px;
+}
+
+.select_action_use {
+    margin-top: 40px;
+
+    & .text {
+        margin-bottom: 10px;
+    }
+}
+.SumoSelect.open > .optWrapper {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+    display: block;
+}
+
+.SumoSelect>.optWrapper>.options li.opt:hover {
+    background-color: #E4E4E4;
+}
+
+.thank-total-item {
+    color: $clr-grey;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > *:last-child {   
+        flex-shrink: 0;
+        text-align: right;
+        width: 120px;
+        color: $clr-black;
+    }
+}
+
+.thank-total-cost {
+    color: $clr-black;
+    font-size: 125%;
+    padding: 24px 0;
+    border-top: 1px solid $clr-border;
+    margin-top: 10px;
+}
+
+.thank-total-bonus {
+    margin-top: -25px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: $clr-primary;
+    font-weight: bold;
+
+    & .cart_bonus-wrap {
+    color: $clr-primary;
+    }
+}
+
+.all-product-bonus {
+    font-size: 14px;
+    color: $clr-primary;
+}
+
+textarea.input {
+    height: 102px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    line-height: 1.5em;
+}
+
+.main-order-button {
+    margin-top: 10px;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.bonus_wrapper_block {
+    margin-bottom: 5px;
+}
+
+.delivery-form .butn {
+    padding: 17px 30px;
+}
+
+.errorMsg {
+    //display: none;
+    position: relative;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.3em;
+    color: $clr-secondary;
+    margin-bottom: 10px;
+
+    &::before {
+    display: inline-block;
+    text-align: center;
+    content: '!';
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    border-radius: 100%;
+    margin-right: 10px;
+    border: 1px solid $clr-secondary;
+    }
+    
+}
+
+.delivery-form .thank-total-wrap {
+    border-top: 0px !important;
+}
+
+@media screen and (max-width: 1730px){
+    .delivery-form {
+        padding: 20px 30px 30px;
+    }
+}
+
+
+@media screen and (max-width: 1199px){
+    .checkout-section .decor-img {
+        display: none;
+    }
+
+    .delivery-form {
+        padding: 15px 15px 15px;
+    }
+
+    .moneychange-input .input {
+        max-width: 220px;
+    }
+}
+
+@media (min-width: 1200px){
+.SumoSelect > .optWrapper > .options li.opt:hover {
+    background-color: transparent;
+}
+}
+
+@media screen and (max-width: 991px){
+    .delivery-form {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .thank-total-bonus-product {
+        margin-bottom: 0px;
+    }
+
+    .cart_bonus-wrap {
+        margin-top: -3px;
+        text-align: center;
+    }
+
+    .delivery-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .input {
+        font-size: 14px;
+        height: 44px;
+        line-height: 44px;
+    }
+
+    .SelectBox {
+        font-size: 14px;
+        padding: 9px 40px 9px 15px;
+    }
+
+    .moneychange-input .input {
+        max-width: 150px;
+        margin-right: 0;
+    }
+
+    .input {
+        font-size: 14px;
+        height: 44px;
+        line-height: 44px;
+    }
+}
