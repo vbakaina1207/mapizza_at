@@ -67,22 +67,7 @@
                     €
                   </span>
                 </div>
-            </div>
-
-            <!-- <div class="ing_output" [ngClass]="{'active': isAddition}">
-                <div class="ing_output-inner"  *ngFor="let addProduct of additionProduct; let id = index">
-                    <div class="ing_control" data-ing="1" data-price="8">
-                        <div class="ing_control-title">
-                          {{ addProduct.name }} {{ addProduct ? addProduct.description ? '('+addProduct.description +')': '' : undefined }}
-                        </div>
-                        <button class="btn-close" (click)="additionDeleteClick(addProduct.name)"></button>
-                    </div>
-                </div>
-                <button class="ing_output-clean-all" (click)="additionDeleteAllClick()">
-                    <b>Clear everything</b>
-                    <i></i>
-                </button>
-            </div> -->
+            </div>           
 
             <div class="ing_output" [ngClass]="{'active': isAddition}">
               <div class="ing_output-inner" *ngFor="let addProduct of additionProduct; let id = index">
@@ -116,14 +101,15 @@
             
               <div class="tab-i active">
                 <div class="ing_row">                                                        
-                <div class="ingredient addition" *ngFor="let addition of additionProducts; let id = index" (click)="additionClick(addition.name)">
+                <div class="ingredient addition" [class.active]="activeIngredients[addition.name]" *ngFor="let addition of additionProducts; let id = index" (click)="additionClick(addition.name)">
                   <div class="ingredient_img">
                     <img class="img imgLoaded"
                       [src]="addition ? addition.imagePath : undefined"
                       class=" img-fluid rounded-start">                
                   </div>
                   <div class="ingredient_title">
-                    {{ addition ? addition.name : undefined }} {{ addition ? addition.description ? '('+addition.description +')': '' : undefined }}                                                 
+                    <span class="ingredient_title_addition">{{ addition ? addition.name : undefined }} </span> 
+                    <span> {{ addition ? addition.description ? '('+addition.description +')': '' : undefined }}  </span>                                               
                   </div>
                   <div class="ingredient_bottom">
                     <span>{{ addition ? addition.weight : undefined }}  g</span>
@@ -137,9 +123,10 @@
 
 
         </div>
-                                                                                                            </div>
+                                                                                                            
+      </div>
     </div>
-    <!-- </div> -->
+   
 
   <div class="ing_footer">
     <div class="ing_footer-controls">
@@ -150,7 +137,7 @@
             <button type="button" class="increment" (click)="productCount(currentProduct, true)"></button>
         </div>
         <div class="price-wrap">
-            Sum: <span><b class="price">{{ (currentProduct) ? (currentProduct.price*currentProduct.count + additionPrice*currentProduct.count) :  0 }}</b> € </span>
+            Sum: <span><b class="price">{{ (currentProduct) ? (currentProduct.price*currentProduct.count + additionPrice*currentProduct.count).toFixed(2) :  0 }}</b> € </span>
         </div>
 
     </div>
@@ -173,5 +160,4 @@
 <button class="btn-close-modal close-popup close" mat-dialog-close data-dismiss="modal" aria-label="Close">
 <span></span>
 </button>
-    <!-- </div> -->
-<!-- </div> -->
+    

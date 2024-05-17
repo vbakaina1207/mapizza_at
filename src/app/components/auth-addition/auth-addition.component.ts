@@ -37,6 +37,8 @@ export class AuthAdditionComponent implements OnInit {
   public currentUser!: any;
   public favorite: Array<IProductResponse> = [];
   public display_addition_price: string='0';
+  public activeIngredients: { [key: string]: boolean } = {};
+
 
   constructor(
     private router: Router,
@@ -49,8 +51,7 @@ export class AuthAdditionComponent implements OnInit {
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
-      this.loadProduct();
-      //this.updateFavorite();
+      this.loadProduct();      
       this.activatedRoute.data.subscribe(response => {
         this.currentProduct = response['productInfo'];        
       })
@@ -94,114 +95,77 @@ export class AuthAdditionComponent implements OnInit {
     let index = this.favorite.findIndex(prod => prod.id === PRODUCT_ID);
     if (index !== -1)
       this.isFavorite = true;
-    //};
-    console.log(this.isFavorite, 'isFav', this.favorite);
   }
 
-   additionClick(additionName: any): void {
-    this.activeAddition = additionName;
-    const elem = document.querySelectorAll('.addition');
-    console.log(elem);
-    for (let j = 0; j < elem.length; j++) { 
-      if (this.additionProducts[j]?.name == additionName) {
-        elem[j].classList.toggle('active');
-        if (elem[j].classList.contains('active')) {
-          this.additionProduct.push(this.additionProducts[j]);
-          this.additionPrice += Number(this.additionProducts[j].price);
-        } else {
-          let ind = this.additionProduct.indexOf(this.additionProducts[j]);
-          this.additionPrice = (this.additionPrice - Number(this.additionProducts[j].price));
-          if (ind >= 0) this.additionProduct.splice(ind, 1);
-        }
-        if (this.additionProduct.length > 0) {
-          this.isAddition = true;
-        } else {
-          this.isAddition = false;
-        }
+ 
+
+
+ additionDeleteClick(additionName: any): void {
+  let removed = false; 
+  for (let i = 0; i < this.additionProduct.length; i++) {
+      if (this.additionProduct[i].name === additionName) {
+          let ind = this.additionProduct.indexOf(this.additionProduct[i]);
+          this.additionPrice -= Number(this.additionProduct[i].price);
+          if (ind >= 0) {
+              this.additionProduct.splice(ind, 1);
+              removed = true;
+          }
       }
-    }
-    this.display_addition_price = this.additionPrice.toFixed(2);
   }
-
-  additionDeleteClick(additionName: any): void {
-   
-    
-    console.log(additionName, this.isAddition, 'add', this.additionProduct);
-    let elem = document.querySelectorAll('.addition');
-    for (let i = 0; i < this.additionProduct.length; i++) {
-      if (this.additionProduct[i].name == additionName) {
-        let ind = this.additionProduct.indexOf(this.additionProduct[i]);
-        this.additionPrice = this.additionPrice - Number(this.additionProduct[i].price);
-        if (ind >= 0) this.additionProduct.splice(ind, 1);
-        elem[i]?.classList.remove('active');
-      }
-    }
-    if (this.additionProduct.length > 0) {
-          this.isAddition = true;
-        } else {
-          this.isAddition = false;
-        }
-    this.display_addition_price = this.additionPrice.toFixed(2);
+  if (removed) {
+      this.isAddition = this.additionProduct.length > 0;
+      this.display_addition_price = this.additionPrice.toFixed(2);
+      this.activeIngredients[additionName] = !this.activeIngredients[additionName];
+      console.log(this.activeIngredients);
+      const elements = document.querySelectorAll('.ingredient');
+      elements.forEach((elem: Element) => {
+          const titleElement = elem.querySelector('.ingredient_title');
+          const titleText = titleElement?.textContent?.trim();
+          if (titleText === additionName) {
+              elem.classList.remove('active');
+          }
+      });
   }
-/*
-  additionDeleteAllClick(): void{
-    this.additionProduct.splice(0, this.additionProduct.length);
-    this.additionPrice = 0;
-    this.isAddition = false;
-    document.querySelectorAll('.addition').forEach((el) =>
-      el.classList.remove("active"));
-  } */
-
-
- /*  additionClick(additionName: any): void {
-    const additionIndex = this.additionProducts.findIndex(addition => addition.name === additionName);
-    if (additionIndex !== -1) {
-        const isSelected = this.additionProduct.some(product => product.name === additionName);
-        if (!isSelected) {
-            this.additionProduct.push(this.additionProducts[additionIndex]);
-            this.additionPrice += Number(this.additionProducts[additionIndex].price);
-        } else {
-            const removeIndex = this.additionProduct.findIndex(product => product.name === additionName);
-            this.additionProduct.splice(removeIndex, 1);
-            this.additionPrice -= Number(this.additionProducts[additionIndex].price);
-        }
-        this.isAddition = this.additionProduct.length > 0;
-    }
-    this.display_addition_price = this.additionPrice.toFixed(2);
-    console.log(additionName, this.isAddition, 'addAdd', this.additionProduct);
 }
- */
 
 
-/* additionDeleteClick(additionName: any): void {
-  const additionIndex = this.additionProducts.findIndex(addition => addition.name === additionName);
-  if (additionIndex !== -1) {
-      const isSelected = this.additionProduct.some(product => product.name === additionName);
-      if (isSelected) {
-          const removeIndex = this.additionProduct.findIndex(product => product.name === additionName);
-          this.additionProduct.splice(removeIndex, 1);
-          this.additionPrice -= Number(this.additionProducts[additionIndex].price);
-          this.isAddition = this.additionProduct.length > 0;
+
+
+
+
+additionClick(additionName: any): void {
+  this.activeAddition = additionName;
+  this.activeIngredients[additionName] = !this.activeIngredients[additionName];
+  const selectedProduct = this.additionProducts.find(product => product.name === additionName);
+  if (selectedProduct) {
+      const index = this.additionProduct.findIndex(product => product.name === additionName);
+      if (this.activeIngredients[additionName]) {
+          if (index === -1) {
+              this.additionProduct.push(selectedProduct);
+              this.additionPrice += Number(selectedProduct.price);
+          }
+      } else {
+          if (index !== -1) {
+              this.additionProduct.splice(index, 1);
+              this.additionPrice -= Number(selectedProduct.price);
+          }
       }
   }
+  this.isAddition = this.additionProduct.length > 0;
   this.display_addition_price = this.additionPrice.toFixed(2);
-} */
+}
 
-/* 
-additionDeleteClick(additionName: any): void {
-  const index = this.additionProduct.findIndex(addProduct => addProduct.name === additionName);
-  if (index !== -1) {
-      this.additionProduct.splice(index, 1); // Удаляем ингредиент из массива
-      this.additionPrice -= Number(this.additionProducts[index].price); // Вычитаем стоимость удаленного ингредиента из общей стоимости
-      this.isAddition = this.additionProduct.length > 0; // Обновляем флаг, указывающий на наличие ингредиентов
-  }
-  this.display_addition_price = this.additionPrice.toFixed(2); // Обновляем отображаемую цену ингредиентов
-} */
+
+
+
+
+
 
 additionDeleteAllClick(): void {
     this.additionProduct = [];
     this.additionPrice = 0;
     this.isAddition = false;
+    this.activeIngredients = {};
     document.querySelectorAll('.addition').forEach((el) => {
         el.classList.remove("active");
     });
@@ -287,9 +251,6 @@ additionDeleteAllClick(): void {
 
   buttonFavoriteClick(product: IProductResponse): void {
     this.isFavorite = !this.isFavorite;
-   /*  if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
-    } */
       if (this.isFavorite) {
         this.favorite.push(product);
         localStorage.setItem('favorite', JSON.stringify(this.favorite));
