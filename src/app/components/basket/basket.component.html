@@ -36,7 +36,7 @@
                 </div>            
                 <div class="prod_horiz-controls">
                 <div class="price_default">
-                  <b>{{ product.price }}</b> €                
+                  <b>{{ product.price + (product.addition_price ? product.addition_price : 0) }}</b> €                
                 </div>
 
                 <div class="thumb-input-number">

@@ -141,7 +141,7 @@
     border-radius: 100%;
 }
 
-
+/* 
 .SumoSelect {
     display: block;
     width: 100%;
@@ -156,6 +156,7 @@
     top: 0;
     left: 0;
 }
+
 
 .SelectClass, .SumoUnder {
     right: 0;
@@ -331,13 +332,22 @@
     & li.opt.disabled * {
         opacity: .5;
     }
+} */
+/* 
+.SumoSelect > .CaptionCont > span {
+    border: 1px solid red; 
 }
 
+.SumoSelect > .CaptionCont > span.placeholder {
+    border: 1px solid blue; 
+} */
+
+/* 
 .SumoSelect.open > .CaptionCont, .SumoSelect:focus > .CaptionCont, .SumoSelect:hover > .CaptionCont {
     box-shadow: none;
     border-color: $clr-primary;
 }
-
+ */
 .input:not(.calendar):focus,
 .input:not(.calendar):focus-visible {
     border-color: $clr-primary;
@@ -351,7 +361,7 @@
 .options > .opt.disabled:first-child {
     display: none;
 }
-
+/* 
 .SumoSelect:hover {
     z-index: 4;
 }
@@ -360,7 +370,7 @@
     box-shadow: none;
     border-color: $clr-primary;
 }
-
+ */
 .checkbox-entry-wrap.time_wrapper {
     margin: 10px 0 0;
 }
@@ -463,7 +473,7 @@
         margin-bottom: 10px;
     }
 }
-.SumoSelect.open > .optWrapper {
+/* .SumoSelect.open > .optWrapper {
     opacity: 1;
     visibility: visible;
     top: 100%;
@@ -473,7 +483,7 @@
 .SumoSelect>.optWrapper>.options li.opt:hover {
     background-color: #E4E4E4;
 }
-
+ */
 .thank-total-item {
     color: $clr-grey;
     padding: 8px 0;
@@ -588,9 +598,9 @@ textarea.input {
 }
 
 @media (min-width: 1200px){
-.SumoSelect > .optWrapper > .options li.opt:hover {
+/* .SumoSelect > .optWrapper > .options li.opt:hover {
     background-color: transparent;
-}
+} */
 }
 
 @media screen and (max-width: 991px){

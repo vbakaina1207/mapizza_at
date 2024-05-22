@@ -6,7 +6,7 @@
       <div class="spacer-sm"></div>
         <div class="row justify-content-center">
           <div class="col-xxl-10 text-center">
-            <h1 class="title title-decor h1">Оформлення замовлення</h1>
+            <h1 class="title title-decor h1">Placing an order</h1>
           </div>
         </div>
         <div class="spacer-xs"></div>
@@ -17,7 +17,7 @@
               <div class="thank-total-bonus-product">
                 <span>Нарахується бонусів:</span>
                 <span class="cart_bonus-wrap">
-                  <b class="all-product-bonus-start"> {{ bonus }}</b> грн
+                  <b class="all-product-bonus-start"> {{ bonus }}</b> €
                 </span>
               </div>
                                                                                               
@@ -31,7 +31,8 @@
                     {{ product.name }}
                     </a>                    
                     <button class="btn-close remove-product" (click)="removeFromBasket(product)"></button>
-                    <div class="added_ing-wrap">
+                    <ng-container *ngIf="product.selected_addition.length"> 
+                        <div class="added_ing-wrap">
                       <div class="ing_output-inner">
                         <div class="ing_control" *ngFor="let addProduct of product.selected_addition; let id = index">
                             <div class="ing_control-title">
@@ -40,12 +41,13 @@
                             <button class="cart-dropdown-delete" (click)="additionDeleteClick(product, addProduct.name)"></button>
                         </div>                    
                       </div>
-                    </div>
+                        </div>
+                    </ng-container>
                   </div>
             
                   <div class="prod_horiz-controls">
                     <div class="price_default">
-                      <b>{{ product.price + product.addition_price}}</b> грн                
+                      <b>{{ product.price + (product.addition_price ? product.addition_price : 0)}}</b> €                
                     </div>
 
                     <div class="thumb-input-number">
@@ -55,7 +57,7 @@
                     </div>
 
                     <div class="price-wrap">
-                        <b class="price">{{ (product) ? (product.price*product.count + product.addition_price*product.count) :  0  }}</b> грн                    
+                        <b class="price">{{ (product) ? (product.price*product.count + (product.addition_price ? product.addition_price*product.count : 0)) :  0   }}</b> €                     
                     </div>
                   </div>
                 </div>
@@ -67,36 +69,35 @@
             <form [formGroup]="orderForm" class="delivery-form b-shadow" (ngSubmit)="addOrder()">                        
               <div class="form-group">
                 <div class="form-title title h4">
-                  Контактні дані
+                    Contacts
                 </div>
                             
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    <input formControlName="name" class="input" type="text" name="name" placeholder="*Вашe ім’я" value="">
+                    <input formControlName="name" class="input" type="text" name="name" placeholder="*Your name" value="">
                   </div>
                   <div class="col-12 col-md-6">
-                    <input formControlName="phone" class="input inputmask" name="phone" type="text" pattern="^(8|\+?\d{1,3})?[ -]?\(?(\d{3})\)?[ -]?(\d{3})[ -]?(\d{2})[ -]?(\d{2})$" value="" placeholder="*Телефон" inputmode="numeric" data-inputmask="'mask': '+38 (0x9) 999 99 99'" >
+                    <input formControlName="phone" class="input inputmask" name="phone" type="text" pattern="^(8|\+?\d{1,3})?[ -]?\(?(\d{3})\)?[ -]?(\d{3})[ -]?(\d{2})[ -]?(\d{2})$" value="" placeholder="*Phone" inputmode="numeric" data-inputmask="'mask': '+43 (0x9) 999 99 99'" >
                   </div>
                   <div class="col-12">
-                    <input formControlName="email" class="input" value="" type="email" name="email" placeholder="Email (для отримання копії замовлення)">
+                    <input formControlName="email" class="input" value="" type="email" name="email" placeholder="Email (to receive a copy of the order)">
                   </div>
                 </div>
-                            
               </div>
 
               <div class="form-group">
                 <div class="form-title title h4">
-                  Інформація про доставку
+                    Delivery information
                 </div>
                             
                 <div class="checkbox-entry-wrap">            
                   <label class="checkbox-entry radio">
                     <input formControlName="delivery_method" id="driveDelivery" type="radio" name="delivery_method" class="toggle-block-control" data-block="2"  checked="checked" value="courier" (click)="deliveryMethodClick('courier')">
-                    <span>Адресна доставка</span>
+                    <span>Address delivery</span>
                   </label>
                   <label class="checkbox-entry radio">
                     <input formControlName="delivery_method" id="driveDelivery" type="radio" name="delivery_method" class="toggle-block-control" data-block="2" value="local_pickup" (click)="deliveryMethodClick('local_pickup')">
-                    <span>Самовивіз</span>
+                    <span>Pickup</span>
                   </label>
                 </div>
                 
@@ -104,47 +105,44 @@
               <ng-container *ngIf="isCourier"> 
                 <div class="toggle-block" data-block="2">
                   <div class="row">                    
-                    <div class="col-12">
-                      <div class="sumoselect-wrap">
-                        <div class="SumoSelect sumo_select_city" tabindex="0">
-                          <select formControlName="addres" name="addres" class="input" tabindex="-1" (click)="getAddress()">
-                            <option value="Виберіть адресу доставки" selected="" disabled="">Виберіть адресу доставки</option>
-                            <option *ngFor="let addr of address" [value]="addr.city+'/'+addr.street+'/'+addr.house+'/'+addr.flat+'/'+addr.entrance+'/'+addr.floor"> {{ addr.city }} {{ addr.street }}, {{addr.house}}, {{ addr.flat }}</option> 
-                          </select>
-                        </div>
-                      </div>
+                    <div class="col-12">                                               
+                          <select formControlName="addres" name="addres" class="input" tabindex="-1"  (change)="onAddressChange($event)">
+                             <option class="select_address" [value]="defaultAddress" disabled selected>
+                              Select a shipping address ( default: {{ defaultAddress }} )
+                            </option>
+                            <option *ngFor="let addr of address" [value]="formatAddress(addr)"> 
+                              {{ addr.city }} {{ addr.street }}, {{addr.house}}, {{ addr.flat }}
+                            </option>
+                          </select>                       
                     </div>  
-                  <div class="col-12">
-                    <div class="sumoselect-wrapp">
-                      <div class="SumoSelect sumo_select_city" tabindex="0" role="button" >                      
+                  <div class="col-12">                                     
                         <select formControlName="city" name="city" class="input" >
-                          <option value="" disabled selected>*Місто</option>                            
-                          <option [value]="select_address[0]" selected>{{select_address[0]}}</option>
-                          <option value="Львів">Львів</option>
-                          <option value="Зубра">Зубра</option>
-                          <option value="Сокільники">Сокільники</option>
-                          <option value="Пасіки-Зубрицькі">Пасіки-Зубрицькі</option> 
-                        </select>                  
-                      </div>                                
-                    </div>
+                          <option value="" disabled selected>*City</option>                            
+                          <option class="select_city" *ngFor="let addr of address" [value]="addr.city" selected>{{ addr.city }}</option>
+                          <option value="Vienna">Vienna</option>
+                          <option value="Döbling">Döbling</option>
+                          <option value="Hernals">Hernals</option>
+                          <option value="Leopoldstadt">Leopoldstadt</option> 
+                          <option value="Ottakring">Ottakring</option> 
+                        </select>                                        
                   </div>
 
                 <div class="col-12">
-                  <input formControlName="street" id="streetAutocomplete" class="input ui-autocomplete-input" type="text" placeholder="*Вулиця" name="street" autocomplete="off" [value]="select_address[1]">
+                  <input formControlName="street" id="streetAutocomplete" class="input ui-autocomplete-input" type="text" placeholder="*Street" name="street" autocomplete="off" [value]="select_address[1]">
                 </div>
 
                 <div class="col-6 col-sm-3">
-                  <input formControlName="house" id="houseNumber" maxlength="5" class="input" type="text" placeholder="Будинок" name="house" [value]="select_address[2]" >
+                  <input formControlName="house" id="houseNumber" maxlength="5" class="input" type="text" placeholder="House" name="house" [value]="select_address[2]" >
                 </div>
 
                 <div class="col-6 col-sm-3">
-                  <input formControlName="entrance" type="text" name="entrance" class="input" placeholder="Під'їзд"  [value]="undefined ? '' : select_address[4]">
+                  <input formControlName="entrance" type="text" name="entrance" class="input" placeholder="Entrance"  [value]="undefined ? '' : select_address[4]">
                 </div>
                 <div class="col-6 col-sm-3">
-                  <input formControlName="floor" type="text" name="floor" class="input" placeholder="Поверх" [value]="select_address[5]">
+                  <input formControlName="floor" type="text" name="floor" class="input" placeholder="Floor" [value]="select_address[5]">
                 </div>
                 <div class="col-6 col-sm-3">
-                  <input formControlName="flat" type="text" name="flat" class="input" placeholder="Квартира" autocomplete="new-password" [value]="select_address[3]">
+                  <input formControlName="flat" type="text" name="flat" class="input" placeholder="Flat" autocomplete="new-password" [value]="select_address[3]">
                 </div>
                 
                 </div>              
@@ -154,45 +152,41 @@
               <ng-container *ngIf="!isCourier">   
               <div class="toggle-block" data-block="2" >              
                 <div class="row">
-                  <div class="col-12">
-                    <div class="sumoselect-wrapp">
-                      <div class="SumoSelect sumo_self_delivery_address" tabindex="0" role="button" aria-expanded="false">
-                        <select formControlName="self_delivery_address" name="self_delivery_address" class="input" id="location_delivery" data-work-to="2023-11-13 20:59:00" tabindex="-1">
-                        
-                          <option value="" selected="" disabled="">*Виберіть адресу самовивозу                        </option>
-                        
-                          <option value="Залізнична, 19  ">Залізнична, 19  </option>
-                          <option value="Малоголосківська, 16 " >Малоголосківська, 16 </option>
-                          <option value="Пулюя, 12 ">Пулюя, 12 </option>
-                          <option value="Китайська, 10 ">Китайська, 10 </option>
-                          <option value="Івана Франка, 71">Івана Франка, 71</option>
-                          <option value="Червоної Калини, 60">Червоної Калини, 60</option>
-                          <option value="Пасічна, 181">Пасічна, 181</option> 
+                  <div class="col-12">                    
+                        <select formControlName="self_delivery_address" name="self_delivery_address" class="input" id="location_delivery" data-work-to="2023-11-13 20:59:00" tabindex="-1">                        
+                          <option value="" selected disabled>*Choose a pick-up address </option>                        
+                          <option value="Ringstrasse, 181">Ringstrasse, 181  </option>
+                          <option value="Sweden Square, 60" >Sweden Square, 60</option>
+                          <option value="Landstrasse, 12">Landstrasse, 12</option>
+                          <option value="Bennogasse, 16">Bennogasse, 16</option>
+                          <option value="Alserstrasse, 10">Alserstrasse, 10</option>
+                          <option value="Otto-Wagner-Platz, 71">Otto-Wagner-Platz, 71</option>
+                          <option value="Friedrich-Schmidt-Platz, 19">Friedrich-Schmidt-Platz, 19</option> 
                         </select>
-                      </div>
-                    </div>
                   </div>
                 </div>
+                  <!-- </div>
+                </div> -->
               </div>
               </ng-container> 
               <div class="checkbox-entry-wrap time_wrapper">
                 <label class="checkbox-entry radio">
                 <input formControlName="at_time" type="radio" class="toggle-block-control" name="at_time" data-block="1" data-rel="1"  [checked]="atTime" value="false" (click)="atTimeclick()">
-                <span>На час</span>
+                <span>On time</span>
                 </label>
               </div>
 
 
               <div class="row wrapper_time_block" style="padding-bottom: 15px;"  *ngIf="(orderForm?.get('at_time')?.value)">
                 <div class="col-sm-6">
-                  <input formControlName="delivery_date" type="date" class="input calendar" name="delivery_date" placeholder="Дата доставки" value=""  (change)="getOrderDay()">
+                  <input formControlName="delivery_date" type="date" class="input calendar" name="delivery_date" placeholder="Delivery date" value="" (change)="getOrderDay()" >
                 </div>
 
                 <div class="col-sm-6">
-                  <div class="sumoselect-wrapp">
-                    <div class="SumoSelect sumo_at_time_time" tabindex="0" role="button" aria-expanded="false">
+                  <!-- <div class="sumoselect-wrapp">
+                    <div class="SumoSelect sumo_at_time_time" tabindex="0" role="button" aria-expanded="false"> -->
                       <select formControlName="delivery_time" name="delivery_time" class="input" tabindex="-1">
-                        <option value="" selected="" disabled="">*Час</option>
+                        <option value="" selected="" disabled="">*Time</option>
                         <option value="10:00 - 10:15">10:00 - 10:15</option>
                         <option value="10:15 - 10:30">10:15 - 10:30</option>
                         <option value="10:30 - 10:45">10:30 - 10:45</option>
@@ -240,56 +234,53 @@
                         <option value="21:00 - 21:15">21:00 - 21:15</option>
                         <option value="21:15 - 21:30">21:15 - 21:30</option>            
                       </select>              
-                    </div>
-                  </div>
                 </div>
-              </div>
-                <!-- <input type="hidden" name="organizationID">                             -->
+                  </div>                
             </div>
 
                         <!-- 3 step -->
             <div class="form-group pay-part">
-              <div class="form-title title h4">Параметри оплати</div>
+              <div class="form-title title h4">Payment options</div>
 
                 <div class="checkbox-entry-wrap">
                   <label class="checkbox-entry radio">
                     <input formControlName="payment_method" type="radio" class="toggle-block-control" id="payment_method_cod" data-block="3" name="payment_method" checked="" value="cod">
-                    <span>Готівка</span>
+                    <span>Cash</span>
                   </label>
 
                   <label class="checkbox-entry radio">
                     <input formControlName="payment_method" type="radio" class="toggle-block-control" id="payment_method_liqpay" data-block="3" data-rel="liqpay" name="payment_method" value="liqpay">
-                    <span>Онлайн оплата</span>
+                    <span>Online payment</span>
                   </label>
 
                   <label class="checkbox-entry radio">
                     <input formControlName="payment_method" type="radio" class="toggle-block-control" id="payment_method_bacs" data-block="3" data-rel="bacs" name="payment_method" value="bacs">
-                    <span>Оплата через термінал</span>
+                    <span>Payment through the terminal</span>
                   </label>
                 </div>
                 <div class="toggle-block" data-block="3"  *ngIf="(orderForm?.get('payment_method')?.value)==='cod'" >
                   <div class="moneychange-input">
-                    <div class="text">Підготувати решту з:</div>
-                      <input formControlName="cash" class="input" type="number" placeholder="Введіть суму" name="cash" [readonly]="orderForm.get('isWithoutRest')?.value" >
+                    <div class="text">Prepare the rest of:</div>
+                      <input formControlName="cash" class="input" type="number" placeholder="Enter the amount" name="cash" [readonly]="orderForm.get('isWithoutRest')?.value" >
                       <label class="checkbox-entry">
-                        <input formControlName="isWithoutRest" type="checkbox" name="isWithoutRest" (change)="isWithoutRestClick()"><span>Без решти</span>
+                        <input formControlName="isWithoutRest" type="checkbox" name="isWithoutRest" (change)="isWithoutRestClick()"><span>Without the rest</span>
                       </label>
                     </div>
                 </div>
 
                   <div class="btn_check_user_bonus btn-primar" (click)="bonusClick()">
-                  Перевірити наявність бонусів                              
+                    Check for bonuses                             
                   </div>
       
                   <div class="col-12 bonus_wrapper_block" *ngIf="sum_bonus>0 && isBonus">
                     <label class="checkbox-entry bonus">
                       <input formControlName="use_bonus" type="checkbox" class="toggle-block-control" data-block="4" name="use_bonus">
-                      <span >Використати бонуси ( Доступно: <b>{{sum_bonus}}</b> )</span>
+                      <span >Use bonuses (Available: <b>{{sum_bonus}}</b> )</span>
                     </label>
                   </div>
       
                   <div class="wrapper_not_bonus"></div>
-                  <div class="wrapper_not_bonus" *ngIf="!sum_bonus && !isBonus && isBonusClick" >Наразі у вас немає бонусів.</div>
+                  <div class="wrapper_not_bonus" *ngIf="!sum_bonus && !isBonus && isBonusClick" >You currently have no bonuses.</div>
 
                   <div class="row" *ngIf="(orderForm?.get('use_bonus')?.value)">
                         <div class="toggle-block" data-block="4" >
@@ -299,90 +290,91 @@
                             </div>
                             <div class="col-sm-4 align-self-center">
                               <div class="butn btn-secondary btn-block apply_bonus" (click)="bonusUse()">
-                                <span>ЗАСТОСУВАТИ</span>
+                                <span>APPLY</span>
                               </div>
                             </div>
-                          </div>
-                          <!-- <div class="bonuses_code_message"></div> -->
+                          </div>                        
                         </div>
 
                         <div class="toggle-block" data-block="4" data-rel="1">
                           <div class="row" style="padding-top: 15px">
                             <div class="col-sm-8">
-                                <input formControlName="promocode" class="input" type="text" placeholder="Введіть промокод" name="promocode">
+                                <input formControlName="promocode" class="input" type="text" placeholder="Enter promo code" name="promocode">
                             </div>
                             <div class="col-sm-4 align-self-center">
                               <div class="butn btn-secondary btn-block">
-                                <span>ЗАСТОСУВАТИ</span>
+                                <span>APPLY</span>
                               </div>
                             </div>
                           </div>
                         </div>
                   </div>
                   <div class="select_action_use ">                                
-                        <div class="text">Вибір акції</div>
-                        <div class="SumoSelect sumo_select_action_use" tabindex="0" role="button" aria-expanded="false">
+                        <div class="text">Choice of action</div>                        
                             <select formControlName="action" name="action" class="input" data-prev-change="2+1" tabindex="-1" (click)="actionClick()"> 
-                              <option value="-1" selected="">Виберіть акцію</option>
-                              <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Акція 2+1</option>
-                              <option value="3+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Акція 3+1</option>
-                              <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% на самовивіз</option>                                
-                            </select>
-                        </div>
+                              <option value="-1" selected="">Select a promotion</option>
+                              <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Action 2+1</option>
+                              <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Action 3+1</option>
+                              <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% for pickup</option>                                
+                            </select>                        
                   </div>             
             </div>
             
                       <div class="thank-total-wrap">
                         <div class="deliveryWarning">
                           <div class="errorMsg empty-address" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value || !orderForm.get('city')?.value)">
-                              Введіть Вашу адресу та номер будинку    
+                            Enter your address and house number   
                           </div>
-                          <div class="errorMsg lowOrder minimum-order" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<300">
-                              Мінімальна сума замовлення у вашу зону доставки складає 
-                            <b class="js-zone-min-price"></b>300 грн    
+                          
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<50">
+                            The minimum order amount for free delivery is<b class="js-zone-min-price">50 €</b>    
                           </div>
-                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<500">
-                              Мінімальна сума замовлення для безкоштовної доставки у вашу зону складає <b class="js-zone-min-price"></b>500 грн    
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'local_pickup' && !orderForm.get('self_delivery_address')?.value ">
+                            Enter the address for pickup<b class="js-zone-min-price"></b>    
+                          </div>
+                          <div class="errorMsg lowOrderDelivery" *ngIf="!orderForm.get('name')?.value || !orderForm.get('phone')?.value || !orderForm.get('email')?.value ">
+                            Enter your contact information<b class="js-zone-min-price"></b>    
                           </div>
                         </div>
 
                         <div class="thank-total-item product_price_total">
-                          <div>Сума замовлення:</div>
-                          <div><b class="all-product-price-el">{{ total }}</b>  грн</div>
+                          <div>Order amount:</div>
+                          <div><b class="all-product-price-el">{{ total }}</b>  €</div>
                         </div>
 
                         <div class="thank-total-item last-item-border price-delivery" *ngIf="sum_delivery">
-                          <div>Доставка:</div>
-                          <div><b id="all-products-delivery"></b>{{ sum_delivery }} грн</div>
+                          <div>Delivery:</div>
+                          <div><b id="all-products-delivery"></b>{{ sum_delivery }} €</div>
                         </div>
 
                         <div class="thank-total-item last-item-border price-bonuses" *ngIf="orderForm.get('use_bonus')?.value">
-                          <div>Бонуси:</div>
-                          <div>-<b id="all-products-bonuses">{{ orderForm.get('summa_bonus')?.value}}</b> грн</div>
+                          <div>Bonuses:</div>
+                          <div>-<b id="all-products-bonuses">{{ orderForm.get('summa_bonus')?.value}}</b> €</div>
                         </div>
 
                         <div class="thank-total-item last-item-border price-action" *ngIf="minPrice">
-                          <div>Знижка:</div>
-                          <div>-<b id="all-products-discount-action">{{ minPrice }}</b> грн</div>
+                          <div>Discount:</div>
+                          <div>-<b id="all-products-discount-action">{{ minPrice * countActionProduct }}</b> €</div>
                         </div>
 
                         <div class="thank-total-item  thank-total-cost not_visble_border">
-                          <div>Загальна вартість:</div>
-                          <div><b class="all-product-price">{{ sum_order + sum_delivery }}</b> грн</div>
+                          <div>The total cost:</div>
+                          <div><b class="all-product-price">{{ sum_order + sum_delivery }}</b> €</div> 
                         </div>
 
                         <div class="thank-total-item thank-total-bonus ">
-                          <div>Нарахується бонусів:</div>
+                          <div>Bonuses are accrued:</div>
                           <div class="cart_bonus-wrap">
-                            <b class="all-product-bonus">{{ bonus }}</b> грн
+                            <b class="all-product-bonus">{{ bonus }}</b> €
                           </div>
                         </div>
-                      </div>
+                        </div>
+                      
 
                       <div class="checkbox-entry-wrap">
                         <label class="checkbox-entry">
                         <input formControlName="isCall" type="checkbox" name="isCall">
-                          <span>Зателефонуйте мені для уточнення замовлення</span>
+                          <span>Call to clarify the order</span>
                         </label>
                       </div>
 
@@ -390,7 +382,7 @@
                       <div class="checkbox-entry-wrap">
                         <label class="checkbox-entry">
                           <input formControlName="isComment" type="checkbox" name="isComment" class="toggle-block-control" data-block="5">
-                          <span>Додати коментар</span>
+                          <span>Add a comment</span>
                         </label>
                       </div>
                       <div *ngIf="(orderForm.get('isComment')?.value)" class="toggle-block" data-block="5" style="padding-bottom: 15px">
@@ -400,7 +392,7 @@
 
 
                       <button class="butn btn-primar btn-block main-order-button" type="submit"  [disabled]="(orderForm.invalid) ||   ((orderForm.get('delivery_method')?.value) ==='courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value)) ||((orderForm.get('delivery_method')?.value) ==='local_pickup' && !orderForm.get('self_delivery_address')?.value) || (orderForm.get('at_time')?.value && (!orderForm.get('delivery_date')?.value || !orderForm.get('delivery_time')?.value))">
-                        <span>Підтвердити замовлення</span>
+                        <span>Confirm the order</span>
                       </button>
 
             </form>

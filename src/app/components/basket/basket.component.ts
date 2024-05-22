@@ -102,33 +102,22 @@ public total = 0;
     let basket: Array<IProductResponse> = [];
     if(localStorage?.length > 0 && localStorage.getItem('basket')){
         basket = JSON.parse(localStorage.getItem('basket') as string);
-
-        // Check if the product with the same ID and selected additions exists in the basket
         const existingProductIndex = basket.findIndex(prod => prod.id === product.id && this.areSelectedAdditionsEqual(prod.selected_addition, product.selected_addition));
 
-        if(existingProductIndex !== -1){
-            // If the product already exists, update its count based on the value parameter
+        if(existingProductIndex !== -1){      
             if (value) {
                 basket[existingProductIndex].count += 1;
             } else if (!value && basket[existingProductIndex].count > 1) {
                 basket[existingProductIndex].count -= 1;
             }
-        } else {
-            // If the product doesn't exist, add it to the basket
+        } else {            
             basket.push(product);
         }
-    } else {
-        // If the basket is empty, add the product to the basket
+    } else {      
         basket.push(product);
-    }
-    
-    // Save the updated basket to localStorage
-    localStorage.setItem('basket', JSON.stringify(basket));
-    
-    // Reset the product count to 1
+    }    
+    localStorage.setItem('basket', JSON.stringify(basket));    
     product.count = 1;
-    
-    // Emit a change event for the basket
     this.orderService.changeBasket.next(true);
 }
 

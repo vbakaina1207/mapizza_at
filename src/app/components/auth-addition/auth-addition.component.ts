@@ -153,6 +153,7 @@ additionClick(additionName: any): void {
   }
   this.isAddition = this.additionProduct.length > 0;
   this.display_addition_price = this.additionPrice.toFixed(2);
+  this.currentProduct.addition_price = Math.round(this.additionPrice);
 }
 
 
@@ -170,6 +171,7 @@ additionDeleteAllClick(): void {
         el.classList.remove("active");
     });
     this.display_addition_price = this.additionPrice.toFixed(2);
+    this.currentProduct.addition_price = this.additionPrice;
 }
 
 
