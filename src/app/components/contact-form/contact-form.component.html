@@ -85,8 +85,8 @@
                       <div class="col-md-6">
                         <p>
                           <span class="wpcf7-form-control-wrap">
-                            <input formControlName="name" name="name" size="40" class="input" [class.input-empty]="massageForm.invalid && isValid"  placeholder="*Name" value="" type="text" required="">
-                            <ng-container *ngIf="massageForm.invalid && isValid">
+                            <input formControlName="name" name="name" size="40" class="input" [class.input-empty]="massageForm.get('name')?.invalid && isValid"  placeholder="*Name" value="" type="text" required="">
+                            <ng-container *ngIf="massageForm.get('name')?.invalid && isValid">
                               <span class="not-valid-tip">The field is mandatory. </span>
                             </ng-container>
                           </span>
@@ -95,8 +95,8 @@
                       <div class="col-md-6">
                         <p>
                           <span class="wpcf7-form-control-wrap">
-                            <input formControlName="phone" name="phone" size="40" class="input inputmask" [class.input-empty]="massageForm.invalid && isValid" placeholder="*Enter a phone number" value="" data-inputmask="'mask': '+43 (999) 999 99 99'" data-inputmask-placeholder="x" type="tel" inputmode="text" required="">                            
-                            <ng-container *ngIf="massageForm.invalid && isValid">
+                            <input formControlName="phone" name="phone" size="40" class="input inputmask" [class.input-empty]="massageForm.get('phone')?.invalid && isValid" placeholder="*Enter a phone number" value="" data-inputmask="'mask': '+43 (999) 999 99 99'" data-inputmask-placeholder="x" type="tel" inputmode="text" required="">                            
+                            <ng-container *ngIf="massageForm.get('phone')?.invalid && isValid">
                               <span class="not-valid-tip">The field is mandatory. </span>
                             </ng-container>
                           </span>
@@ -105,8 +105,8 @@
                     </div>
                     <p>
                       <span class="wpcf7-form-control-wrap">
-                        <input formControlName="email" size="40" class="input" [class.input-empty]="massageForm.invalid && isValid" placeholder="*Email" value="" type="email" name="email" required="">
-                        <ng-container *ngIf="massageForm.invalid && isValid">
+                        <input formControlName="email" size="40" class="input" [class.input-empty]="massageForm.get('email')?.invalid && isValid" placeholder="*Email" value="" type="email" name="email" required="">
+                        <ng-container *ngIf="massageForm.get('email')?.invalid && isValid">
                               <span class="not-valid-tip">The field is mandatory. </span>
                         </ng-container>
                       </span>

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
-  Resolve,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  ActivatedRouteSnapshot,
+  ResolveFn
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { IDiscountResponse } from '../../interfaces/discount/discount.interface';
 import { DiscountService } from './discount.service';
 
-@Injectable({
+/* @Injectable({
   providedIn: 'root'
 })
 export class DiscountInfoResolver implements Resolve<IDiscountResponse> {
@@ -18,4 +18,15 @@ export class DiscountInfoResolver implements Resolve<IDiscountResponse> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IDiscountResponse> {
     return this.discountService.getOneFirebase((route.paramMap.get('id') as string)) as Observable<IDiscountResponse>;
   }
-}
+} */
+
+export const DiscountInfoResolver : ResolveFn<Observable<IDiscountResponse>> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+  ) => {
+    const id = route.paramMap.get('id');
+    if (id) {
+      return inject(DiscountService).getOneFirebase(id) as Observable<IDiscountResponse>;
+    }
+    return of({} as IDiscountResponse);
+  }

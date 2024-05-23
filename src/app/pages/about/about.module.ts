@@ -4,6 +4,8 @@ import { AboutComponent } from './about.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { AboutRoutingModule } from './about-routing.module';
+import { SlideAboutModule } from '../../components/slide-about/slide-about.module';
+import { ContactModule } from '../contact/contact.module';
 
 
 
@@ -13,16 +15,16 @@ import { AboutRoutingModule } from './about-routing.module';
   ],
   exports: [
     AboutComponent,
-    /* ContactModule,
-    SlideAboutModule, */
+    ContactModule,
+    SlideAboutModule 
   ],
   imports: [
     CommonModule,
     AboutRoutingModule,
     SharedModule,
     NgbCarouselModule,
-    /* ContactModule,
-    SlideAboutModule */
+    ContactModule,
+    SlideAboutModule 
   ]
 })
 export class AboutModule { }

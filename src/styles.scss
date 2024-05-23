@@ -1431,7 +1431,7 @@ a{
 
 @media (min-width: 992px) {
     .banner-info>* {
-        color: $clr-white;
+        color: $clr-white !important;
     }
 }
 

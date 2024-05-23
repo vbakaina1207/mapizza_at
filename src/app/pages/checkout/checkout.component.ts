@@ -497,8 +497,7 @@ setDefaultAddress():void {
       this.orderForm?.patchValue({
         'action' : '3+1'
       })     
-    } else {
-      /* this.minPrice + 0; */
+    } else {     
       this.sum_order = this.total;
       this.countActionProduct = 0;
       this.orderForm?.patchValue({

@@ -10,6 +10,7 @@ import { SlideProductComponent } from '../../components/slide-product/slide-prod
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button'; 
 import { ImageModule } from 'primeng/image'; 
+import { SlideAboutModule } from '../../components/slide-about/slide-about.module';
 
 
 
@@ -24,13 +25,13 @@ import { ImageModule } from 'primeng/image';
   ],
   exports: [
     ProductComponent,
-    /* SlideAboutModule */
+    SlideAboutModule
   ],
   imports: [
     CommonModule,
     ProductRoutingModule,
     SharedModule,
-    /* SlideAboutModule,*/
+    SlideAboutModule,
     CarouselModule,
     ButtonModule, 
     ImageModule, 

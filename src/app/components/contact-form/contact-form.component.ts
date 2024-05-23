@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IMassageResponse } from '../../shared/interfaces/massage/massage.interface';
 import { MassageService } from '../../shared/services/massage/massage.service';
 import { ImageService } from '../../shared/services/image/image.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -36,7 +38,8 @@ export class ContactFormComponent implements OnInit {
     private imageService: ImageService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -53,7 +56,7 @@ export class ContactFormComponent implements OnInit {
       imagePath: [null],
       date_message: new Date()
     });
-    this.isValid = false;
+    this.isValid = false,//this.massageForm.invalid && this.massageForm.dirty;
     console.log(this.route.component?.name);
     if ( this.route.component?.name === '_ContactComponent') {
       this.caption = 'Feedback form';
@@ -71,8 +74,7 @@ export class ContactFormComponent implements OnInit {
       this.workTime = 'Mon-Sun 10:00 - 22:30';      
       this.placeholderDescription = 'Massage...';
     }
-    if ( this.route.component?.name === '_AboutComponent' ) {
-      // this.workTime = `Працюємо щодня без вихідних з <strong>10:00</strong> до <strong>22:30</strong>`;
+    if ( this.route.component?.name === '_AboutComponent' ) {      
       this.isAbout = true;
     }
     this.mailto = 'mailto:' + this.email;
@@ -117,9 +119,26 @@ export class ContactFormComponent implements OnInit {
 
   addMassage(): void {
     this.isValid = true;
+    Object.keys(this.massageForm.controls).forEach(field => {
+      const control = this.massageForm.get(field);
+      if (control && control.invalid) {
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
     if (this.massageForm.valid) {
       this.massageService.createFirebase(this.massageForm.value).then(() => {
+        this.dialog.open(AlertDialogComponent, {
+          backdropClass: 'dialog-back',
+          panelClass: 'alert-dialog',
+          autoFocus: false,
+          data: {
+            message: 'Massage successfully created ',
+            icon: '',
+            isError: false
+          }
+        });
         this.toastr.success('Massage successfully created');
+        this.isValid = false;
       })
       this.massageForm.reset();
       this.isUploaded = false;

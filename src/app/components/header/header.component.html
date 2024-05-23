@@ -3,7 +3,7 @@
       <div class="container">
         <div class="header-top">
           <div class="header-phone">
-            <a href="tel:+380971830618">+38 097 18 306 18 </a>                        
+            <a href="tel:+380971830618">+43 097 18 306 18 </a>                        
             <p>Mon-Thu 09:30 − 21:30 <br> Fri-Sat 09:30 − 22:30 <br></p>
           </div>
           <nav class="header-links">
@@ -40,14 +40,14 @@
           <div class="menu-list">
             <ul>
               <li *ngFor="let category of userCategories" class="nav-item menu-item">
-                <a [routerLink]="[ '/product/', category.path, '' ]" routerLinkActive="route-active" class="nav-link" aria-current="page">
+                <a [routerLink]="[ '/product', category.path, '' ]" routerLinkActive="route-active" class="nav-link" aria-current="page">
                   <div class="link-menu">
                     <img [src]="category.imagePath" alt="">
                       <span>{{category.name}}</span>
                   </div>
                 </a>
               </li>
-            </ul>
+            </ul>          
   
             
         </div>

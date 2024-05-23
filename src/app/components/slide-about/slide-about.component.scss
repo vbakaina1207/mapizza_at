@@ -2,15 +2,15 @@
 @import '../../shared/styles/variables';
 @import '../../shared/styles/mixins';
 
-/* * {
+* {
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    -webkit-text-size-adjust: none;
-} */
+    // -webkit-text-size-adjust: none;
+}
 
 
 .benefits-wrapper {
@@ -59,9 +59,10 @@
 }
 
 
-.swiper-container .swiper-initialized {
+.swiper-container.swiper-initialized {
     opacity: 1;
-    height: 220px;
+    height: auto;
+    // height: 180px;
 }
 .swiper-container {
     margin-left: auto;
@@ -102,63 +103,65 @@
 .carousel-indicators {
 
 	.active {
-    	background-color: $clr-secondary;
-    	border-color: $clr-secondary;
+        background-color: $clr-secondary;
+        border-color: $clr-secondary;
 	}
 }
 
-.block-wrapper {
-    position: relative;
-    display: flex;
-    width: 100%;
+
+
+
+@media screen and (max-width: 1730px) {
+    
+
+    .benefits-wrapper {
+        padding: 30px;
+        margin: 20px 0 ;
+    }
+
+    .benefits-row {
+        --bs-gutter-x: 30px;
+        margin-bottom: -30px;
+    }
+
+    .benefits-row>[class*=col] {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .benefits-wrapper .decor-img {
+        display: none;
+    }    
 }
 
 
-.wp-video {
-    max-width: 100%;
-    height: auto;
+@media (max-width: 767px) { 
+    .hide-on-desktop { 
+        display: block; 
+    }
+
+    .hide-on-mobile {
+        display: none; 
+    }
+
+    
+    .swiper-wrapper .carousel-indicators{
+        bottom: -36px;;
+        padding: 20px;
+    }
+
+    .swiper-wrapper .carousel{
+        margin-bottom: 0;
+        height: 180px;
+    }
 }
 
-.mejs-offscreen {
-    border: 0;
-    clip: rect(1px,1px,1px,1px);
-    clip-path: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-    word-wrap: normal;
-}
 
-.mejs-container {
-    clear: both;
-    max-width: 100%;
-    box-sizing: border-box;
-    font-family: Helvetica,Arial,serif;
-    position: relative;
-    text-align: left;
-    text-indent: 0;
-    vertical-align: top;
-}
+@media (max-width: 575px){
+    .swiper-container {
+        overflow: visible;
+    }
 
-.mejs-container * {
-    font-family: Helvetica,Arial;
-}
-.mejs-mediaelement {
-    height: 100%;
-    width: 100%;
-    z-index: 0;
-}
 
-.mejs-background, .mejs-mediaelement {
-    left: 0;
-    position: absolute;
-    top: 0;
 }
-.wp-video-shortcode video, video.wp-video-shortcode {
-    max-width: 100%;
-    display: inline-block;
-}
-

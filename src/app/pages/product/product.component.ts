@@ -51,14 +51,14 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
     private afs: Firestore,
     private toastr: ToastService
   ) {
-    /* this.eventSubscription = this.router.events.subscribe(event => {
+    this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
         this.loadProducts();
         this.getTypeProducts();   
-        this.loadFaviriteProducts();
+        //this.loadFaviriteProducts();
         this.loadUser();       
       }
-    }) */
+    })
   }
 
   ngOnInit(): void {
@@ -104,9 +104,9 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
       });
     }
   
-  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' || this.router.url == '/#pizza' ) {    
+  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' ) {    
       this.isCategoryPizza = true;
-      if(/* this.router.url == '/#pizza' || */ this.router.url == '/') {
+      if(this.router.url == '/') {
         this.categoryName = 'pizza';
         this.currentCategoryName = '';
         this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
@@ -126,11 +126,11 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
         this.isProductType = true;
       }
     }
-    if (this.router.url == '/' || this.router.url == '/#pizza' ) {
+    if (this.router.url == '/') {
       this.isCategoryPizza = true;    
     }
     if (this.isCategoryPizza) this.currentCategoryName = 'Pizza';
-    if (this.categoryName === 'pizza' || this.router.url === '/' || this.router.url === '/#pizza')
+    if (this.categoryName === 'pizza' || this.router.url === '/')
       this.isInfoBlock = true;
     else 
       this.isInfoBlock = false;
@@ -154,7 +154,7 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
   
   ngOnDestroy(): void {
-    /* this.eventSubscription.unsubscribe(); */
+    this.eventSubscription.unsubscribe();
   }
 
   productCount(product: IProductResponse, value: boolean): void {

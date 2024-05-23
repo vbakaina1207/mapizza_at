@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormatDatePipe } from './pipes/format-date.pipe';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 const MATERIAL = [
     MatDialogModule,
@@ -24,6 +25,7 @@ const MATERIAL = [
 @NgModule({
     declarations: [
     FormatDatePipe,
+    CapitalizePipe,
     ],
     imports: [
         ...MATERIAL,
@@ -37,7 +39,8 @@ const MATERIAL = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormatDatePipe
+    FormatDatePipe,
+    CapitalizePipe
   ]
 })
 export class SharedModule { }

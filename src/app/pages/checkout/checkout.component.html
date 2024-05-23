@@ -315,7 +315,7 @@
                               <option value="-1" selected="">Select a promotion</option>
                               <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Action 2+1</option>
                               <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Action 3+1</option>
-                              <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% for pickup</option>                                
+                              <option value="localPickup" [disabled]="orderForm.get('delivery_method')?.value === 'courier'">-15% for pickup</option>                                
                             </select>                        
                   </div>             
             </div>
