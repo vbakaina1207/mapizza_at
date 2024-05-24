@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { AuthAddressComponent } from './components/auth-address/auth-address.component';
@@ -24,6 +25,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimations } from '@angular/platform-browser/animations';
+//import { MapComponent } from './components/map/map.component';
 
 
 
@@ -57,6 +59,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     HttpClientModule,
     NgbModule,
     NgbCarouselModule,
+    GoogleMapsModule
   ],
   providers: [
     provideAnimations()
