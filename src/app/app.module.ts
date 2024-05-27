@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { FormsModule } from '@angular/forms';
 
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { AuthAddressComponent } from './components/auth-address/auth-address.component';
@@ -59,7 +60,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     HttpClientModule,
     NgbModule,
     NgbCarouselModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    FormsModule
   ],
   providers: [
     provideAnimations()

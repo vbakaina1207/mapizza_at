@@ -1,31 +1,14 @@
-<div class="map-container">
-    <!-- <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
-      <map-marker [position]="center" [options]="markerOptions"></map-marker> 
-    </google-map> -->
-    <h1>Hallo</h1>
+<div class="container">
+  <div class="form">
+    <input class="input" type="text" placeholder="Enter an address" [(ngModel)]="searchAddress">
+    <button type="button" class="butn btn-primar" (click)="searchLocation()">Search</button>
   </div>
+  <div #mapContainer style="height: 850px; width: 100%;">
+</div>
+<!-- 
+<div>
+  <div>Latitude: {{display?.lat}}</div>
+  <div>Longitude: {{display?.lng}}</div>
+</div> -->
 
-  <google-map height="450px"
-            width="1000px"
-            [center]="center"
-            [zoom]="zoom"
-            (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)">
-</google-map>
-  
-<div>Latitude: {{display?.lat}}</div>
-<div>Longitude: {{display?.lng}}</div>
 
-<google-map 
-  height="400px"
-  width="750px"
-  [center]="center"
-  [zoom]="zoom"
-  mapId="MAP_ID_HERE"
-  >
-    @for (position of markerPositions; track position) {
-     <!--  <map-advanced-marker [position]="position" /> -->
-     <map-marker [position]="position" />
-    }
-</google-map>
-  
