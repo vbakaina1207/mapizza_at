@@ -56,7 +56,7 @@ export class ContactFormComponent implements OnInit {
       imagePath: [null],
       date_message: new Date()
     });
-    this.isValid = false,//this.massageForm.invalid && this.massageForm.dirty;
+    this.isValid = false;
     console.log(this.route.component?.name);
     if ( this.route.component?.name === '_ContactComponent') {
       this.caption = 'Feedback form';

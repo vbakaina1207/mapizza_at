@@ -65,7 +65,9 @@ export class MapComponent {
      
 
       const yellowZoneCoords: google.maps.LatLngLiteral[] = [
-        { lat: 47.79051304150198, lng: 16.231028336112445 },
+       
+        
+        /* { lat: 47.79051304150198, lng: 16.231028336112445 },
         { lat: 47.817262605819145, lng: 16.518046129663414 },
         { lat: 47.984824753610255, lng: 16.820170122874963 },
         { lat: 48.19710126230375, lng: 16.825663286387897 },
@@ -78,7 +80,22 @@ export class MapComponent {
         { lat: 48.41594452454928, lng: 15.575968587194685 },        
         { lat: 48.161921954980336, lng: 15.560862387534106 },       
         { lat: 47.984824753610255, lng: 15.703684638870474 },
-        { lat: 47.82095111990034, lng: 15.926157761144431 }
+        { lat: 47.82095111990034, lng: 15.926157761144431 } */
+        { lat: 47.79051304150198, lng: 16.231028336112445 },
+        { lat: 47.817262605819145, lng: 16.518046129663414 },
+        { lat: 47.984824753610255, lng: 16.820170122874963 },
+        { lat: 48.19710126230375, lng: 16.825663286387897 },
+        { lat: 48.28644948370899, lng: 16.809145961059137 },
+        { lat: 48.54520969457169, lng: 16.714426728823092 },
+        { lat: 48.55889207305498, lng: 16.391071226728894 },
+        { lat: 48.631363933013174, lng: 16.36763762207027 },
+        { lat: 48.577932735025935, lng: 16.28595997124182 },
+        { lat: 48.521566054630625, lng: 15.98658255978674 },
+        { lat: 48.41594452454928, lng: 15.575968587194685 },
+        { lat: 48.161921954980336, lng: 15.560862387534106 },
+        { lat: 47.984824753610255, lng: 15.703684638870474 },
+        { lat: 47.82095111990034, lng: 15.926157761144431 },
+        { lat: 47.79051304150198, lng: 16.231028336112445 }
       ];
       
 
@@ -86,11 +103,11 @@ export class MapComponent {
       this.geocoder = new google.maps.Geocoder();
 
       this.yellowZone = new google.maps.Polygon({
-        paths: yellowZoneCoords,
-        strokeColor: '#FF0000',
+        paths: [yellowZoneCoords, greenZoneCoords],
+        strokeColor: '#FFF000',
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#FFFF00',
+        fillColor: '#e0d24c',
         fillOpacity: 0.35,
       });
   
@@ -99,7 +116,7 @@ export class MapComponent {
         strokeColor: '#00FF00',
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#00FF00',
+        fillColor: '#20ee64',
         fillOpacity: 0.35,
       });
 

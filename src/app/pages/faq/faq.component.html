@@ -1,1 +1,97 @@
-<p>faq works!</p>
+<div class="content">
+
+    <div class="header">
+      <div class="header__bg">
+    
+      </div>
+      <div class="container">
+        
+        <div>
+          <section class="employee">
+            <img alt="" class="employee__photo" src="assets/faq/mapizza.jpg">
+            <div class="employee__descr">
+              <p class="employee__descr__name"> MA Delivery </p>
+              <small class="employee__descr__position">administrator</small>
+            </div>
+          </section>
+        </div>
+          <div>
+            <section class="message-to-user">
+              <p _ngcontent-c12="" class="message-to-user__text">
+                If you have any comments or wishes regarding the quality of food or service, please leave a review.
+              </p>
+              <p class="message-to-user__required">
+                * Fields with asterisks are mandatory
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="container-form">
+            <section class="rating">
+                <form id="form"  [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+                  <section class="rating-card">
+                    <div class="card-block">
+                        <h1 class="rating-card__title">General impression*</h1>
+                        <ng-container *ngIf="!feedbackForm.get('stars')?.value && isValid">
+                          <span class="not-valid-tip">Choose the general impression </span>
+                        </ng-container>                        
+                        <ul class="rating-card__list">
+                            <li class="rating-card__list__item star"  *ngFor="let star of stars" (click)="rate(star)"  [ngClass]="{'filled': star?.star <= selectedStars}">
+                                <label>
+                                    <svg class="star-ico" fill="#e6e7ea" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                                        <path [ngClass]="{'fill': star.star <= selectedStars}"  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
+                                        <linearGradient id="StarGradient0">
+                                            <stop offset="0%" stop-color="#FC8885"></stop>
+                                            <stop offset="100%" stop-color="#FB7C7F"></stop>
+                                        </linearGradient>
+                                    </svg>
+                                    <div>{{star.text}}</div>
+                                </label>
+                            </li>                      
+                        </ul>                                  
+                      <section class="comment" id="comment-block">
+                        <textarea formControlName="comment" autosize="" class="textarea comment__field" id="comment" name="comment" rows="1" placeholder="Add a comment*"  [class.input-empty]="feedbackForm.get('comment')?.invalid && isValid">  
+                        </textarea>
+                        <ng-container *ngIf="feedbackForm.get('comment')?.invalid && isValid">
+                            <span class="not-valid-tip">Add a comment </span>
+                          </ng-container>                       
+                      </section>
+                      <section class="btns-block">
+                        <ng-container *ngIf="!isUploaded">
+                        <div class="mb-2">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="formFile" accept=".pdf,.xlsx,.xls,.doc,.docx,.jpeg,.jpg,.png" (change)="upload($event)">
+                        </div>
+                      
+                    </ng-container>
+                        <ng-container *ngIf="isUploaded">
+                        <div class="img-btn">
+                          
+                            <div class="file_name"> {{ file?.name | slice:0:20}}</div>
+                          
+                            <img [src]="valueByControl('imagePath')" width="70px" alt="">                        
+                            <button type="button" class="btn-exit" (click)="deleteImage()">delete</button>
+                            
+                        </div>
+                    </ng-container>
+
+                   
+                      </section>
+                      <div class="submit">
+                            <button class="btn btn-danger mt-3" type="submit" > Send </button>
+                            <!-- [disabled]="feedbackForm.invalid" -->
+                            <p class="submit__description"> By clicking the "Send" button, you agree to 
+                                <a href="/terms">the terms of the agreement</a>
+                            </p>
+                        </div>
+                      </div>  
+                     
+                    
+                  </section>  
+                 
+                </form>
+            </section>             
+    </div>
+    
