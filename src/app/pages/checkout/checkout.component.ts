@@ -65,6 +65,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   public countActionProduct!: number;
   public defaultAddress!: string;
   public isSelectAddress: boolean = false;
+  public fullAddress: string = '';
 
 
   constructor(
@@ -162,6 +163,19 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     this.getTotalPrice();
     this.getMinPrice();   
     this.getAction();
+  }
+
+  handleAddressFound(event: any) {
+    if (event) {
+      console.log('Address found:', event);
+    } else {
+      console.log('Address not found');
+    }
+  }
+
+  onSubmitAddress() {
+    //this.fullAddress = `${this.street} ${this.house}, ${this.flat ? this.flat + ', ' : ''}${this.city}, Vienna`;
+    this.fullAddress =  this.orderForm.get('street')?.value + ', '+ this.orderForm.get('house')?.value + ' Vienna';
   }
 
   getMinPrice(): void {

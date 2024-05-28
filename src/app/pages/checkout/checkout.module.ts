@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CheckoutComponent } from './checkout.component';
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { DeliveryModule } from '../delivery/delivery.module';
 
 
 
@@ -13,7 +14,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     CheckoutRoutingModule,
-    SharedModule
+    SharedModule,
+    DeliveryModule
   ]
 })
 export class CheckoutModule { }
