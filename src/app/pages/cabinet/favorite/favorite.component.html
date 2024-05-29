@@ -26,7 +26,7 @@
         </td>
         <td (click)="ingredientClick()" *ngIf="!isFullText">{{ product.ingredients| slice:0:75 }} <span *ngIf="product.ingredients">...</span></td>
         <td (click)="ingredientClick()" *ngIf="isFullText">{{ product.ingredients }}</td>
-        <td class="status"> <b>{{ product.price }} </b> грн</td>
+        <td class="status"> <b>{{ product.price }} </b> €</td>
       </tr>
   
       </tbody>

@@ -7,6 +7,7 @@ import { ImageService } from '../../shared/services/image/image.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthDialogComponent } from '../../components/auth-dialog/auth-dialog.component';
 import { AlertDialogComponent } from '../../components/alert-dialog/alert-dialog.component';
+import { TermsDialogComponent } from '../../components/terms-dialog/terms-dialog.component';
 
 @Component({
   selector: 'app-faq',
@@ -20,7 +21,7 @@ export class FaqComponent implements OnInit{
   public isUploaded: boolean = false;
   public file!: any;
   public isLogin: boolean = false;
-  public isValid = false;
+  public isValid = false;  
   public stars: any[] = [
     {star: 2, text: "Terribly"},
     {star: 3, text: "Bad"},
@@ -140,6 +141,16 @@ valueByControl(control: string): string {
     })
   }
 
+  termsClick(): void {
+    this.dialog.open(TermsDialogComponent, {
+      backdropClass: 'dialog-back',
+          panelClass: 'terms-dialog',
+          autoFocus: false,
+          maxWidth: '100vw',         
+        }).afterClosed().subscribe(result => {
+          console.log(result);          
+        })
+  }
   
 }
 

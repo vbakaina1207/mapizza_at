@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AccountService } from '../../shared/services/account/account.service';
-import { OrderService } from '../../shared/services/order/order.service';
 
 
 
@@ -16,9 +13,6 @@ export class CabinetComponent implements OnInit {
     public title: string = 'Особисті дані';
 
   constructor(
-    /* private router: Router,
-    private accountService: AccountService,
-    private orderService: OrderService */
   ) { }
 
   ngOnInit() {

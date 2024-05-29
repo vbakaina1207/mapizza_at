@@ -24,14 +24,16 @@ export class HistoryComponent implements OnInit {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
         this.loadUser();
-        this.getOrders();
-
+        this.getOrders();        
       }
     })
   }
 
   ngOnInit() {
-
+    this.loadUser();
+    if (this.currentUser) {
+      this.getOrders();
+    }
   }
 
   getOrders(): void {
@@ -45,4 +47,7 @@ export class HistoryComponent implements OnInit {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
     }
   }
+
+
+
 }

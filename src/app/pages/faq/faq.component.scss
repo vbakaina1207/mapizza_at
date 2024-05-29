@@ -252,8 +252,7 @@ a {
 
 .btn {
     display: block;
-    width: 100%;
-    // height: 56px;
+    width: 100%;    
     line-height: 56px;
     background: 0 0;
     border: none;
@@ -306,4 +305,14 @@ a {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.terms{
+    font-style: italic;
+    text-decoration: underline !important;
+    font-weight: 600;
+
+    &:hover{
+        text-decoration: none !important;
+    }
 }

@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Injectable, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
-import { ToastrService } from 'ngx-toastr/toastr/toastr.service';
-import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { ToastService } from '../../shared/services/toast/toast.service';
+import { ActivatedRoute } from '@angular/router';
+import { AccountService } from '../../shared/services/account/account.service';
 
 
 @Component({
@@ -17,14 +17,13 @@ export class MapComponent implements OnInit{
 
   constructor(
     private dialog: MatDialog,
-    private toastr: ToastService
+    private toastr: ToastService,
+    private route: ActivatedRoute,
+    private accountService: AccountService
   ){}
 
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
-  //@ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
-  @Input() searchAddress: string = '';
-  @Output() addressFound = new EventEmitter<boolean>();
-
+  
 
   center: google.maps.LatLngLiteral = { lat: 48.2082, lng: 16.3738 };
   zoom = 9;
@@ -36,15 +35,16 @@ export class MapComponent implements OnInit{
   map!: google.maps.Map;
 //.AdvancedMarkerElement
 
-
   yellowZone: google.maps.Polygon | undefined;
   greenZone: google.maps.Polygon | undefined;
 
-  //searchAddress: string = '';
+  searchAddress: string = '';
 
   geocoder = new google.maps.Geocoder();
 
-  loading = false;
+  isCheckout: boolean = false;
+
+  /* loading = false;
 
   mapCenter!: google.maps.LatLng;
 
@@ -53,10 +53,14 @@ export class MapComponent implements OnInit{
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     animation: google.maps.Animation.DROP,
-  };
+  }; */
 
   ngOnInit(): void {
-    this.getCurrentLocation();
+    this.initForm();
+    
+    this.accountService.address$.subscribe((address) => {
+      this.searchLocation(address);
+    })
   }
 
 
@@ -70,14 +74,6 @@ export class MapComponent implements OnInit{
   
       this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
 
-      /* const marker = new google.maps.marker.AdvancedMarkerElement({
-        position: { lat: 49.834338, lng: 23.984174 },
-        map: this.map, 
-        title: 'Marker Title', // Other options like icon, animation, etc. can be added here
-      }); */
-
-     
-
       const greenZoneCoords: google.maps.LatLngLiteral[] = [
         { lat: 48.37035019551224, lng: 16.115671899180775 },
         { lat: 48.21593885751787, lng: 15.908304976567395 },
@@ -89,8 +85,6 @@ export class MapComponent implements OnInit{
         { lat: 48.39771169675444, lng: 16.710306851104914 },
         { lat: 48.57156841881332, lng: 16.33402515046871 }
       ];
-
-     
 
       const yellowZoneCoords: google.maps.LatLngLiteral[] = [
         { lat: 47.79051304150198, lng: 16.231028336112445 },
@@ -109,9 +103,7 @@ export class MapComponent implements OnInit{
         { lat: 47.82095111990034, lng: 15.926157761144431 },
         { lat: 47.79051304150198, lng: 16.231028336112445 }
       ];
-      
-
-      
+            
       this.geocoder = new google.maps.Geocoder();
 
       this.yellowZone = new google.maps.Polygon({
@@ -141,19 +133,16 @@ export class MapComponent implements OnInit{
   
       this.map.addListener('mousemove', (event: google.maps.MapMouseEvent) => {
         this.move(event);
-      });
-
-      
-      
+      });            
     }
   }
 
- /*  openInfoWindow(marker: MapMarker) {
-    this.infoWindow.open(marker);
-  } */
   
-  onMapReady(map: google.maps.Map) {
-    this.map = map;
+  initForm(): void{
+    console.log(this.route.component?.name);
+    if ( this.route.component?.name === '_DeliveryComponent') {
+      this.isCheckout = true;
+    }    
   }
 
   
@@ -166,11 +155,9 @@ export class MapComponent implements OnInit{
   }
 
  
-  searchLocation() {
-    
-    this.getCurrentLocation();
-    if (this.searchAddress) {
-      const addressString = this.searchAddress + ', Vienna';//
+  searchLocation(address: string) {  
+    if (address) {
+      const addressString = address + ', Vienna';//
       const geocoderRequest: google.maps.GeocoderRequest = {
         address: addressString,
         region: 'at'
@@ -179,19 +166,16 @@ export class MapComponent implements OnInit{
       this.geocoder.geocode(geocoderRequest, async (results, status) => {
         console.log('Geocode status:', status);
         if (status === 'OK' && results && results.length > 0) {
-
-          const location = results[0].geometry.location;
-          //const types = results[0].types;
-          
-/* 
-          const isPreciseAddress = types.includes('street_address') || types.includes('premise');
-          console.log(location.lat(), location.lng(), types, isPreciseAddress), ' - location';
-          if (!isPreciseAddress) {
-            console.error('Адрес не является точным: ', this.searchAddress);           
+          const validResult = results.find(result => {
+            return result.types.includes('street_address') || result.types.includes('premise');
+          });
+  
+          if (!validResult) {
+            this.showErrorDialog('Invalid address. Enter the exact address with the house number.');
             return;
-          } */
-          
-          //const location = results[0].geometry.location;
+          }
+
+          const location = results[0].geometry.location;          
           const lat = location.lat();
           const lng = location.lng();        
           if (this.searchMarker) {
@@ -210,18 +194,14 @@ export class MapComponent implements OnInit{
           this.lng = lng;
           this.map.set('zoom', 16);
           this.map.setCenter({ lat: lat, lng: lng });
-          
-
-          /* let position = this.searchMarker.getPosition();
-          console.log(position, 'posotion'); */
-        
+                
           this.checkDeliveryZone({ lat, lng });
 
-        } else if (status === 'ZERO_RESULTS') {
-          console.error('No results found for the address:', this.searchAddress);          
-        } else {
-          console.error('Geocode was not successful for the following reason:', status);         
-        }
+        } 
+        else {
+          this.showErrorDialog('No results found for the address.');
+          this.accountService.setZoneStatus(false, false);
+        }        
       });
     }
   }
@@ -229,35 +209,39 @@ export class MapComponent implements OnInit{
 
   checkDeliveryZone(location: google.maps.LatLngLiteral) {    
     const latLng = new google.maps.LatLng(location);
-          const isInGreenZone = google.maps.geometry.poly.containsLocation(latLng, this.greenZone!);
-          const isInYellowZone = google.maps.geometry.poly.containsLocation(latLng, this.yellowZone!);
-          let message = "";
-          if (isInGreenZone) {
-            message = 'Address in the green delivery zone';
-          } else if (isInYellowZone) {
-            message = 'Address in the yellow delivery zone';
-          } else {
-            message = 'The address is not in the delivery zone';
-          }   
-          this.dialog.open(AlertDialogComponent, {
-            backdropClass: 'dialog-back',
-            panelClass: 'alert-dialog',
-            autoFocus: false,
-            data: {
-              message: message,
-              icon: '',
-              isError: false
-            }
-          });
-        this.toastr.showSuccess('', message);        
-        this.addressFound.emit(isInGreenZone || isInYellowZone);
+    const isInGreenZone = google.maps.geometry.poly.containsLocation(latLng, this.greenZone!);
+    const isInYellowZone = google.maps.geometry.poly.containsLocation(latLng, this.yellowZone!);
+    let message = "";
+    if (isInGreenZone) {
+      message = 'Address in the green delivery zone';
+    } else if (isInYellowZone) {
+      message = 'Address in the yellow delivery zone';
+    } else {
+      message = 'The address is not in the delivery zone';
+    }   
+    this.showErrorDialog(message);   
+    this.accountService.setZoneStatus(isInGreenZone, isInYellowZone);      
+  }
+
+
+  showErrorDialog(message: string): void {
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: message,      
+      }
+    });
+  this.toastr.showSuccess('', message);     
+
   }
   /* 
   KEY_API = 'AIzaSyCiZNf5DEW6DRxd6trod-rMuH7gLuRBtIs';
   //AIzaSyCiZNf5DEW6DRxd6trod-rMuH7gLuRBtIs
 */
 
-getCurrentLocation() {
+/* getCurrentLocation() {
   this.loading = true;
 
   navigator.geolocation.getCurrentPosition(
@@ -297,6 +281,6 @@ getCurrentLocation() {
     },
     { enableHighAccuracy: true,  }
   );
-}
+} */
 }
 

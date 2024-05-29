@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { DeliveryComponent } from './delivery.component';
 import { DeliveryRoutingModule } from './delivery-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { MapComponent } from '../../components/map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MapModule } from '../../components/map/map.module';
 
 
 @NgModule({
   declarations: [
-    DeliveryComponent,
-    MapComponent
+    DeliveryComponent,    
   ],
-  
+  exports: [
+    MapModule
+  ],
   imports: [
     CommonModule,
     DeliveryRoutingModule,
     SharedModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MapModule
   ]
 })
 export class DeliveryModule { }

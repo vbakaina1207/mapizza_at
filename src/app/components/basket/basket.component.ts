@@ -72,31 +72,6 @@ public total = 0;
     this.addToBasket(product, value);
   }
 
-  /* addToBasket(product: IProductResponse, value: boolean): void {
-    let basket: Array<IProductResponse> = [];
-    if(localStorage?.length > 0 && localStorage.getItem('basket')){
-      basket = JSON.parse(localStorage.getItem('basket') as string);
-      if(basket.some(prod => prod.id === product.id)){
-        product.selected_addition.forEach(function (item) {
-          if(basket.some(prodAdd => prodAdd.id === item.id)) {
-
-          }
-          //product.addition_price += Number(item.price);
-        });
-        const index = basket.findIndex(prod => prod.id === product.id && prod.selected_addition.id);
-        if (value) basket[index].count += 1;
-        if (!value && basket[index].count > 1) basket[index].count -= 1;
-      } else {
-        basket.push(product);
-      }
-    } else {
-      basket.push(product);
-    }
-    localStorage.setItem('basket', JSON.stringify(basket));
-    product.count = 1;
-    this.orderService.changeBasket.next(true);
-  }
- */
 
   addToBasket(product: IProductResponse, value: boolean): void {
     let basket: Array<IProductResponse> = [];
@@ -122,7 +97,7 @@ public total = 0;
 }
 
 // Function to check if the selected additions of two products are equal
-areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: Array<ITypeAdditionResponse>): boolean {
+    areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: Array<ITypeAdditionResponse>): boolean {
     // Sort the additions arrays to ensure consistent comparison
     const sortedAdditions1 = additions1.slice().sort();
     const sortedAdditions2 = additions2.slice().sort();
@@ -171,25 +146,7 @@ areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: 
   }
 
 
-  /* additionDeleteClick(product: IProductResponse, additionName: any): void {
-    for (let i = 0; i < product.selected_addition.length; i++) {
-      if (product.selected_addition[i].name == additionName) {
-        product.addition_price = product.addition_price - Number(product.selected_addition[i].price);
-        product.selected_addition.splice(i, 1);
-        if(localStorage?.length > 0 && localStorage.getItem('basket')){
-          let basket = JSON.parse(localStorage.getItem('basket') as string);
-          if(basket.some((prod: { id: string | number; }) => prod.id === product.id)){
-            const index = basket.findIndex((prod: { id: string | number; }) => prod.id === product.id);
-            basket.splice(index,1);
-            basket.push(product);
-          }
-        localStorage.setItem('basket', JSON.stringify(basket));
-          this.orderService.changeBasket.next(true);
-      }
-    }
-    }
-  } */
-
+  
   additionDeleteClick(product: IProductResponse, additionName: any): void {
     if(localStorage?.length > 0 && localStorage.getItem('basket')){
       let basket = JSON.parse(localStorage.getItem('basket') as string);

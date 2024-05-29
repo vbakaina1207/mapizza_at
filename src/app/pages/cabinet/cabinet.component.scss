@@ -108,6 +108,10 @@ button{
     transition: $transition;
 
 }
+.categories-list-item .route-active button{
+    background-color: $clr-secondary;
+    color: $clr-white;
+}
 
 
 @media screen and (max-width: 1730px) {
@@ -126,7 +130,7 @@ button{
         margin: -10px auto 20px auto;
     }
 
-    .route-active button{
+    .categories-list-item .route-active button{
         background-color: $clr-secondary;
         color: $clr-white;
     }

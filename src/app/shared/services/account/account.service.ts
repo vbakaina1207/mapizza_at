@@ -16,6 +16,10 @@ export class AccountService {
     public changeAddress = new Subject<boolean>();
     public changeCurrentUser = new Subject<boolean>();  
     public changeFavorite = new Subject<boolean>();
+    public searchAddress = new Subject<string>();
+    address$ = this.searchAddress.asObservable();
+    private zoneStatus = new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>();
+    zoneStatus$ = this.zoneStatus.asObservable();    
     public index!: number;
     public isEdit!: boolean;
     public userAddress = [];
@@ -29,11 +33,22 @@ export class AccountService {
 
     constructor(
         private http: HttpClient
-    ) { }
+    ) {}
 
     login(credential: ILogin): Observable<any> {
         return this.http.get(`${this.api.auth}?email=${credential.email}&password=${credential.password}`)
     }
 
+    updateAddress(address: string) {
+        this.searchAddress.next(address);
+    }
+    
+    setAddress(address: string) {
+        this.searchAddress.next(address);
+    }
+
+    setZoneStatus(isGreenZone: boolean, isYellowZone: boolean) {
+        this.zoneStatus.next({ isGreenZone, isYellowZone });
+    }
 
 }

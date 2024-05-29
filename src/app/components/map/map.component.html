@@ -1,14 +1,10 @@
 <div class="container">
-  <div class="form">
+  <div class="form" *ngIf="isCheckout">   
     <input class="input" type="text" placeholder="Enter an address" [(ngModel)]="searchAddress">
-    <button type="button" class="butn btn-primar" (click)="searchLocation()">Search</button>
+    <button type="button" class="butn btn-primar" (click)="searchLocation(searchAddress)">Search</button>
   </div>
   <div #mapContainer style="height: 650px; width: 100%;">
 </div>
-<!-- 
-<div>
-  <div>Latitude: {{display?.lat}}</div>
-  <div>Longitude: {{display?.lng}}</div>
-</div> -->
+
 
 

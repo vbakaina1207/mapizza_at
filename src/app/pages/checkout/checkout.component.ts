@@ -12,6 +12,7 @@ import { ITypeAdditionResponse } from '../../shared/interfaces/type-addition/typ
 import { AlertDialogComponent } from '../../components/alert-dialog/alert-dialog.component';
 import { AuthDialogComponent } from '../../components/auth-dialog/auth-dialog.component';
 import { ArrayType } from '@angular/compiler';
+import { AccountService } from '../../shared/services/account/account.service';
 
 /* import $ from 'jquery';
 import 'sumoselect'; */
@@ -66,6 +67,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   public defaultAddress!: string;
   public isSelectAddress: boolean = false;
   public fullAddress: string = '';
+  public isInGreenZone: boolean = false;
+  public isInYellowZone: boolean = false;
 
 
   constructor(
@@ -74,7 +77,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     private toastr: ToastService,
     private router: Router,
     private afs: Firestore,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private accountService: AccountService
     ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
@@ -165,22 +169,34 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     this.getAction();
   }
 
-  handleAddressFound(event: any) {
+  /* handleAddressFound(event: any) {
     if (event) {
       console.log('Address found:', event);
     } else {
       console.log('Address not found');
     }
-  }
+  } */
 
   onSubmitAddress() {
     //this.fullAddress = `${this.street} ${this.house}, ${this.flat ? this.flat + ', ' : ''}${this.city}, Vienna`;
     this.fullAddress =  this.orderForm.get('street')?.value + ', '+ this.orderForm.get('house')?.value + ' Vienna';
+    this.accountService.updateAddress(this.fullAddress);
+    this.getZoneStatus();
+    //const selectedAddress = event.target.value;
+    //this.accountService.setAddress(this.fullAddress);
   }
+
+  getZoneStatus():void {
+    this.accountService.zoneStatus$.subscribe(status => {
+      this.isInGreenZone = status.isGreenZone;
+      this.isInYellowZone = status.isYellowZone;
+    });
+  }
+
 
   getMinPrice(): void {
     this.sum_order = this.total;
-    this.sum_delivery = (this.total >= 50) ? 0 : 20;
+    this.sum_delivery = ((this.total >= 50 && this.isInYellowZone) || (this.total >= 40 && this.isInGreenZone)) ? 0 : ((this.total < 50 && this.isInYellowZone) ? 30 : (this.total < 40 && this.isInGreenZone) ? 20 : 0);  
     this.pizzaCount = this.basket.filter(el => el.category.path === 'pizza')?.reduce((count: number, el: IProductResponse) => count + el.count, 0);   
     let priceArr: Array<number> = [];
     if (this.pizzaCount > 0) {
@@ -374,15 +390,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   
 
 setDefaultAddress():void {
-   let addr = this.address[0]; 
-   /*   this.select_address = [
-        addr.city,
-        addr.street,
-        addr.house,
-        String(addr.flat),
-        addr.entrance,
-        String(addr.floor)
-      ];*/
+   let addr = this.address[0];    
       this.orderForm.patchValue({
         city: addr.city|| '',
         street: addr.street || '',
@@ -566,8 +574,8 @@ setDefaultAddress():void {
       this.sum_delivery = 0;
       this.isCourier = false;
     } else {      
-      this.orderForm.patchValue({ 'action': '' });
-      this.sum_delivery = (this.total >= 50) ? 20 : 0;    
+      this.orderForm.patchValue({ 'action': '' });       
+      this.sum_delivery = ((this.total >= 50 && this.isInYellowZone) || (this.total >= 40 && this.isInGreenZone)) ? 0 : ((this.total < 50 && this.isInYellowZone) ? 30 : (this.total < 40 && this.isInGreenZone) ? 20 : 0);  
       this.isCourier = true;      
     }
     this.actionClick();

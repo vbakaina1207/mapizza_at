@@ -26,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimations } from '@angular/platform-browser/animations';
-//import { MapComponent } from './components/map/map.component';
+import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.component';
 
 
 
@@ -40,7 +40,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
       AuthAddressComponent,
       AuthAdditionComponent,
       BasketComponent,
-      AlertDialogComponent
+      AlertDialogComponent,
+      TermsDialogComponent
   ],
   imports: [
     BrowserModule,

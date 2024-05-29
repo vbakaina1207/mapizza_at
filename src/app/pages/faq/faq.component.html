@@ -80,10 +80,9 @@
                    
                       </section>
                       <div class="submit">
-                            <button class="btn btn-danger mt-3" type="submit" > Send </button>
-                            <!-- [disabled]="feedbackForm.invalid" -->
+                            <button class="btn btn-danger mt-3" type="submit" > Send </button>                          
                             <p class="submit__description"> By clicking the "Send" button, you agree to 
-                                <a href="/terms">the terms of the agreement</a>
+                                <a class="terms" (click)="termsClick()">the terms of the agreement</a>
                             </p>
                         </div>
                       </div>  
@@ -92,6 +91,7 @@
                   </section>  
                  
                 </form>
-            </section>             
+            </section>        
+                        
     </div>
     
