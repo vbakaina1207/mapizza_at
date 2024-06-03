@@ -1,0 +1,79 @@
+
+<div class="row ms-3">
+    <ng-container *ngIf="isAdd">
+          <div class="col-10">
+              <form [formGroup]="vacancyForm" (ngSubmit)="addVacancy()">
+                  <button [disabled]="vacancyForm.invalid"  type="submit" class="btn-add">
+                      {{ editStatus ? 'Change vacancy' : 'Add vacancy' }}
+                  </button>
+                  <div class=" d-flex flex-row justify-content-between">
+                      <div class="col-5 mb-3">
+                          <input formControlName="name" name="name" type="text" class="form-control" id="name" placeholder="*Name">
+                      </div>
+                      <div class="col-6 mb-3">
+                          <input formControlName="path" name="path" type="text" class="form-control" id="path" placeholder="*Path">
+                          <div class="invalid-feedback">Path is required</div>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <textarea formControlName="description" name="description" type="text" class="form-control" placeholder="*Description"></textarea>
+                  </div>
+                  <ng-container *ngIf="!isUploaded">
+                      <div class="mb-3">
+                          <label for="formFile" class="form-label">Default file input example</label>
+                          <input class="form-control" type="file" id="formFile" (change)="upload($event)">
+                      </div>
+                      <div class="progress mb-3">
+                          <div class="progress-bar progress-bar-striped" role="progressbar"
+                              [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100">
+                          </div>
+                          </div>
+                  </ng-container>
+                  <ng-container *ngIf="isUploaded">
+                      <div>
+                          <img [src]="valueByControl('imagePath')" width="100px" alt="">
+                      </div>
+                      <div>
+                          <button type="button" class="btn-exit mt-3" (click)="deleteImage()">delete</button>
+                      </div>
+                  </ng-container>
+              </form>
+          </div>
+      </ng-container>
+  
+      <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Add a vacancy</button>
+          <div class="table-responsive d-flex justify-center col-12"  *ngIf="!isAdd">
+          <table class="table col">
+              <thead class="table-category">
+                  <tr>  
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Path</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let vacancy of adminVacancy; let id=index">
+                      <td>№ {{ id+1 }}</td>
+                      <td>{{ vacancy.name }}</td>
+                      <td>{{ vacancy.path }}</td>
+                      <td>{{ vacancy.description | slice:0:105 }} <span *ngIf="vacancy.description.length > 105">...</span></td>
+                      <td>
+                          <img [src]="vacancy.imagePath" alt="" height="50px">
+                      </td>
+                      <td>
+                          <button (click)="editDiscount(vacancy)" type="button" class="btn">Edit</button>
+                          <p>
+                              <button [disabled]="editStatus" (click)="deleteDiscount(vacancy)" type="button" class="btn">Delete</button>
+                          </p>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+  
+  
+  

@@ -1,0 +1,55 @@
+@import '../../../shared/styles/fonts';
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+p{
+    white-space: pre-wrap;
+}
+
+.recruiter-wrap {
+    border-bottom: 1px solid $clr-border;
+    padding-bottom: 30px;
+    margin-bottom: 25px;
+}
+
+.recruiter {
+    display: flex;
+}
+
+.recruiter-img {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-right: 16px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.recruiter-info {
+    text-align-last: left;
+    align-self: center;
+
+    & .caption {
+    color: $clr-grey;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4em;
+    }
+
+    & .title {
+        margin-bottom: 0;
+    }
+}
+
+
+.prom-detail-section .decor-img, .promotions .decor-img {
+    position: absolute;
+    max-width: 230px;
+    max-height: 230px;
+}
+
+@media screen and (max-width: 1199px){
+    .prom-detail-section .decor-img, .promotions .decor-img {
+        display: none;
+    }
+}

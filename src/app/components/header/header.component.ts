@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
     this.checkUserLogin();
     this.checkUpdatesUserLogin();
     this.loadFavorite();
-    this.updateFavorite();
+    this.updateFavorite();    
   }
 
 
@@ -144,7 +144,7 @@ export class HeaderComponent implements OnInit {
   }
 
   mobileMenuOpen(): void {
-    this.isOpenMobileMenu = !this.isOpenMobileMenu;
+    this.isOpenMobileMenu = !this.isOpenMobileMenu;   
   }
 
   logout(): void {

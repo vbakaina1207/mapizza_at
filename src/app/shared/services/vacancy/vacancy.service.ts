@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CollectionReference, DocumentData, Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, updateDoc } from '@angular/fire/firestore';
 import { IVacancyRequest } from '../../interfaces/vacancy/vacancy.interface';
 
+
 @Injectable({
     providedIn: 'root'
 })

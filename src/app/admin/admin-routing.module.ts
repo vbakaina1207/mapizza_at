@@ -8,6 +8,7 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminDiscountComponent } from './admin-discount/admin-discount.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,7 @@ export const routes: Routes = [
           { path: 'product', component: AdminProductComponent },
           { path: 'discount', component: AdminDiscountComponent },
           { path: 'order', component: AdminOrdersComponent },
+          { path: 'vacancy', component: AdminVacancyComponent },
           { path: '', pathMatch: 'full', redirectTo: 'discount' }
         ]
       } 

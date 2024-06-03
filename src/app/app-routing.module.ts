@@ -21,7 +21,11 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule)
+    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule)    
+  },
+  {
+    path: 'vacancy',
+    loadChildren: () => import('./pages/vacancy/vacancy.module').then(m => m.VacancyModule)
   },
   {
     path: 'contact',

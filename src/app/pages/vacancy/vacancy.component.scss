@@ -1,0 +1,223 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+
+.vacancy {
+    position: relative;
+
+    & .decor-img {
+        position: absolute;
+        z-index: -1;
+        max-width: 230px;
+        max-height: 230px;
+    }
+}
+
+.advantages-row {
+    margin-bottom: -30px;
+}
+
+.advantages-row>[class*=col] {
+    margin-bottom: 30px;
+}
+
+.swiper-entry {
+    position: relative;
+}
+.hide-on-desktop {
+    display: none;
+}
+
+.benefits-item.type-2 {
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    box-shadow: 20px 20px 0px $clr-shadow;
+    border-radius: 16px;
+    padding: 30px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & .title {
+        margin-bottom: 0;
+    }
+
+    & .benefits-img {
+        margin-bottom: 0;
+        margin-right: 15px;
+
+        & img {
+            max-width: 48px;
+            max-height: 48px;
+        }
+    }
+}
+
+.swiper-container.swiper-initialized {
+    opacity: 1;
+}
+.swiper-container {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+}
+.swiper-autoheight, .swiper-autoheight .swiper-slide {
+    height: auto;
+}
+.swiper-pointer-events {
+    touch-action: pan-y;
+}
+// .swiper-container {
+//     opacity: 0;
+//     transition: $transition;
+// }
+
+.vacancy-img {
+    display: block;
+    position: relative;
+    padding-top: 57%;
+    border-radius: 16px;
+    overflow: hidden;
+
+    & img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: $transition;
+    }
+}
+
+.vacancy-item>*+* {
+    margin-top: 10px;
+}
+
+.text-cut-2 {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.carousel-indicators [data-bs-target] {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	border: 1px solid $clr-grey;
+}
+
+.carousel-indicators {
+
+	.active {
+    	background-color: $clr-secondary;
+    	border-color: $clr-secondary;
+	}
+}
+.swiper-autoheight .swiper-slide {
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.advantages-item {
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    box-shadow: 20px 20px 0px $clr-shadow;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.advantages-img {
+    position: relative;
+    padding-top: 57%;
+
+    & img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+}
+
+.advantages-info {
+    text-align: center;
+    padding: 15px 5px 20px;
+}
+
+@media screen and (max-width: 1730px){
+    .vacancy-row {
+        --bs-gutter-x: 30px;
+        margin-top: 40px;
+        margin-bottom: -30px;
+    }
+
+    .vacancy-row>[class*=col] {
+        margin-bottom: 30px;
+    }
+}
+
+
+@media screen and (max-width: 1400px){
+    .benefits-item.type-2 {
+        padding: 15px 10px;
+
+        & .benefits-img {
+            margin-right: 10px;
+
+            & img {
+                max-width: 36px;
+                max-height: 36px;
+            }
+        }
+    }
+
+    .advantages-info {
+        padding: 10px 5px 15px;
+    }
+}
+
+
+@media screen and (max-width: 1199px){
+    .vacancy .decor-img {
+        display: none;
+    }
+
+    .advantages-item {
+        box-shadow: none;
+    }
+}
+
+@media (min-width: 1200px){
+    .vacancy-item a:hover {
+        color: $clr-primary;
+    }
+
+    .vacancy-img:hover img {
+        transform: scale(1.05);
+    }
+}
+
+@media screen and (max-width: 767px){
+    .benefits-item.type-2 {
+        box-shadow: none;
+    }
+
+    .hide-on-mobile {
+        display: none;
+    }
+    .hide-on-desktop {
+        display: block;
+    }
+
+    
+    .vacancy-item>*+* {
+        margin-top: 5px;
+    }
+}

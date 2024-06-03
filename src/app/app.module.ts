@@ -31,6 +31,7 @@ import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.com
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,7 @@ import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.com
       AuthAdditionComponent,
       BasketComponent,
       AlertDialogComponent,
-      TermsDialogComponent
+      TermsDialogComponent,
   ],
   imports: [
     BrowserModule,

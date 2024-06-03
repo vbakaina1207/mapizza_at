@@ -19,7 +19,7 @@ import { ToastService } from '../../shared/services/toast/toast.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, */ OnDestroy {
+export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, */AfterViewInit, OnDestroy {
 
   public userProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
@@ -62,10 +62,20 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
   }
 
   ngOnInit(): void {
-      this.loadProducts();
-      this.getTypeProducts();   
+      /* this.loadProducts();
+      this.getTypeProducts();    */
       this.loadFavoriteProducts();
-      this.loadUser();       
+      //this.loadUser();       
+  }
+
+  ngAfterViewInit(): void {
+    /* this.loadProducts();
+    this.getTypeProducts() */;
+  }
+
+  ngAfterContentInit(): void {
+    this.loadProducts();
+    this.getTypeProducts();    
   }
 
   /* ngDoCheck(): void {
@@ -78,7 +88,7 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
 
 
-  getTypeProducts(): void {
+  private getTypeProducts(): void {
     this.productTypeService.getAllFirebase().subscribe(data => {   
       this.userTypeProducts = data as ITypeProductResponse[];
     })
@@ -86,9 +96,9 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
   
 
-  loadProducts(): void {
-    this.categoryName == 'pizza';
-    this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
+  private loadProducts(): void {
+    //this.categoryName = 'pizza';
+    this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string | 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
     let currentExtras = this.router.getCurrentNavigation()?.extras.skipLocationChange;
       this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
