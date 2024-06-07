@@ -31,10 +31,10 @@ const routes: Routes = [
     path: 'contact',
     loadChildren: () => import('./pages/contact/contact.module').then(m => m.ContactModule)
   },
- /*  {
+  {
     path: 'offerta',
     loadChildren: () => import('./pages/offerta/offerta.module').then(m => m.OffertaModule)
-  }, */
+  },
   {
     path: 'faq',
     loadChildren: () => import('./pages/faq/faq.module').then(m => m.FaqModule)
@@ -52,7 +52,11 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule)
-  }
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./pages/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule)
+  },
 ];
 
 @NgModule({

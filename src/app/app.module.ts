@@ -26,10 +26,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.component';
-
-
-
+import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.component'
 
 
 @NgModule({
@@ -42,7 +39,7 @@ import { TermsDialogComponent } from './components/terms-dialog/terms-dialog.com
       AuthAdditionComponent,
       BasketComponent,
       AlertDialogComponent,
-      TermsDialogComponent,
+      TermsDialogComponent     
   ],
   imports: [
     BrowserModule,

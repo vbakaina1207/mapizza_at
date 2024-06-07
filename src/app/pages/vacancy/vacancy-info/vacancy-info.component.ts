@@ -32,10 +32,7 @@ export class VacancyInfoComponent implements OnInit {
   public mailto = '';
   public placeholderDescription = '';
   public isAbout = false;
-  public isSocial = false;
-  public description!: string;
-  //public currentVacancy: Array<IVacancyResponse> = [];
-
+  public isSocial = false; 
   public vacancy!: IVacancyResponse;
   eventSubscription: any;
 
@@ -51,8 +48,7 @@ export class VacancyInfoComponent implements OnInit {
     private vacancyService: VacancyService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd ) {
-        this.loadVacancy();
+      if(event instanceof NavigationEnd ) {        
         this.loadMassages();
         this.activatedRoute.data.subscribe(response => {
           this.vacancy = response['vacancyInfo'];
@@ -61,9 +57,7 @@ export class VacancyInfoComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    //console.log(this.vacancy?.description);
-    console.log(this.getSanitizedDescription(this.vacancy?.description));
+  ngOnInit(): void {   
     this.initMassageForm();
     
   }
@@ -80,18 +74,13 @@ export class VacancyInfoComponent implements OnInit {
     this.isValid = false;
   }
   
-  loadVacancy(): void {
+ /*  loadVacancy(): void {
     const VACANCY_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
     this.accountService.VACANCY_ID = VACANCY_ID;
     this.vacancyService.getOneFirebase( VACANCY_ID).subscribe(data => {
-      this.vacancy = data as IVacancyResponse;
-      this.description = this.getSanitizedDescription(this.vacancy.description);
-      console.log(this.description, 'descript')
-      // console.log(this.currentNews.detail.detail[0].description)
-      // this.descrip = this.sanitizer.bypassSecurityTrustHtml(this.currentNews.detail.detail[0].description);
-      // console.log(this.descrip);
+      this.vacancy = data as IVacancyResponse;     
     });
-  }
+  } */
 
   loadMassages(): void {
     this.massageService.getAllFirebase().subscribe(data => {
@@ -99,12 +88,12 @@ export class VacancyInfoComponent implements OnInit {
     })
   }
 
-  getSanitizedDescription(description: string): string {
+  /* getSanitizedDescription(description: string): string {
     const config = { ALLOWED_TAGS: ['h2', 'strong', 'ul', 'li', 'b'] };
     const sanitized = DOMPurify.sanitize(description, config);
     console.log(sanitized); 
     return sanitized;
-  }
+  } */
   
   upload(event: any): void {
     this.file = event.target.files[0];

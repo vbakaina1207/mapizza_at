@@ -19,7 +19,7 @@ import { ToastService } from '../../shared/services/toast/toast.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, */AfterViewInit, OnDestroy {
+export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, */ OnDestroy {
 
   public userProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
@@ -54,37 +54,18 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
         this.loadProducts();
-        this.getTypeProducts();   
-        //this.loadFaviriteProducts();
+        this.getTypeProducts();           
         this.loadUser();       
       }
     })
   }
 
   ngOnInit(): void {
-      /* this.loadProducts();
-      this.getTypeProducts();    */
-      this.loadFavoriteProducts();
-      //this.loadUser();       
+      this.loadProducts();
+      this.getTypeProducts();   
+      this.loadFavoriteProducts();      
   }
 
-  ngAfterViewInit(): void {
-    /* this.loadProducts();
-    this.getTypeProducts() */;
-  }
-
-  ngAfterContentInit(): void {
-    this.loadProducts();
-    this.getTypeProducts();    
-  }
-
-  /* ngDoCheck(): void {
-    this.loadFavoriteProducts();  
-  }
-
-  ngAfterContentInit(): void {
-    this.loadFavoriteProducts();    
-  } */
 
 
 

@@ -35,6 +35,11 @@ export class VacancyComponent implements OnInit {
   }
 
 
+  getDescription(str:string):string {    
+    return str.replace(/<h2>|<\/h2>|<strong>|<\/strong>/gi, '');  
+  } 
+
+
   ngOnDestroy(): void {
     this.eventSubscription.unsubscribe();
   }

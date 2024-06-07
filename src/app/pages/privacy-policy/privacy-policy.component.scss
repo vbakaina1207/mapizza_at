@@ -1,0 +1,23 @@
+
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+
+.text a {
+    color: $clr-secondary !important;
+    border: none;
+    text-decoration: none;
+    background: linear-gradient(to bottom, transparent 0%, transparent 90%, $clr-secondary 100%);
+    background-size: 200% 100%;
+    background-position:  200% 0;
+    background-repeat: no-repeat;
+    transition: all 0.5s linear;
+}
+
+.text a:hover {
+  background-position:  100% 0;
+  color: $clr-secondary;
+}
+

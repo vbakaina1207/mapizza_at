@@ -40,7 +40,7 @@ describe('Service: Product', () => {
     // Mock productService methods
     (productService.getAllByCategoryFirebase as jasmine.Spy).and.returnValue(of([])); // Mock to return an empty observable
 
-    component.ngAfterViewInit();
+    
     expect(component.userProducts.length).toBe(0); // Assert products are empty
   });
 
