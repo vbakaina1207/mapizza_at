@@ -9,7 +9,7 @@ export interface IOrderRequest {
   date_order: Timestamp;
   total: number;
   status: boolean;
-  product: IProductResponse;
+  product: IProductResponse[];
   name: string;
   phone: string;
   email: string;
@@ -18,8 +18,8 @@ export interface IOrderRequest {
   cash: number;
   isWithoutRest: boolean;
   at_time: boolean;
-  delivery_date: string;
-  delivery_time: Date;
+  delivery_date: Date;
+  delivery_time: string;
   self_delivery_address: string;
   city: string;
   street: string;

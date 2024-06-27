@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import './app/shared/styles/fonts';
-@import './app/shared/styles/theme-material';
-@import './app/shared/styles/variables';
-@import './app/shared/styles/mixins';
+// @import 'ngx-toastr/toastr';
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import './app/shared/styles/fonts';
+// @import './app/shared/styles/_theme-material';
+@import './app/shared/styles/variables';
+@import './app/shared/styles/mixins';
+
 
 
 body{
@@ -148,7 +149,7 @@ ul, ol {
 }
 
 .ing_output.active .ing_output-clean-all,
-.added_ing-wrap .active {
+.added_ing-wrap.active {
     display: inline-flex;
 }
 
@@ -238,7 +239,7 @@ ul, ol {
 }
 
 .added_ing-wrap:before {
-    content: 'Added: ';
+    content: 'Додано: ';
     color: $clr-primary;
 }
 
@@ -355,8 +356,13 @@ ul, ol {
 
 .ingredient_action:after {
     background-image: url(./assets/icons/icon-ingredient-check.svg);
+    
 }
 
+.active-ingradient:after, .active-ingradient:before {
+    background-image: url(./assets/icons/icon-ingredient-check.svg);
+    opacity: 1;
+}
 
 .ingredient.active {
     border-color: $clr-primary;
@@ -837,7 +843,7 @@ textarea.input {
   display: inline-block;
   align-self: center;
   text-align: left;
- /*  padding: 0 35px; */
+  padding: 0 35px;
 
   & p {
     margin-bottom: 0;
@@ -1431,7 +1437,7 @@ a{
 
 @media (min-width: 992px) {
     .banner-info>* {
-        color: $clr-white !important;
+        color: $clr-white;
     }
 }
 
@@ -1502,6 +1508,9 @@ a{
     line-height: 44px;
   }
 
+  .contact-link-info {
+    font-size: 14px;
+  }
 }
 
 
@@ -1566,6 +1575,10 @@ a{
     margin: 15px 0 0;
     width: 100%;
 }
+
+.contact-link-info {
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 360px){
@@ -1576,5 +1589,5 @@ a{
 } 
 
 
-/* Importing Bootstrap SCSS file. */
+// /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

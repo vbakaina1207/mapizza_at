@@ -33,7 +33,7 @@ export class AdminProductComponent implements OnInit {
 
   public currentCategoryId!: number | string;
   public currentCategoryName = '';
-  private currentProductId!: string | number;
+  public currentProductId!: string | number;
 
   
 

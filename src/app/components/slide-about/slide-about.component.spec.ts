@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { SlideAboutComponent } from './slide-about.component';
 
@@ -9,12 +8,15 @@ describe('SlideAboutComponent', () => {
   let component: SlideAboutComponent;
   let fixture: ComponentFixture<SlideAboutComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SlideAboutComponent ]
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
+      declarations: [SlideAboutComponent],
+      schemas:[
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SlideAboutComponent);
@@ -25,4 +27,17 @@ describe('SlideAboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should apply component styles', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    const carouselComponent = compiled.querySelector('.banner-slide');
+    
+    expect(carouselComponent).toBeDefined();
+  });
+  
+  it('should initialize component without errors', () => {
+    expect(component.ngOnInit).toBeDefined();
+  });
+  
 });

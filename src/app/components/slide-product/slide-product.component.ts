@@ -50,7 +50,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     private orderService: OrderService,
     private accountService: AccountService,
     private afs: Firestore,
-    private toastr: ToastService
+    public toastr: ToastService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {

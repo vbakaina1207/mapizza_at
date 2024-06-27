@@ -37,9 +37,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private orderService: OrderService,
-    private accountService: AccountService,
+    public accountService: AccountService,
     public dialog: MatDialog,
-    private router: Router
+    public router: Router
   ) { }
 
   ngOnInit() {

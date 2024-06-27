@@ -115,7 +115,7 @@
                     <span>{{ addition ? addition.weight : undefined }}  g</span>
                     <span>{{ addition ? addition.price : undefined }}  €</span>
                   </div>
-                  <div class="ingredient_action"></div>
+                  <div class="ingredient_action" [class.active-ingradient]="activeIngredients[addition.name]"></div>
                 </div>
               </div>
             </div>

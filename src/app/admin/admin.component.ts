@@ -12,8 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class AdminComponent implements OnInit {
 
   constructor(
-    private router: Router,
-    private accountService: AccountService,
+    public router: Router,
+    public accountService: AccountService,
     private dialog: MatDialog
   ) { }
 

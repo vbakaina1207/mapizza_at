@@ -69,7 +69,7 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
 
 
-  private getTypeProducts(): void {
+  public getTypeProducts(): void {
     this.productTypeService.getAllFirebase().subscribe(data => {   
       this.userTypeProducts = data as ITypeProductResponse[];
     })
@@ -77,7 +77,7 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
   
 
-  private loadProducts(): void {
+  public loadProducts(): void {
     //this.categoryName = 'pizza';
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string | 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;

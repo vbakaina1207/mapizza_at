@@ -51,7 +51,9 @@ export class AuthAdditionComponent implements OnInit {
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
-      this.loadProduct();      
+      this.loadUser();
+      this.loadTypeAddition();
+      this.loadProduct();     
       this.activatedRoute.data.subscribe(response => {
         this.currentProduct = response['productInfo'];        
       })
@@ -123,6 +125,7 @@ export class AuthAdditionComponent implements OnInit {
           const titleText = titleElement?.textContent?.trim();
           if (titleText === additionName) {
               elem.classList.remove('active');
+              elem.querySelector('.ingredient_action')?.classList.remove('active-ingradient');
           }
       });
   }
@@ -158,10 +161,6 @@ additionClick(additionName: any): void {
 
 
 
-
-
-
-
 additionDeleteAllClick(): void {
     this.additionProduct = [];
     this.additionPrice = 0;
@@ -169,6 +168,7 @@ additionDeleteAllClick(): void {
     this.activeIngredients = {};
     document.querySelectorAll('.addition').forEach((el) => {
         el.classList.remove("active");
+        el.querySelector('.ingredient_action')?.classList.remove('active-ingradient');
     });
     this.display_addition_price = this.additionPrice.toFixed(2);
     this.currentProduct.addition_price = this.additionPrice;

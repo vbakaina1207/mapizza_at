@@ -19,7 +19,7 @@ export class AdminProductTypeComponent implements OnInit {
   public typeProductForm!: FormGroup;
   public isAdd = false;
   public editStatus = false;
-  private currentTypeProductId!: string;
+  public currentTypeProductId!: string;
   public uploadPercent!: number;
   public isUploaded = false;
 

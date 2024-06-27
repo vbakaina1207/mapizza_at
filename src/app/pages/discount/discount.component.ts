@@ -12,7 +12,7 @@ import { DiscountService } from '../../shared/services/discount/discount.service
 })
 export class DiscountComponent implements OnInit {
   public userDiscounts: Array<IDiscountResponse> = [];
-  private eventSubscription!: Subscription;
+  public eventSubscription!: Subscription;
 
   constructor(
     private discountService: DiscountService,

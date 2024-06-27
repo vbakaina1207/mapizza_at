@@ -33,7 +33,7 @@ export class PersonalComponent implements OnInit {
     private auth: Auth,
     private toast: ToastrService,
     public dialog: MatDialog,
-    private accountService: AccountService,
+    public accountService: AccountService,
     private toastr: ToastService
   ) { }
 

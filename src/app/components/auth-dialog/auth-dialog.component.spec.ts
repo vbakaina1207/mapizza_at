@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+
 
 import { AuthDialogComponent } from './auth-dialog.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -16,8 +15,8 @@ describe('AuthDialogComponent', () => {
   let component: AuthDialogComponent;
   let fixture: ComponentFixture<AuthDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AuthDialogComponent],
       imports: [
         HttpClientTestingModule,
@@ -33,7 +32,7 @@ describe('AuthDialogComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthDialogComponent);
@@ -42,6 +41,34 @@ describe('AuthDialogComponent', () => {
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('test login  #testIt()', fakeAsync (() => {
+    const spy = spyOn(component,'login').and.callThrough();
+    spy.and.returnValue(Promise.resolve({
+      credential: null,
+      user: null,
+    }));
+    component.login('admin@gmail.com','qwerty123');
+    tick();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
+    expect(component).toBeTruthy();
+  }));
+
+  it('should check confirm password', () => {
+    spyOn(component, 'checkVisibilityError').and.callThrough();
+    component.checkVisibilityError('123123', '123123');
+    expect(component).toBeTruthy();
+  });
+
+
+  it('should check confirm password', () => {
+    component.password;
+    component.confirmed;
+    spyOn(component, 'checkConfirmPassword').and.callThrough();
+    component.checkConfirmPassword();
     expect(component).toBeTruthy();
   });
 });

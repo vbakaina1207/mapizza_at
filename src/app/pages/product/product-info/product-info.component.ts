@@ -53,8 +53,8 @@ export class ProductInfoComponent implements OnInit {
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
-      this.loadProduct();
       this.loadUser();
+      this.loadProduct();      
       this.loadFavoriteProduct(); 
       this.updateFavorite();
       this.activatedRoute.data.subscribe(response => {
@@ -75,7 +75,7 @@ export class ProductInfoComponent implements OnInit {
       if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     };  
         const PRODUCT_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
-        let index = this.favorite.findIndex(prod => prod.id === PRODUCT_ID);    
+        let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
         if (index > -1) 
           this.isFavorite = true;
   }
@@ -169,9 +169,11 @@ export class ProductInfoComponent implements OnInit {
     additionClick(additionName: any): void {  
     this.activeAddition = additionName;
     let elem = document.querySelectorAll('.ingredient');
+    let elemIng = document.querySelectorAll('.ingredient_action');
     for (let i = 0; i < elem.length; i++) {
       if (this.currentProduct.type_addition[i].name == additionName) {
         elem[i]?.classList.toggle('active');
+        elemIng[i]?.classList.toggle('active-ingradient');
         if (elem[i].classList.contains('active')) {
           this.additionProduct.push(this.currentProduct.type_addition[i]);
           this.additionPrice +=  Number(this.currentProduct.type_addition[i].price);          
@@ -210,6 +212,8 @@ export class ProductInfoComponent implements OnInit {
     this.isAddition = false;
     document.querySelectorAll('.ingredient').forEach((el) =>
       el.classList.remove("active"));
+    document.querySelectorAll('.ingredient_action').forEach((el) =>
+      el.classList.remove("active-ingradient"));
     this.currentProduct.addition_price = this.additionPrice;
     this.display_addition_price = this.currentProduct.addition_price.toFixed(2);
   }

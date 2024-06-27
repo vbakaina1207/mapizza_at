@@ -1,40 +1,50 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FaqService } from './faq.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Firestore, addDoc, collectionData } from '@angular/fire/firestore';;
-import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { Firestore} from '@angular/fire/firestore';;
 import { AngularFireModule } from '@angular/fire/compat';
 
-import { FirebaseApp, FirebaseAppModule, getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from 'src/environments/environment';
-import * as firebase from 'firebase/compat';
-import { Auth } from '@angular/fire/auth';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { of } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+
 
 describe('Service: Faq', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [FaqService,
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: {} },
-        // AngularFirestoreCollection,
-        // { provide: AngularFirestoreCollection, useValue: {Document} },
-        // { provide: addDoc, useValue: {} },
-        // { provide: collectionData, useValue: {}}
+  let firestoreMock: any;
+
+  let component: FaqService;
+  let fixture: ComponentFixture<FaqService>;
+  const serviceStub = {
+    getOneFirebase: (id: string) =>
+      of({ id: id, name: '', email: '', phone:' ', stars: 4, comment: '', imagePath: '' , date_message: ''}),
+  };
+
+  beforeEach(async () => {
+    
+    firestoreMock = {
+      collection: jasmine.createSpy('collection').and.returnValue({
+        doc: jasmine.createSpy('doc').and.returnValue({
+          valueChanges: jasmine.createSpy('valueChanges').and.returnValue(of({})),
+          set: jasmine.createSpy('set').and.returnValue(Promise.resolve()),
+          update: jasmine.createSpy('update').and.returnValue(Promise.resolve()),
+          delete: jasmine.createSpy('delete').and.returnValue(Promise.resolve())
+        })
+      })
+    };
+    await TestBed.configureTestingModule({
+      providers: [
+        { provide: FaqService, useValue: serviceStub },
+        { provide: Firestore, useValue: firestoreMock },           
       ],
       imports: [
         HttpClientTestingModule,
-        
-      
-        AngularFireModule,
-        // AngularFireStorageModule,
-        // AngularFireAuthModule
-      
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule
+         
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([FaqService], (service: FaqService) => {

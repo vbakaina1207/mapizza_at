@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { ProductInfoResolver } from './product-info.resolver';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { IProductResponse } from '../../interfaces/product/product.interface';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProductService } from './product.service';
+import { IProductResponse } from '../../interfaces/product/product.interface';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 describe('ProductInfoResolver', () => {
   let productServiceMock: any;
@@ -31,4 +31,6 @@ describe('ProductInfoResolver', () => {
   it('should be created', () => {
     expect(ProductInfoResolver).toBeTruthy();
   });
+
+  
 });

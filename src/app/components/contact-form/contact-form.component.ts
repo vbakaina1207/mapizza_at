@@ -35,7 +35,7 @@ export class ContactFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private massageService: MassageService,
-    private imageService: ImageService,
+    public imageService: ImageService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
