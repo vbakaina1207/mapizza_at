@@ -8,13 +8,28 @@ import { TypeProductService } from './../../shared/services/type-product/type-pr
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ToastrService } from 'ngx-toastr';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { OrderService } from '../../shared/services/order/order.service';
 import { ITypeAdditionResponse } from '../../shared/interfaces/type-addition/type-addition.interfaces';
 import { environment } from '../../../environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IProductResponse } from '../../shared/interfaces/product/product.interface';
+import { CategoryService } from '../../shared/services/category/category.service';
+import { ICategoryRequest, ICategoryResponse } from '../../shared/interfaces/category/category.interface';
+import { DocumentData, DocumentReference, Firestore, getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
 
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 
 describe('ProductComponent', () => {
@@ -74,6 +89,33 @@ describe('ProductComponent', () => {
     ])
   };
 
+  const categoryServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({
+        id: id,
+        name: 'test category',
+        path: '',
+        imagePath: '',
+      }),
+
+      getAllFirebase: () =>
+        of([{
+          id: 1,
+          name: 'test category',
+          path: '',
+          imagePath: '',
+        }]),
+        updateFirebase: (category: ICategoryRequest, id: string) => {
+          return Promise.resolve({ id: id } as DocumentReference<DocumentData>);
+        }, 
+        createFirebase: (data: ICategoryRequest) => Promise.resolve({
+          id: '5',
+          ...data
+        } as ICategoryResponse),
+        deleteFirebase: (id: string) => Promise.resolve()
+  };
+
+
 
   const orderServiceStub = {
     getAllFirebase: () => of({
@@ -121,7 +163,7 @@ describe('ProductComponent', () => {
   };
 
 
-const mockFirestore = jasmine.createSpyObj('AngularFirestore', ['collection']);
+const mockFirestore = jasmine.createSpyObj('Firestore', ['collection']);
 const collectionStub = jasmine.createSpyObj('collection', ['doc']);
 const docStub = jasmine.createSpyObj('doc', ['get']);
 
@@ -144,21 +186,27 @@ const toastrServiceStub = {
   error: jasmine.createSpy()
 };
 
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProductComponent],
       imports: [
         HttpClientTestingModule,
         AngularFireStorageModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        RouterTestingModule,
-        
+        RouterModule.forRoot( routes ),   
+        AngularFireModule.initializeApp(environment.firebase),       
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore())    
       ],
       providers: [
         { provide: ProductService, useValue: serviceStub },
         { provide: TypeProductService,useValue: serviceTypeProductStub  },       
         { provide: OrderService, useValue: orderServiceStub },
         { provide: ToastrService, useValue: toastrServiceStub },
+        { provide: CategoryService, useValue: categoryServiceStub },
+        provideRouter(routes)
+        // { provide: Firestore, usevalue: mockFirestore }
       ],
       schemas:[
         CUSTOM_ELEMENTS_SCHEMA

@@ -1,17 +1,45 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
 
-import { authGuard } from './auth.guard';
+import {  AuthGuardService } from './auth.guard';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Auth } from '@angular/fire/auth';
 
-describe('authGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+describe('AuthGuard', () => {
+  let guard:  AuthGuardService;
+  let router: Router;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        AuthGuardService,
+        { provide: Auth, useValue: {} },
+        { provide: Router, useValue: {} }
+      ],
+      imports: [RouterTestingModule],
+    }).compileComponents();
+    
+  });
+
+  beforeEach(() => {
+    guard = TestBed.inject(AuthGuardService);
+    router = TestBed.inject(Router);
   });
 
   it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+    expect(guard).toBeTruthy();
+  });
+
+  it('should canActivate', () => {
+    const route = {} as ActivatedRouteSnapshot;
+    const state = {} as RouterStateSnapshot;
+    
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify({ role: 'ADMIN' }));
+    spyOn(Router.prototype, 'navigate');
+
+    const result = guard.canActivate(route, state);
+    
+    expect(result).toBe(true);
+    expect(Router.prototype.navigate).not.toHaveBeenCalled();
   });
 });

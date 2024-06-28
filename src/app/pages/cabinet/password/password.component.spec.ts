@@ -31,7 +31,7 @@ describe('PasswordComponent', () => {
       declarations: [PasswordComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+      
         ReactiveFormsModule,
         MatDialogModule,
         AngularFireModule,

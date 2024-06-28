@@ -78,7 +78,7 @@ export class AdminVacancyComponent implements OnInit{
   }
 
   deleteVacancy(vacancy: IVacancyResponse): void {
-    this.vacancyService.deleteFirebase(vacancy.id as string).then(() => {
+    this.vacancyService?.deleteFirebase(vacancy.id as string).then(() => {
       this.loadVacancy();
       this.toastr.success('Vacancy successfully deleted');
     })

@@ -53,8 +53,7 @@ export class PasswordComponent implements OnInit {
       /* password: [null, [Validators.required], [this.passwordValidator.currentPasswordValidator()]], */
       newPassword: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
-    })
-    console.log(this.passwordValidator.currentPasswordValidator());
+    })   
   }
   
 

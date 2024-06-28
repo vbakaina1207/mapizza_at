@@ -28,9 +28,9 @@ export class PersonalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
+    // private router: Router,
     private afs: Firestore,
-    private auth: Auth,
+    // private auth: Auth,
     private toast: ToastrService,
     public dialog: MatDialog,
     public accountService: AccountService,
@@ -92,6 +92,7 @@ export class PersonalComponent implements OnInit {
   }
 
   getUser():void{
+    if ( this.currentUser) {
     getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {        
         this.authFormData = this.fb.group({
           email: [this.currentUser['email'], [Validators.required, Validators.email]],          
@@ -103,6 +104,7 @@ export class PersonalComponent implements OnInit {
         });    
         this.dataUser = user_doc.get('address');        
       })
+    }
 }
 
   updateUser():void{        

@@ -8,28 +8,28 @@ import { Observable, catchError, from, of } from 'rxjs';
 })
 export class PasswordValidatorService {
 
-  constructor(private auth: Auth) {}
+  // constructor(private auth: Auth) {}
 
   // Async validator for checking the current password
-  currentPasswordValidator(): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
-      const { value } = control;
+  // currentPasswordValidator(): AsyncValidatorFn {
+  //   return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+  //     const { value } = control;
 
-      // If the field is empty, consider the password valid
-      if (!value) {
-        return of(null);
-      }
+  //     // If the field is empty, consider the password valid
+  //     if (!value) {
+  //       return of(null);
+  //     }
 
-      const { password } = value;
-      const credential = EmailAuthProvider.credential(this.auth.currentUser?.email as string, password);
+  //     const { password } = value;
+  //     const credential = EmailAuthProvider.credential(this.auth.currentUser?.email as string, password);
 
-      // Attempt to reauthenticate the user with the current password
-      return from(signInWithEmailAndPassword(this.auth, this.auth.currentUser?.email as string, password))
-        .pipe(
-          catchError(() => of({ invalidPassword: true }))
-        );
-    };
-  }
+  //     // Attempt to reauthenticate the user with the current password
+  //     return from(signInWithEmailAndPassword(this.auth, this.auth.currentUser?.email as string, password))
+  //       .pipe(
+  //         catchError(() => of({ invalidPassword: true }))
+  //       );
+  //   };
+  // }
 }
 
 

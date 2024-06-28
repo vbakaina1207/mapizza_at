@@ -5,10 +5,22 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule, Routes, provideRouter } from '@angular/router';
 import { DiscountService } from '../../../shared/services/discount/discount.service';
+import { Component } from '@angular/core';
 
 
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 
 
@@ -36,15 +48,17 @@ describe('DiscountInfoComponent', () => {
       declarations: [DiscountInfoComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot( routes ), 
       ],
       providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            data: of({ discountInfo: discountServiceStub })
-          }
-        }
+        { provide: DiscountService, useValue: discountServiceStub },
+        provideRouter(routes)
+        // {
+        //   provide: ActivatedRoute,
+        //   useValue: {
+        //     data: of({ discountInfo: discountServiceStub })
+        //   }
+        // }
       ]
     })
     .compileComponents();

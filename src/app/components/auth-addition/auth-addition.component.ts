@@ -92,7 +92,7 @@ export class AuthAdditionComponent implements OnInit {
   loadFavoriteProduct(): void {
     const PRODUCT_ID = this.accountService.PRODUCT_ID;
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+      if (this.favorite?.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     }
     let index = this.favorite.findIndex(prod => prod.id === PRODUCT_ID);
     if (index !== -1)

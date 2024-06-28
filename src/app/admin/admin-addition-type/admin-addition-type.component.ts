@@ -21,7 +21,7 @@ export class AdminAdditionTypeComponent implements OnInit {
   public typeAdditionForm!: FormGroup;
   public isAdd = false;
   public editStatus = false;
-  private currentTypeAdditionId!: string;
+  public currentTypeAdditionId!: string;
   public uploadPercent!: number;
   public isUploaded = false;
 

@@ -173,18 +173,24 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
     }
     
     this.toastr.showSuccess('',  product.name + ' successfully added to cart');
-    e.target.innerText = '';
+    if (e?.target) {
+      e.target.innerText = '';
+  } else {
+      console.error("Event target is not defined:", e);
+  }
+  
+    // e.target.innerText = '';
     
     this.isOrder = true;
     if (this.isOrder) {
-      e.target.nextSibling?.classList.add('hide');
-      e.target.classList.add('primary');
+      e?.target?.nextSibling?.classList.add('hide');
+      e?.target?.classList.add('primary');
     }
     if (this.isOrder) {      
       setTimeout(() => {
-          e.target.innerText = 'order',
+        if (e?.target)  e.target.innerText = 'order',
           this.isOrder = false,
-          e.target.nextSibling?.classList.remove('hide'),
+          e?.target?.nextSibling?.classList.remove('hide'),
           e.target.classList.remove('primary')
       }, 2000);
     }

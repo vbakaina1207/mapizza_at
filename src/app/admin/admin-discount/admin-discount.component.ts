@@ -20,7 +20,7 @@ export class AdminDiscountComponent implements OnInit {
   public editStatus = false;
   public uploadPercent!: number;
   public isUploaded = false;
-  private currentDiscountId!: number | string;
+  public currentDiscountId!: number | string;
 
 
   constructor(

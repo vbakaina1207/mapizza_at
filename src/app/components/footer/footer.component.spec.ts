@@ -5,6 +5,25 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { CategoryService } from '../../shared/services/category/category.service';
 import { ICategoryResponse } from '../../shared/interfaces/category/category.interface';
+import { Component } from '@angular/core';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../../../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { SharedModule } from '../../shared/shared.module';
+
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 
 describe('FooterComponent', () => {
@@ -34,9 +53,16 @@ describe('FooterComponent', () => {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [FooterComponent],
-        imports: [RouterTestingModule],
+        imports: [
+          RouterModule.forRoot( routes ),   
+          SharedModule,
+          AngularFireModule.initializeApp(environment.firebase),       
+          provideFirebaseApp(() => initializeApp(environment.firebase)),
+          provideFirestore(() => getFirestore())  
+        ],
         providers: [
-          { provide:CategoryService, useValue: categoryServiceStub}
+          { provide:CategoryService, useValue: categoryServiceStub},
+          provideRouter(routes)
         ],
         
       }).compileComponents();
