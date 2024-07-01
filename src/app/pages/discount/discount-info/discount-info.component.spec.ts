@@ -52,13 +52,13 @@ describe('DiscountInfoComponent', () => {
       ],
       providers: [
         { provide: DiscountService, useValue: discountServiceStub },
-        provideRouter(routes)
-        // {
-        //   provide: ActivatedRoute,
-        //   useValue: {
-        //     data: of({ discountInfo: discountServiceStub })
-        //   }
-        // }
+        provideRouter(routes),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ discountInfo: discountServiceStub })
+          }
+        }
       ]
     })
     .compileComponents();

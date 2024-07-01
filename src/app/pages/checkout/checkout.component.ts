@@ -14,8 +14,7 @@ import { AuthDialogComponent } from '../../components/auth-dialog/auth-dialog.co
 import { ArrayType } from '@angular/compiler';
 import { AccountService } from '../../shared/services/account/account.service';
 
-/* import $ from 'jquery';
-import 'sumoselect'; */
+
 
 
 
@@ -179,7 +178,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
 
   onSubmitAddress() {
     //this.fullAddress = `${this.street} ${this.house}, ${this.flat ? this.flat + ', ' : ''}${this.city}, Vienna`;
-    this.fullAddress =  this.orderForm.get('street')?.value + ', '+ this.orderForm.get('house')?.value + ' Vienna';
+    this.fullAddress =  this.orderForm?.get('street')?.value + ', '+ this.orderForm?.get('house')?.value + ' Vienna';
     this.accountService.updateAddress(this.fullAddress);
     this.getZoneStatus();
     //const selectedAddress = event.target.value;
@@ -453,7 +452,7 @@ setDefaultAddress():void {
   }
 
   sumBonusClick(): void {
-    let sumBonus = this.orderForm.get('summa_bonus')?.value;
+    let sumBonus = this.orderForm?.get('summa_bonus')?.value;
     if (sumBonus > this.sum_bonus) {
       this.dialog.open(AlertDialogComponent, {
         backdropClass: 'dialog-back',
@@ -474,7 +473,7 @@ setDefaultAddress():void {
   }
 
   bonusClick(): void{    
-    if (!this.orderForm.get('phone')?.value) {
+    if (!this.orderForm?.get('phone')?.value) {
         this.dialog.open(AlertDialogComponent, {
         backdropClass: 'dialog-back',
         panelClass: 'alert-dialog',
@@ -550,7 +549,7 @@ setDefaultAddress():void {
   }
 
   bonusUse(): void {
-    if (!this.orderForm.get('summa_bonus')?.value) {
+    if (!this.orderForm?.get('summa_bonus')?.value) {
       this.dialog.open(AlertDialogComponent, {
         backdropClass: 'dialog-back',
         panelClass: 'alert-dialog',
@@ -562,8 +561,8 @@ setDefaultAddress():void {
         }
       });
     } else 
-    if (this.orderForm.get('summa_bonus')?.value <= this.sum_bonus && !this.isUseBonus) {
-      this.sum_order = this.sum_order - this.orderForm.get('summa_bonus')?.value;
+    if (this.orderForm?.get('summa_bonus')?.value <= this.sum_bonus && !this.isUseBonus) {
+      this.sum_order = this.sum_order - this.orderForm?.get('summa_bonus')?.value;
       this.isUseBonus = true;
     }
   }
@@ -582,7 +581,7 @@ setDefaultAddress():void {
   }
 
   isWithoutRestClick(): void {
-    if (this.orderForm.get('isWithoutRest')?.value) {
+    if (this.orderForm?.get('isWithoutRest')?.value) {
       this.orderForm.patchValue({ 'cash': 0 });
     }
   }

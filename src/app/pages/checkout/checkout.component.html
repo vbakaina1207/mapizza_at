@@ -276,7 +276,7 @@
                 <div class="toggle-block" data-block="3"  *ngIf="(orderForm?.get('payment_method')?.value)==='cod'" >
                   <div class="moneychange-input">
                     <div class="text">Prepare the rest of:</div>
-                      <input formControlName="cash" class="input" type="number" placeholder="Enter the amount" name="cash" [readonly]="orderForm.get('isWithoutRest')?.value" >
+                      <input formControlName="cash" class="input" type="number" placeholder="Enter the amount" name="cash" [readonly]="orderForm?.get('isWithoutRest')?.value" >
                       <label class="checkbox-entry">
                         <input formControlName="isWithoutRest" type="checkbox" name="isWithoutRest" (change)="isWithoutRestClick()"><span>Without the rest</span>
                       </label>
@@ -330,27 +330,27 @@
                               <option value="-1" selected="">Select a promotion</option>
                               <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Action 2+1</option>
                               <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Action 3+1</option>
-                              <option value="localPickup" [disabled]="orderForm.get('delivery_method')?.value === 'courier'">-15% for pickup</option>                                
+                              <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% for pickup</option>                                
                             </select>                        
                   </div>             
             </div>
             
                       <div class="thank-total-wrap">
                         <div class="deliveryWarning">
-                          <div class="errorMsg empty-address" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value || !orderForm.get('city')?.value)">
+                          <div class="errorMsg empty-address" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' && (!orderForm?.get('house')?.value || !orderForm?.get('street')?.value || !orderForm?.get('city')?.value)">
                             Enter your address and house number   
                           </div>
                           
-                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' &&  isInGreenZone && total < 40">
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' &&  isInGreenZone && total < 40">
                             The minimum order amount for free delivery is <b class="js-zone-min-price">40 €</b>    
                           </div>
-                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' &&  isInYellowZone && total < 50">
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' &&  isInYellowZone && total < 50">
                             The minimum order amount for free delivery is <b class="js-zone-min-price">50 €</b>    
                           </div>
-                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'local_pickup' && !orderForm.get('self_delivery_address')?.value ">
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm?.get('delivery_method')?.value === 'local_pickup' && !orderForm?.get('self_delivery_address')?.value ">
                             Enter the address for pickup<b class="js-zone-min-price"></b>    
                           </div>
-                          <div class="errorMsg lowOrderDelivery" *ngIf="!orderForm.get('name')?.value || !orderForm.get('phone')?.value || !orderForm.get('email')?.value ">
+                          <div class="errorMsg lowOrderDelivery" *ngIf="!orderForm?.get('name')?.value || !orderForm?.get('phone')?.value || !orderForm?.get('email')?.value ">
                             Enter your contact information<b class="js-zone-min-price"></b>    
                           </div>
                         </div>
@@ -365,9 +365,9 @@
                           <div><b id="all-products-delivery"></b>{{ sum_delivery }} €</div>
                         </div>
 
-                        <div class="thank-total-item last-item-border price-bonuses" *ngIf="orderForm.get('use_bonus')?.value">
+                        <div class="thank-total-item last-item-border price-bonuses" *ngIf="orderForm?.get('use_bonus')?.value">
                           <div>Bonuses:</div>
-                          <div>-<b id="all-products-bonuses">{{ orderForm.get('summa_bonus')?.value}}</b> €</div>
+                          <div>-<b id="all-products-bonuses">{{ orderForm?.get('summa_bonus')?.value}}</b> €</div>
                         </div>
 
                         <div class="thank-total-item last-item-border price-action" *ngIf="minPrice">
@@ -403,13 +403,13 @@
                           <span>Add a comment</span>
                         </label>
                       </div>
-                      <div *ngIf="(orderForm.get('isComment')?.value)" class="toggle-block" data-block="5" style="padding-bottom: 15px">
+                      <div *ngIf="(orderForm?.get('isComment')?.value)" class="toggle-block" data-block="5" style="padding-bottom: 15px">
                           <textarea formControlName="comment" name="comment" class="input" placeholder="Ваш коментар" spellcheck="false"></textarea>
                       </div>
 
 
 
-                      <button class="butn btn-primar btn-block main-order-button" type="submit"  [disabled]="(orderForm.invalid) ||   ((orderForm.get('delivery_method')?.value) ==='courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value)) ||((orderForm.get('delivery_method')?.value) ==='local_pickup' && !orderForm.get('self_delivery_address')?.value) || (orderForm.get('at_time')?.value && (!orderForm.get('delivery_date')?.value || !orderForm.get('delivery_time')?.value))">
+                      <button class="butn btn-primar btn-block main-order-button" type="submit"  [disabled]="(orderForm?.invalid) ||   ((orderForm?.get('delivery_method')?.value) ==='courier' && (!orderForm?.get('house')?.value || !orderForm?.get('street')?.value)) ||((orderForm?.get('delivery_method')?.value) ==='local_pickup' && !orderForm?.get('self_delivery_address')?.value) || (orderForm?.get('at_time')?.value && (!orderForm?.get('delivery_date')?.value || !orderForm?.get('delivery_time')?.value))">
                         <span>Confirm the order</span>
                       </button>
 

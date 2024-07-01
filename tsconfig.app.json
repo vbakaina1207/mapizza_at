@@ -3,7 +3,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": ["jasmine","node", "googlemaps"]
+    "types": [
+      "jasmine",
+      "node",
+      "googlemaps",
+      "@angular/localize"
+    ]
   },
   "files": [
     "src/main.ts"

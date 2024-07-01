@@ -53,14 +53,16 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
+        this.loadUser();
         this.loadProducts();
         this.getTypeProducts();           
-        this.loadUser();       
+        this.loadFavoriteProducts();        
       }
     })
   }
 
   ngOnInit(): void {
+      this.loadUser();
       this.loadProducts();
       this.getTypeProducts();   
       this.loadFavoriteProducts();      
@@ -129,7 +131,7 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
 
   loadFavoriteProducts(): void{
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+      if (this.favorite?.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     }
       for (let i = 0; i < this.userProducts.length; i++) {
       this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
@@ -214,8 +216,10 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
     }
         localStorage.setItem('favorite', JSON.stringify(this.favorite));
         this.accountService.changeFavorite.next(true);
-        this.currentUser.favorite = this.favorite;
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        if (this.currentUser) {
+          this.currentUser.favorite = this.favorite;
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        }
   }
 
   updateFavorite(): void {

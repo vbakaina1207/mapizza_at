@@ -42,10 +42,10 @@ export class VacancyInfoComponent implements OnInit {
     private massageService: MassageService,
     private imageService: ImageService,
     private toastr: ToastrService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService,
-    private vacancyService: VacancyService
+    // private accountService: AccountService,
+    // private vacancyService: VacancyService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {        

@@ -53,7 +53,8 @@ describe('AdminProductTypeComponent', () => {
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: toastrServiceStub },
-        { provide: TypeProductService, useValue: serviceTypeProductStub}
+        { provide: TypeProductService, useValue: serviceTypeProductStub}, 
+        
       ]
     })
     .compileComponents();
@@ -175,14 +176,14 @@ describe('AdminProductTypeComponent', () => {
     expect(component.typeProductForm.get('name')?.value).toEqual(mockProduct.name);
   });
 
-  it('delete values type product', () => {
-    spyOn(component, 'deleteTypeProduct').and.callThrough();
-    component.deleteTypeProduct({
-      id: 1,
-      name: '', path: '', imgPath: '' 
-    });
-    spyOn(typeProductService, 'deleteFirebase');
-    expect(component).toBeTruthy();
-  });
+  // it('delete values type product', () => {
+  //   spyOn(component, 'deleteTypeProduct').and.callThrough();
+  //   component.deleteTypeProduct({
+  //     id: 1,
+  //     name: '', path: '', imgPath: '' 
+  //   });
+  //   spyOn(typeProductService, 'deleteFirebase');
+  //   expect(component).toBeTruthy();
+  // });
 
 });

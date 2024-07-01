@@ -10,10 +10,8 @@ import { ActivatedRoute, NavigationEnd, Router, RouterModule, Routes, provideRou
 import { VacancyService } from '../../../shared/services/vacancy/vacancy.service';
 import { ImageService } from '../../../shared/services/image/image.service';
 import { MassageService } from '../../../shared/services/massage/massage.service';
-import { Component } from '@angular/core';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../../../../environments/environment';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+
 
 
 @Component({
@@ -38,7 +36,6 @@ describe('VacancyInfoComponent', () => {
   let component: VacancyInfoComponent;
   let fixture: ComponentFixture<VacancyInfoComponent>;
   let vacancyService: VacancyService;
-  let router: Router;
 
   const vacancyServiceStub = {
     getAllFirebase: () => of([
@@ -51,6 +48,12 @@ describe('VacancyInfoComponent', () => {
       }
     ])
   };
+
+  const toastrServiceStub = {
+    success: jasmine.createSpy(),
+    error: jasmine.createSpy()
+  };
+  
 
   
   const massageServiceStub = {
@@ -66,17 +69,25 @@ describe('VacancyInfoComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,   
-        RouterModule.forRoot( routes ),    
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideFirestore(() => getFirestore()),       
+        RouterModule.forRoot( routes ),            
       ],
       providers: [
         ImageService  ,
         { provide: Storage, useValue: {} },               
-        { provide: ToastrService, useValue: {} },
+        { provide: ToastrService, useValue: toastrServiceStub },
         { provide: MassageService, useValue: massageServiceStub },
         { provide: VacancyService, useValue: vacancyServiceStub },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
+        provideRouter(routes),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ vacancyInfo: vacancyServiceStub })
+          }
+        },
+        // { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     })
     .compileComponents();
@@ -85,7 +96,14 @@ describe('VacancyInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VacancyInfoComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
+    component.vacancy = {  
+      id: '1', 
+      name: 'new vacancy',
+      path: '',
+      description: '',
+      imagePath: ''
+    };
+    
     fixture.detectChanges();
   });
 
@@ -93,21 +111,21 @@ describe('VacancyInfoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('loading vacancy', () => {
-  //   const VACANCY_ID = '1';
-  //   const data = [
-  //     {
-  //       id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''
-  //     }
-  //   ] ;   
-  //   router.events.next(new NavigationEnd(1, '/', '/'));
-  //   if (VACANCY_ID){
-  //     vacancyService?.getOneFirebase(VACANCY_ID).subscribe(result => {
-  //       expect(result).toEqual(data);
-  //     });
-  //   }
-  //   expect(component).toBeTruthy();
-  // });
+  it('loading vacancy', () => {
+    const VACANCY_ID = '1';
+    const data = [
+      {
+        id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''
+      }
+    ] ;   
+   
+    if (VACANCY_ID){
+      vacancyService?.getOneFirebase(VACANCY_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
 
   
 });

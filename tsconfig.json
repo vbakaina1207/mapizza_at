@@ -22,7 +22,7 @@
       "ES2022",
       "dom"
     ],
-    "types": ["jasmine"]
+    "types": ["jasmine", "googlemaps"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -65,7 +65,7 @@ export class ProductInfoComponent implements OnInit {
   })
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {      
   }
 
 
@@ -252,8 +252,10 @@ export class ProductInfoComponent implements OnInit {
       }
     localStorage.setItem('favorite', JSON.stringify(this.favorite));
     this.accountService.changeFavorite.next(true);
-    this.currentUser.favorite = this.favorite;
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    if (this.currentUser) {
+      this.currentUser.favorite = this.favorite;
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    }    
   }
 
   updateFavorite(): void {
