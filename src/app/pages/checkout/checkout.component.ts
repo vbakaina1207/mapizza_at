@@ -102,8 +102,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   }
   
   ngAfterViewInit() {
-    /* ($('.sumo_select_city select') as any).SumoSelect(); */
-   
   }
 
   getOrders(): void {
@@ -176,26 +174,27 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     }
   } */
 
-  onSubmitAddress() {
-    //this.fullAddress = `${this.street} ${this.house}, ${this.flat ? this.flat + ', ' : ''}${this.city}, Vienna`;
+  onSubmitAddress() {  
     this.fullAddress =  this.orderForm?.get('street')?.value + ', '+ this.orderForm?.get('house')?.value + ' Vienna';
     this.accountService.updateAddress(this.fullAddress);
-    this.getZoneStatus();
-    //const selectedAddress = event.target.value;
-    //this.accountService.setAddress(this.fullAddress);
+    this.getZoneStatus();  
   }
 
   getZoneStatus():void {
     this.accountService.zoneStatus$.subscribe(status => {
       this.isInGreenZone = status.isGreenZone;
       this.isInYellowZone = status.isYellowZone;
+      console.log(this.orderForm?.get('delivery_method')?.value);
+      this. deliveryMethodClick(this.orderForm?.get('delivery_method')?.value);
     });
   }
 
 
   getMinPrice(): void {
     this.sum_order = this.total;
+    console.log(this.total, 'total');
     this.sum_delivery = ((this.total >= 50 && this.isInYellowZone) || (this.total >= 40 && this.isInGreenZone)) ? 0 : ((this.total < 50 && this.isInYellowZone) ? 30 : (this.total < 40 && this.isInGreenZone) ? 20 : 0);  
+    console.log(this.sum_delivery, 'sum_deliv');
     this.pizzaCount = this.basket.filter(el => el.category.path === 'pizza')?.reduce((count: number, el: IProductResponse) => count + el.count, 0);   
     let priceArr: Array<number> = [];
     if (this.pizzaCount > 0) {
@@ -206,8 +205,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
             priceArr.push(item.price + (item.addition_price ? item.addition_price : 0 ));
           }
         });
-      this.priceArr = priceArr;
-      this.priceArr.sort((a, b) => a - b);
+      // this.priceArr = priceArr;
+      this.priceArr = priceArr.sort((a, b) => a - b);
       this.minPrice = Math.min(...priceArr);
     } else this.minPrice = 0;
       // Math.min(...priceArr);
@@ -215,18 +214,24 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     if ((this.pizzaCount % 3 == 2 && this.dayOfWeek >= 1 && this.dayOfWeek <= 4) || (this.pizzaCount % 4 == 3 && (this.dayOfWeek >= 5 || this.dayOfWeek == 0))) {
       this.pizzaAction();
     }
+    const minPriceValue = priceArr[0] || 0;
     let arrMinPriceProduct : Array<IProductResponse>=[];
-    arrMinPriceProduct = this.basket.filter((el) => el.category.path === 'pizza' && (el.price + el.addition_price) === priceArr[0]);
-    this.minPriceProduct = arrMinPriceProduct[0];    
+    arrMinPriceProduct = this.basket.filter((el) => el.category.path === 'pizza' && (el.price + (el.addition_price ? el.addition_price : 0)) === minPriceValue);
+    this.minPriceProduct = arrMinPriceProduct[0];   
+    console.log(this.minPriceProduct, arrMinPriceProduct, 'minProd'); 
   }
 
-  getTotalPrice(): void {
+  getTotalPrice(): void {    
     this.total = this.basket
-      ?.reduce((total: number, prod: IProductResponse) => total + prod.count * (prod.price + (Number(prod.price) + Number(prod.addition_price ? prod.addition_price : 0))), 0);
+    ?.reduce((total: number, prod: IProductResponse) => 
+      total + prod.count * (prod.price + (Number(prod.addition_price) || 0)), 0);
+    // this.total = this.basket
+    //   ?.reduce((total: number, prod: IProductResponse) => total + prod.count * (prod.price + (Number(prod.price) + Number(prod.addition_price ? prod.addition_price : 0))), 0);
     this.count = this.basket
       ?.reduce((totalCount: number, prod: IProductResponse) => totalCount + prod.count, 0); 
     this.bonus = this.basket
       ?.reduce((bonus: number, prod: IProductResponse) => bonus + prod.bonus * prod.count, 0); 
+      console.log(this.total, 'total sum');
   }
 
   loadUser(): void {
@@ -240,7 +245,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   
   updateBasket(): void {
     this.orderService.changeBasket.subscribe(() => {
-      this.loadBasket();
+      this.loadBasket();      
     })
   }
 
@@ -315,7 +320,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   
   addOrder(): void {
     this.orderForm.patchValue({
-        summa: this.sum_order,
+        summa: this.sum_order - this.sum_delivery,
         discount: this.minPrice
     });
     const products = JSON.parse(localStorage.getItem('basket') || '[]');
@@ -363,14 +368,57 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
     this.orderService.changeBasket.next(true);
   }
 
+  
+
   additionDeleteClick(product: IProductResponse, additionName: any): void {
-    for (let i = 0; i < product.selected_addition.length; i++) {
-      if (product.selected_addition[i].name == additionName) {
-        product.addition_price = product.addition_price - Number(product.selected_addition[i].price);
-        product.selected_addition.splice(i, 1);
-      }
+    if(localStorage?.length > 0 && localStorage.getItem('basket')){
+      let basket = JSON.parse(localStorage.getItem('basket') as string);
+    
+    // Find the index of the product in the basket array
+    const productIndex = this.findProductIndexInBasket(product);
+    
+    if (productIndex !== -1) {      
+        for (let i = 0; i < basket.length; i++) {           
+            if (basket[i].id === product.id && this.areAdditionsEqual(basket[i].selected_addition, product.selected_addition)) {               
+                basket[i].addition_price -= Number(product.selected_addition.find(addition => addition.name === additionName)?.price);                
+                const additionIndex = basket[i].selected_addition.findIndex((addition: { name: any; }) => addition.name === additionName);
+                if (additionIndex !== -1) {
+                    basket[i].selected_addition.splice(additionIndex, 1);
+                }               
+                this.updateProductInBasket(basket[i], i);               
+                break;
+            }
+        }
     }
   }
+}
+
+// Helper function to compare two arrays of selected additions
+areAdditionsEqual(arr1: Array<ITypeAdditionResponse>, arr2: Array<ITypeAdditionResponse>): boolean {
+  // Convert arrays to JSON strings for comparison
+  const str1 = JSON.stringify(arr1);
+  const str2 = JSON.stringify(arr2);
+  return str1 === str2;
+}
+
+
+// Helper function to find the index of the product in the basket array
+findProductIndexInBasket(product: IProductResponse): number {
+  if (localStorage?.length > 0 && localStorage.getItem('basket')) {        
+      let basket = JSON.parse(localStorage.getItem('basket') as string);        
+      return basket.findIndex((prod: { id: string | number; }) => prod.id === product.id);
+  }   
+  return -1;
+}
+
+updateProductInBasket(product: IProductResponse, index: number): void {
+  if (localStorage?.length > 0 && localStorage.getItem('basket')) {
+      let basket = JSON.parse(localStorage.getItem('basket') as string);
+      basket.splice(index, 1, product);
+      localStorage.setItem('basket', JSON.stringify(basket));
+      this.orderService.changeBasket.next(true);
+  }
+}
 
   openLoginDialog(): void {
     this.dialog.open(AuthDialogComponent, {
@@ -575,6 +623,7 @@ setDefaultAddress():void {
     } else {      
       this.orderForm.patchValue({ 'action': '' });       
       this.sum_delivery = ((this.total >= 50 && this.isInYellowZone) || (this.total >= 40 && this.isInGreenZone)) ? 0 : ((this.total < 50 && this.isInYellowZone) ? 30 : (this.total < 40 && this.isInGreenZone) ? 20 : 0);  
+      console.log(this.sum_delivery, 'sum_delivery');
       this.isCourier = true;      
     }
     this.actionClick();
@@ -600,6 +649,7 @@ setDefaultAddress():void {
         }
       }).afterClosed().subscribe(result => {
         console.log(result);   
+        console.log(this.minPrice, this.minPriceProduct, 'minPrice');
         if (result) {                           
           if (this.minPriceProduct) this.addToBasket(this.minPriceProduct, true);                     
         }

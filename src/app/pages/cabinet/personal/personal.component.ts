@@ -144,10 +144,6 @@ export class PersonalComponent implements OnInit {
     })
   }
 
-  
-
-
-  
 
   updateAddress(): void {
     this.accountService.changeAddress.subscribe(() => {

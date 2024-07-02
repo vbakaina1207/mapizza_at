@@ -161,8 +161,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     
     this.isOrder = true;
     if (this.isOrder) {
-      e.target.nextSibling.classList.add('hide');
-      e.target.classList.add('primary');
+      e.target.nextSibling?.classList.add('hide');
+      e.target?.classList.add('primary');
     }
     if (this.isOrder) {      
       setTimeout(() => {

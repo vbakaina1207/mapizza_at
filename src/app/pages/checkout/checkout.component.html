@@ -31,14 +31,14 @@
                     {{ product.name }}
                     </a>                    
                     <button class="btn-close remove-product" (click)="removeFromBasket(product)"></button>
-                    <ng-container *ngIf="product.selected_addition.length"> 
+                    <ng-container *ngIf="product.selected_addition.length>0">
                         <div class="added_ing-wrap">
                       <div class="ing_output-inner">
                         <div class="ing_control" *ngFor="let addProduct of product.selected_addition; let id = index">
                             <div class="ing_control-title">
-                              1 Х {{ addProduct.name }} {{ addProduct ? addProduct.description ? '('+addProduct.description +')': '' : undefined }}
+                              1 Х {{ addProduct?.name }} {{ addProduct ? addProduct?.description ? '('+addProduct?.description +')': '' : undefined }}
                             </div>
-                            <button class="cart-dropdown-delete" (click)="additionDeleteClick(product, addProduct.name)"></button>
+                            <button class="cart-dropdown-delete" (click)="additionDeleteClick(product, addProduct?.name)"></button>
                         </div>                    
                       </div>
                         </div>

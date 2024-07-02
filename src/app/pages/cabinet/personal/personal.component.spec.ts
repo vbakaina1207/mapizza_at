@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { PersonalComponent } from './personal.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Firestore, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, of } from 'rxjs';
 import { AccountService } from '../../../shared/services/account/account.service';
@@ -82,7 +82,7 @@ describe('PersonalComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        // MatDialogModule,
+        MatDialogModule,
         // RouterModule.forRoot( routes ), 
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideFirestore(() => getFirestore()),
@@ -96,7 +96,7 @@ describe('PersonalComponent', () => {
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: ToastService, useValue: mockToastr },
         // { provide: MatDialog, useValue: mockDialog },
-        { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
+        // { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
         { provide: AccountService, useValue: accountServiceStub },
         // provideRouter(routes)
         // { provide: Firestore, useValue: mockFirestore }, 

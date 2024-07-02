@@ -31,9 +31,10 @@ export class MapComponent implements OnInit{
   coordinates!: any;
   lat!: any;
   lng!: any;
-  searchMarker: google.maps.Marker | undefined;
+  // searchMarker: google.maps.Marker | undefined;
+  searchMarker: google.maps.marker.AdvancedMarkerElement | undefined;
   map!: google.maps.Map;
-//.AdvancedMarkerElement
+
 
   yellowZone: google.maps.Polygon | undefined;
   greenZone: google.maps.Polygon | undefined;
@@ -69,10 +70,12 @@ export class MapComponent implements OnInit{
     if (this.mapContainer) {
       const mapOptions: google.maps.MapOptions = {
         center: this.center,
-        zoom: this.zoom
+        zoom: this.zoom,
+        mapId: "AIzaSyCiZNf5DEW6DRxd6trod-rMuH7gLuRBtIs",
       };
   
       this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
+      
 
       const greenZoneCoords: google.maps.LatLngLiteral[] = [
         { lat: 48.37035019551224, lng: 16.115671899180775 },
@@ -171,7 +174,8 @@ export class MapComponent implements OnInit{
           });
   
           if (!validResult) {
-            this.showErrorDialog('Invalid address. Enter the exact address with the house number.');
+            this.showErrorDialog('Invalid address. Enter the exact address with the house number.');           
+            this.resetZones();
             return;
           }
 
@@ -179,10 +183,12 @@ export class MapComponent implements OnInit{
           const lat = location.lat();
           const lng = location.lng();        
           if (this.searchMarker) {
-            this.searchMarker.setMap(null);
+            this.searchMarker.map = null;
+            // this.searchMarker.setMap(null);
           }
-          
-          this.searchMarker = new google.maps.Marker({
+
+          this.searchMarker = new google.maps.marker.AdvancedMarkerElement({
+          // this.searchMarker = new google.maps.Marker({
             position: { lat: lat, lng: lng },
             map: this.map,            
             title: 'Searched Location'
@@ -236,6 +242,19 @@ export class MapComponent implements OnInit{
   this.toastr.showSuccess('', message);     
 
   }
+
+  resetZones(): void {
+    if (this.searchMarker) this.searchMarker.map = null;
+    this.center = { lat: 48.2082, lng: 16.3738 };
+    this.zoom = 9;
+    this.map.setCenter(this.center);
+    this.map.setZoom(this.zoom);
+    this.yellowZone?.setMap(this.map);
+    this.greenZone?.setMap(this.map);
+    this.accountService.setZoneStatus(false, false); // Reset zone status
+  }
+
+
   /* 
   KEY_API = 'AIzaSyCiZNf5DEW6DRxd6trod-rMuH7gLuRBtIs';
   //AIzaSyCiZNf5DEW6DRxd6trod-rMuH7gLuRBtIs

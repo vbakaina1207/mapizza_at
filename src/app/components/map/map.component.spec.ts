@@ -7,23 +7,11 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { RouterModule, Routes, provideRouter } from '@angular/router';
+import { ActivatedRoute, RouterModule, Routes, provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../../../environments/environment';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-
-
-@Component({
-  selector: 'app-blank',
-  template: '<p>Blank Component</p>'
-})
-class BlankComponent {}
-
-const routes: Routes = [
-  { path: '', component: BlankComponent },
-  { path: 'test', component: BlankComponent }
-];
 
 
 export const GOOGLE = new InjectionToken('google');
@@ -58,30 +46,61 @@ export const googleFactory = () => google;
 // };
 
 
+// const mockGoogle = {
+//   maps: {
+//     Map: jasmine.createSpy().and.returnValue({}),
+//     LatLng: jasmine.createSpy().and.returnValue({}),
+//     Geocoder: jasmine.createSpy().and.returnValue({
+//       geocode: jasmine.createSpy().and.callFake((request, callback) => {
+//         // Mock geocode response if needed
+//         const results = [
+//           {
+//             geometry: {
+//               location: {
+//                 lat: () => 48.2082,
+//                 lng: () => 16.3738
+//               }
+//             }
+//           }
+//         ];
+//         callback(results, 'OK');
+//       })
+//     }),
+//     Polygon: jasmine.createSpy().and.returnValue({}),
+//     geometry: {
+//       poly: {
+//         containsLocation: jasmine.createSpy().and.returnValue(true) // Example spy behavior
+//       }
+//     }
+//   }
+// };
+
 const mockGoogle = {
   maps: {
-    Map: jasmine.createSpy().and.returnValue({}),
+    Map: jasmine.createSpy().and.returnValue({
+      addListener: jasmine.createSpy()
+    }),
     LatLng: jasmine.createSpy().and.returnValue({}),
     Geocoder: jasmine.createSpy().and.returnValue({
       geocode: jasmine.createSpy().and.callFake((request, callback) => {
-        // Mock geocode response if needed
-        const results = [
-          {
-            geometry: {
-              location: {
-                lat: () => 48.2082,
-                lng: () => 16.3738
-              }
+        // Mock geocode response
+        const results = [{
+          geometry: {
+            location: {
+              lat: () => 48.2082,
+              lng: () => 16.3738
             }
           }
-        ];
+        }];
         callback(results, 'OK');
       })
     }),
-    Polygon: jasmine.createSpy().and.returnValue({}),
+    Polygon: jasmine.createSpy().and.returnValue({
+      setMap: jasmine.createSpy()
+    }),
     geometry: {
       poly: {
-        containsLocation: jasmine.createSpy().and.returnValue(true) // Example spy behavior
+        containsLocation: jasmine.createSpy().and.returnValue(true)
       }
     }
   }
@@ -97,21 +116,19 @@ describe('MapComponent', () => {
   beforeEach(waitForAsync(() => {
   const mockGoogle = jasmine.createSpyObj('google', ['maps']);
     TestBed.configureTestingModule({
-      declarations: [MapComponent, BlankComponent],
+      declarations: [MapComponent],
       imports: [
         MatDialogModule,        
         HttpClientTestingModule,
-        GoogleMapsModule,
-        RouterModule.forRoot( routes ), 
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideFirestore(() => getFirestore()),
+        GoogleMapsModule,       
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: ToastrService, useValue: {} },
-        { provide: GOOGLE, useFactory: googleFactory},
-        { provide: 'google', useValue: mockGoogle },
-        provideRouter(routes)
+        // { provide: GOOGLE, useFactory: googleFactory},
+        // { provide: GOOGLE, useValue: mockGoogle},
+        // { provide: 'google', useValue: mockGoogle },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },       
       ],
      
     })
