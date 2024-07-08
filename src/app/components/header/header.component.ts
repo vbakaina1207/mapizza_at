@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ROLE } from './../../shared/constants/role.constant';
 import { Router } from '@angular/router';
@@ -173,6 +173,18 @@ export class HeaderComponent implements OnInit {
         })
         this.isCheckout = true;
     }
+
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const isInsideMenu = target.closest('.user-menu') !== null;
+    const isMenuButton = target.closest('.user-c-btn') !== null;
+
+    if (!isInsideMenu && !isMenuButton) {
+      this.isOpenmenu = false;
+    }
+}
 
 }
 

@@ -24,6 +24,7 @@ import { AccountService } from '../../shared/services/account/account.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
+
 export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
   public total = 0;
   public bonus = 0;
@@ -71,10 +72,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
 
 
   constructor(
-    private orderService: OrderService,
+    public orderService: OrderService,
     private fb: FormBuilder,
     private toastr: ToastService,
-    private router: Router,
+    public router: Router,
     private afs: Firestore,
     public dialog: MatDialog,
     private accountService: AccountService
@@ -319,18 +320,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
 
   
   addOrder(): void {
-    this.orderForm.patchValue({
+    this.orderForm?.patchValue({
         summa: this.sum_order - this.sum_delivery,
         discount: this.minPrice
     });
     const products = JSON.parse(localStorage.getItem('basket') || '[]');
-    this.currentUser.bonus = this.bonus;
+    if (this.currentUser) this.currentUser.bonus = this.bonus;
     const order = {
-      ...this.orderForm.value,
+      ...this.orderForm?.value,
       total: this.sum_order,
       product: products       
     };
-    this.currentUser.orders.push(order);
+    this.currentUser?.orders?.push(order);
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     if (this.currentUser) {        
         this.orderService.createFirebase(order).then(() => {            

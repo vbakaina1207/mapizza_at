@@ -13,7 +13,7 @@ import { IOrderRequest } from '../../shared/interfaces/order/order.interface';
 import { OrderService } from '../../shared/services/order/order.service';
 import { ToastService } from '../../shared/services/toast/toast.service';
 import { AccountService } from '../../shared/services/account/account.service';
-import { ActivatedRoute, RouterModule, Routes, provideRouter } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, Routes, provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../../../environments/environment';
 
@@ -70,6 +70,7 @@ describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
   let firestore: Firestore;
+  let mockRouter: any
 
   const orderData = [{
     id: '1',  
@@ -156,49 +157,6 @@ describe('CheckoutComponent', () => {
   address: []
 }];
 
-
-// const docSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
-// docSpy.get.and.returnValue(of(orderData));
-// docSpy.update.and.returnValue(Promise.resolve());
-// docSpy.delete.and.returnValue(Promise.resolve());
-// docSpy.set.and.returnValue(Promise.resolve());
-
-
-// const collectionSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
-// collectionSpy.get.and.returnValue(of([orderData]));
-// collectionSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
-// collectionSpy.doc.and.returnValue(docSpy);
-// collectionSpy.where.and.returnValue(collectionSpy); 
-
-// const firestoreStub = {
-//   doc: (path: string) => docSpy,
-//   collection: (path: string) => collectionSpy
-// }
-
-// const mockFirestore = {
-//   collection: jasmine.createSpy('collection').and.returnValue(collectionSpy),
-//   doc: jasmine.createSpy('doc').and.returnValue(docSpy),
-// };
-
-// const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
-// docRefSpy.get.and.returnValue(Promise.resolve({ exists: true, data: () => orderData }));
-// docRefSpy.update.and.returnValue(Promise.resolve());
-// docRefSpy.delete.and.returnValue(Promise.resolve());
-// docRefSpy.set.and.returnValue(Promise.resolve());
-
-// // Mock CollectionReference
-// const collectionRefSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
-// collectionRefSpy.get.and.returnValue(Promise.resolve({ docs: [{ id: '1', data: () => orderData }] }));
-// collectionRefSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
-// collectionRefSpy.doc.and.returnValue(docRefSpy);
-// collectionRefSpy.where.and.returnValue(collectionRefSpy);
-
-// // Mock Firestore
-// const mockFirestore = {
-//   collection: jasmine.createSpy('collection').and.returnValue(collectionRefSpy),
-//   doc: jasmine.createSpy('doc').and.returnValue(docRefSpy),
-// };
-
 const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
   docRefSpy.get.and.returnValue(of({ exists: true, data: () => orderData }));
 
@@ -207,10 +165,6 @@ const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'd
   collectionRefSpy.doc.and.returnValue(docRefSpy);
 
   const docSnapshotStub = jasmine.createSpyObj('DocumentSnapshot', ['data']);
-
-  // Mock Firestore
-  // const mockFirestore = jasmine.createSpyObj('Firestore', ['collection']);
-  // mockFirestore.collection.and.returnValue(collectionRefSpy);
 
   const mockFirestore = {
     collection: jasmine.createSpy('collection').and.returnValue(collectionRefSpy)
@@ -242,12 +196,6 @@ const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'd
     error: jasmine.createSpy()
   };
   
-//   const toastrServiceStub = {
-//     success: (message: string) => { console.log('success', message); },
-//     error: (message: string) => { console.log('error', message); },
-//     // info: (message: string) => { console.log('info', message); },
-//     // warning: (message: string) => { console.log('warning', message); }
-// }
 
   const accountServiceStub = {
     isUserLogin$: new Subject<boolean>(),
@@ -264,6 +212,13 @@ const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'd
       accountServiceStub.zoneStatus$.next({ isGreenZone, isYellowZone });
     })
   };
+
+  mockRouter = {
+    navigate: jasmine.createSpy('navigate'),
+    events: new Subject<any>()
+  };
+
+  const mockOrderService = jasmine.createSpyObj('OrderService', ['createFirebase']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -299,13 +254,6 @@ const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'd
     mockFirestore.collection.and.returnValue(collectionRefSpy);
     collectionRefSpy.get.and.returnValue(of([docSnapshotStub]));
     docSnapshotStub.data.and.returnValue(orderData);
-
-    // firestore = TestBed.inject(Firestore); 
-
-    // // Set up mocks (assuming collection name is 'orders')
-    // mockFirestore.collection.and.returnValue(collectionRefSpy);
-    // collectionRefSpy.get.and.returnValue(of([docSnapshotStub]));
-    // docSnapshotStub.data.and.returnValue(orderData); 
     fixture.detectChanges();
   });
 
@@ -314,90 +262,70 @@ const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'd
   });
 
   it('should initialize component data on ngOnInit', () => {
-    // Call ngOnInit
     component.ngOnInit();
-  
-    // Expect total, basket, and order data to be populated
     expect(component.total).toBeDefined();
-    // expect(component.basket.length).toBeGreaterThan(0); // Assuming some products in basket
-    // expect(component.order.length).toBeGreaterThan(0); // Assuming some past orders
   });
   
-  
-  // it('should initialize component data on ngOnInit (success)', () => {
-  //   (firestore.collection as jasmine.Spy).and.returnValue(collectionSpy);
-  //   collectionSpy.get.and.returnValue(of(orderData));
+  it('should initialize form on init', () => {
+    spyOn(component, 'initOrderForm');
+    component.ngOnInit();
+    expect(component.initOrderForm).toBeDefined();
+  });
 
-  //   component.ngOnInit();
+  it('should call loadBasket on initialization', () => {
+    spyOn(component, 'loadBasket');
+    component.ngOnInit();
+    expect(component.loadBasket).toBeDefined();
+  });
 
-  //   expect(component.total).toBeDefined();
-  //   expect(component.basket.length).toBeGreaterThan(0);
-  //   expect(component.order.length).toBeGreaterThan(0);
-  // });
+  it('should call getOrders on initialization', () => {
+    spyOn(component, 'getOrders');
+    component.ngOnInit();
+    expect(component.getOrders).toBeDefined();
+  });
 
-  // it('should handle errors during ngOnInit', () => {
-  //   (firestore.collection as jasmine.Spy).and.returnValue(collectionSpy);
-  //   collectionSpy.get.and.returnValue(throwError('Firestore error'));
 
-  //   spyOn(component, 'handleError').and.callFake(); // Spy on error handling
+  it('should load user from local storage', () => {
+    const user = { address: [], bonus: 100 };
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(user));
+    component.loadUser();
+    expect(component.currentUser).toEqual(user);
+    expect(component.address).toEqual(user.address);
+    expect(component.sum_bonus).toEqual(user.bonus);
+  });
 
-  //   component.ngOnInit();
+  it('should update basket on product count change', () => {
+    const product = { id: 1, count: 1 } as any;
+    spyOn(component, 'addToBasket');
+    component.productCount(product, true);
+    expect(component.addToBasket).toHaveBeenCalledWith(product, true);
+  });
 
-  //   expect(component.handleError).toHaveBeenCalled();
-  // });
+ it('should add order and update user profile', async () => {
+    spyOn(component, 'removeAllFromBasket');
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify([]));
+    spyOn(localStorage, 'setItem');
+    const routerSpy = spyOn(component.router, 'navigate').and.stub();
+    mockOrderService.createFirebase.and.returnValue(Promise.resolve({}));
+
+    component.addOrder();
+
+    expect(mockOrderService.createFirebase).toBeDefined();
+    expect(component.removeAllFromBasket).toBeDefined();
+    expect(localStorage.setItem).toHaveBeenCalled();
+    expect(routerSpy).toBeDefined();
+    expect(toastrServiceStub.success).toBeDefined();
+  });
+
+
+
+  it('should remove product from basket', () => {
+    const product = { id: 1 } as any;
+    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify([product]));
+    spyOn(localStorage, 'setItem');
+    component.removeFromBasket(product);
+    expect(localStorage.setItem).toHaveBeenCalledWith('basket', JSON.stringify([]));
+  });
+
+
 });
-
- 
- 
-
-  
-  
-
-  
- 
-  // it('should initialize the form with user data', () => {
-  //   expect(component.orderForm).toBeDefined();
-  //   expect(component.orderForm.value.name).toBe('John');
-  //   expect(component.orderForm.value.phone).toBe('123-456-7890');
-  //   expect(component.orderForm.value.email).toBe('john.doe@example.com');
-  // });
-
-  // it('should call createOrder on form submit', () => {
-  //   component.orderForm.setValue({
-  //     order_number: 1,
-  //     uid: '12345',
-  //     date_order: new Date(),
-  //     status: false,
-  //     total: 100,
-  //     product: [],
-  //     name: 'John',
-  //     phone: '123-456-7890',
-  //     email: 'john.doe@example.com',
-  //     delivery_method: 'courier',
-  //     payment_method: 'cod',
-  //     cash: null,
-  //     isWithoutRest: true,
-  //     at_time: false,
-  //     delivery_date: new Date().toISOString().split('T')[0],
-  //     delivery_time: null,
-  //     self_delivery_address: null,
-  //     city: null,
-  //     street: null,
-  //     house: null,
-  //     entrance: null,
-  //     floor: null,
-  //     flat: null,
-  //     use_bonus: false,
-  //     summa_bonus: null,
-  //     promocode: null,      
-  //     action: null,
-  //     isCall: false,
-  //     isComment: false,
-  //     comment: null,
-  //     summa: 100,
-  //     discount: 'null',
-  //     addres: null
-  //   });
-  //   component.addOrder();
-  //   expect(orderServiceStub.createFirebase).toHaveBeenCalled();
-  // });

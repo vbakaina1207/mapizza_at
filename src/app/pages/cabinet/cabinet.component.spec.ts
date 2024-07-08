@@ -86,8 +86,8 @@ describe('CabinetComponent', () => {
     expect(component.isOpen).toBeFalse();
   });
 
-  it('should have initial title as "Особисті дані"', () => {
-    expect(component.title).toBe('Особисті дані');
+  it('should have initial title as "Personal data"', () => {
+    expect(component.title).toBe('Personal data');
   });
 
   it('should toggle isOpen state when openMenu is called', () => {

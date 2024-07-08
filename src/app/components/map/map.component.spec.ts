@@ -11,6 +11,7 @@ import { ActivatedRoute, RouterModule, Routes, provideRouter } from '@angular/ro
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../../../environments/environment';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AccountService } from '../../shared/services/account/account.service';
 
 
 
@@ -108,27 +109,31 @@ const mockGoogle = {
 
 
 
+
+
 describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 
+  
 
   beforeEach(waitForAsync(() => {
-  const mockGoogle = jasmine.createSpyObj('google', ['maps']);
+  // const mockGoogle = jasmine.createSpyObj('google', ['maps']);
     TestBed.configureTestingModule({
       declarations: [MapComponent],
       imports: [
-        MatDialogModule,        
+        // MatDialogModule,        
         HttpClientTestingModule,
         GoogleMapsModule,       
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
+        // { provide: MatDialogRef, useValue: {} },
         { provide: ToastrService, useValue: {} },
         // { provide: GOOGLE, useFactory: googleFactory},
         // { provide: GOOGLE, useValue: mockGoogle},
-        // { provide: 'google', useValue: mockGoogle },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },       
+        { provide: 'google', useValue: mockGoogle },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },      
+        { provide: AccountService, useValue: { address$: { subscribe: jasmine.createSpy() }, setZoneStatus: jasmine.createSpy() } }
       ],
      
     })
@@ -136,6 +141,12 @@ describe('MapComponent', () => {
   }));
 
   beforeEach(() => {
+
+    window['google'] = {
+      maps: {
+        Map: () => {}
+      }
+    };
     fixture = TestBed.createComponent(MapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

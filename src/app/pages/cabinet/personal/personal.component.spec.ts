@@ -82,22 +82,21 @@ describe('PersonalComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        MatDialogModule,
+        // MatDialogModule,
         // RouterModule.forRoot( routes ), 
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideFirestore(() => getFirestore()),
-        AngularFireModule
+        // AngularFireModule
       ],
       providers: [       
         // { provide: Storage, useValue: {} },
-        // { provide: MatDialogRef, useValue: {} },
-        // { provide: Auth, useValue: {} },
+        // { provide: MatDialogRef, useValue: {} },       
         // { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: ToastService, useValue: mockToastr },
         // { provide: MatDialog, useValue: mockDialog },
         // { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
-        { provide: AccountService, useValue: accountServiceStub },
+        // { provide: AccountService, useValue: accountServiceStub },
         // provideRouter(routes)
         // { provide: Firestore, useValue: mockFirestore }, 
       ]

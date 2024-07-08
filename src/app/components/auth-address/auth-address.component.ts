@@ -76,21 +76,8 @@ constructor(
     }
   }
 
-  getAddress(): void {
-    /* this.getDataUser().then(() => {
-      this.toastr.success('Data user successfully');
-    }).catch(e => {
-      this.toastr.error(e.message);
-    }) */
+  getAddress(): void {    
     this.dataUser = this.accountService.userAddress;
- 
-
-  /* async getDataUser(): Promise<any> {
-    getDoc(doc(this.afs, "users", this.currentUser.uid )).then((user_doc) => {
-      this.dataUser = user_doc.get('address');  
-    }); */
-    
-    
   }
 
 

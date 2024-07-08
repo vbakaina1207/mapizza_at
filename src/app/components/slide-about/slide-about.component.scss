@@ -147,13 +147,17 @@
 
     
     .swiper-wrapper .carousel-indicators{
-        bottom: -36px;;
-        padding: 20px;
+        bottom: -13px;;
+        // padding: 20px;
     }
 
     .swiper-wrapper .carousel{
         margin-bottom: 0;
-        height: 180px;
+        height: 210px;
+    }
+
+    .benefits-wrapper {
+        padding: 20px;
     }
 }
 
@@ -163,5 +167,20 @@
         overflow: visible;
     }
 
+    .benefits-item .title{
+        font-size: 16px;
+    }
 
+    .benefits-info{
+        font-size: 16px;
+    }
+
+}
+
+
+@media (max-width: 360px) { 
+
+    .swiper-wrapper .carousel{      
+        height: 250px;
+    }
 }

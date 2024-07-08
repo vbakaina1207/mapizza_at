@@ -229,10 +229,10 @@
   border-radius: 10px;
   text-align: center;
   box-shadow: none;
-  background-color: $clr-secondary;
+  background-color: $clr-secondary !important;
 
   &:hover{
-    background-color: $clr-primary;
+    background-color: $clr-primary !important;
     color: $clr-white;
 }
 

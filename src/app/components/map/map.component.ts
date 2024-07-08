@@ -251,7 +251,7 @@ export class MapComponent implements OnInit{
     this.map.setZoom(this.zoom);
     this.yellowZone?.setMap(this.map);
     this.greenZone?.setMap(this.map);
-    this.accountService.setZoneStatus(false, false); // Reset zone status
+    this.accountService.setZoneStatus(false, false); 
   }
 
 

@@ -27,10 +27,8 @@ export class PersonalComponent implements OnInit {
   
 
   constructor(
-    private fb: FormBuilder,
-    // private router: Router,
-    private afs: Firestore,
-    // private auth: Auth,
+    private fb: FormBuilder,  
+    private afs: Firestore,   
     private toast: ToastrService,
     public dialog: MatDialog,
     public accountService: AccountService,

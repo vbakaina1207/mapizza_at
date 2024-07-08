@@ -88,7 +88,7 @@ ngb-carousel .picsum-img-wrapper > img {
 }
 
 .carousel-control-prev, .carousel-control-next{
-	bottom: 37px;
+	bottom: 137px;
 	align-items: end;
 }
 
@@ -117,8 +117,8 @@ ngb-carousel .picsum-img-wrapper > img {
 }
 .carousel-indicators {
 	justify-content: start;
-	bottom: 23px;
-    left: -77px;
+	bottom: 124px;
+    left: -53px;
 
 	.active {
     	background-color: $clr-secondary;
@@ -153,6 +153,17 @@ ngb-carousel .picsum-img-wrapper > img {
 	.carousel-indicators [data-bs-target] {
 		margin: 0 10px;
 	}
+	
+	.carousel-indicators{
+		bottom: 23px;
+    	left: -62px;
+	}
+
+	.carousel-control-prev, .carousel-control-next{
+		bottom: 37px;
+		align-items: end;
+	}
+	
 }
 
 @media screen and (max-width: 1400px) {
