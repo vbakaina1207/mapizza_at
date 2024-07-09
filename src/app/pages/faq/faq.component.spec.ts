@@ -14,7 +14,20 @@ import { FaqService } from '../../shared/services/faq/faq.service';
 import { ImageService } from '../../shared/services/image/image.service';
 import { TermsDialogComponent } from '../../components/terms-dialog/terms-dialog.component';
 import { AuthDialogComponent } from '../../components/auth-dialog/auth-dialog.component';
+import { Component } from '@angular/core';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
 
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 describe('FaqComponent', () => {
   let component: FaqComponent;
@@ -44,9 +57,9 @@ const toastrServiceStub = {
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [FaqComponent],
-        imports: [RouterTestingModule,
+        imports: [
           HttpClientTestingModule,
-          RouterTestingModule,
+          RouterModule.forRoot( routes ), 
           ReactiveFormsModule,
           MatDialogModule,
         ],
@@ -57,7 +70,10 @@ const toastrServiceStub = {
           { provide: MatDialogRef, useValue: {} },
           { provide: Firestore, useValue: {} },
           { provide: ToastrService, useValue: toastrServiceStub },
-          { provide: Auth, useValue: {} },],
+          { provide: Auth, useValue: {} },
+          provideRouter(routes),
+        ],
+          
       }).compileComponents();
     })
   );

@@ -12,7 +12,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class VacancyComponent implements OnInit {
 
   public userVacancy: Array<IVacancyResponse> = [];
-  private eventSubscription!: Subscription;
+  public eventSubscription!: Subscription;
 
   constructor( private vacancyService: VacancyService,
     private activatedRoute: ActivatedRoute,

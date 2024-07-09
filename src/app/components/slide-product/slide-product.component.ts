@@ -181,7 +181,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     this.isFavorite = this.isProductFavorite(product);
     this.isFavorite = !this.isFavorite;
     if (this.isFavorite)
-      this.favorite.push(product);
+      this.favorite?.push(product);
     else {
       let index = this.favorite.findIndex((prod: { id: string; }) => prod.id === product.id);
       this.favorite.splice(index, 1);

@@ -1,9 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 
 import {  AuthGuardService } from './auth.guard';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterModule, RouterStateSnapshot, Routes, provideRouter } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Auth } from '@angular/fire/auth';
+import { Component } from '@angular/core';
+
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 describe('AuthGuard', () => {
   let guard:  AuthGuardService;
@@ -14,9 +27,10 @@ describe('AuthGuard', () => {
       providers: [
         AuthGuardService,
         { provide: Auth, useValue: {} },
-        { provide: Router, useValue: {} }
+        { provide: Router, useValue: {} },
+        provideRouter(routes)
       ],
-      imports: [RouterTestingModule],
+      imports: [RouterModule.forRoot( routes ) ],
     }).compileComponents();
     
   });

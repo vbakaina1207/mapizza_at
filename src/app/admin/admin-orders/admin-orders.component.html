@@ -38,7 +38,7 @@
         <td><b>{{ order.summa }}</b> € </td>
         <td class="td-color">
           <form [formGroup]="orderForm" (ngSubmit)="changeOrder(order)">              
-          <p class="status" [ngClass]="{'btn-status': !order?.status}">{{ order.status ?  'done' : 'not done'}} </p>
+          <p class="status btn-status" [ngClass]="{'btn-status': !order?.status}" [ngClass]="{'done-status': order?.status}">{{ order.status ?  'done' : 'not done'}} </p>
           <button type="submit">change</button>
           </form>       
         </td>

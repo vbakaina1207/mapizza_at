@@ -157,11 +157,12 @@ public total = 0;
     if (productIndex !== -1) {      
         for (let i = 0; i < basket.length; i++) {           
             if (basket[i].id === product.id && this.areAdditionsEqual(basket[i].selected_addition, product.selected_addition)) {               
-                basket[i].addition_price -= Number(product.selected_addition.find(addition => addition.name === additionName)?.price);                
+                basket[i].addition_price -= Number(product.selected_addition.find(addition => addition.name === additionName)?.price || 0);                
                 const additionIndex = basket[i].selected_addition.findIndex((addition: { name: any; }) => addition.name === additionName);
                 if (additionIndex !== -1) {
                     basket[i].selected_addition.splice(additionIndex, 1);
-                }               
+                }    
+                if (!basket[i].selected_addition.length) basket[i].addition_price = 0;            
                 this.updateProductInBasket(basket[i], i);               
                 break;
             }

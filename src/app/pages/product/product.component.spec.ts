@@ -206,7 +206,7 @@ const toastrServiceStub = {
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: CategoryService, useValue: categoryServiceStub },
         provideRouter(routes)
-        // { provide: Firestore, usevalue: mockFirestore }
+       
       ],
       schemas:[
         CUSTOM_ELEMENTS_SCHEMA
@@ -267,7 +267,7 @@ const toastrServiceStub = {
     let index = favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
     component.isFavorite = index === -1 ? false : true;   
     expect(component).toBeTruthy();
-    // component.loadFaviriteProducts(); 
+    
     expect(component.isFavorite).toBe(true); 
   });
 
@@ -373,8 +373,6 @@ it('should update the count field when calling updateCount', () => {
 })
 
 it('should load products on init', () => {
-  // component.ngOnInit();
-  // expect(component.userProducts.length).toEqual(0);
   expect(component.ngOnInit).toBeDefined();
 });
 

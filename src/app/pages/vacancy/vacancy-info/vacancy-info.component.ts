@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { VacancyService } from '../../../shared/services/vacancy/vacancy.service';
 import { AccountService } from '../../../shared/services/account/account.service';
 import DOMPurify from 'dompurify';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-vacancy-info',
@@ -42,10 +43,7 @@ export class VacancyInfoComponent implements OnInit {
     private massageService: MassageService,
     private imageService: ImageService,
     private toastr: ToastrService,
-    // private route: ActivatedRoute,
     private router: Router,
-    // private accountService: AccountService,
-    // private vacancyService: VacancyService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {        
@@ -69,18 +67,11 @@ export class VacancyInfoComponent implements OnInit {
       email: [null, Validators.required],
       description: [null],
       imagePath: [null],
-      date_message: new Date()
+      date_message: Timestamp.fromDate(new Date())
     });
     this.isValid = false;
   }
-  
- /*  loadVacancy(): void {
-    const VACANCY_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
-    this.accountService.VACANCY_ID = VACANCY_ID;
-    this.vacancyService.getOneFirebase( VACANCY_ID).subscribe(data => {
-      this.vacancy = data as IVacancyResponse;     
-    });
-  } */
+ 
 
   loadMassages(): void {
     this.massageService.getAllFirebase().subscribe(data => {
@@ -88,13 +79,6 @@ export class VacancyInfoComponent implements OnInit {
     })
   }
 
-  /* getSanitizedDescription(description: string): string {
-    const config = { ALLOWED_TAGS: ['h2', 'strong', 'ul', 'li', 'b'] };
-    const sanitized = DOMPurify.sanitize(description, config);
-    console.log(sanitized); 
-    return sanitized;
-  } */
-  
   upload(event: any): void {
     this.file = event.target.files[0];
     this.imageService.uploadFile('images', this.file.name, this.file)
@@ -138,12 +122,7 @@ export class VacancyInfoComponent implements OnInit {
     }
   }
 
-  /* getDescription(str:string):string {
-   // return  str.split(/(✅ )/);
-   str.replace(/(<)/gi, `&#60`);
-    return str.replace(/(>)/gi, `&#62`);
-   
- } */
+  
     
 
 }

@@ -29,6 +29,10 @@ td button {
     @include btn-save;
 }
 
+td:last-child{
+    text-align: center;
+}
+
 .btn-add {    
     @include btn-detail;
 }
@@ -57,7 +61,11 @@ textarea {
 }
 
 .status{
-    white-space: nowrap;
+    white-space: nowrap;    
+}
+
+.done-status{
+    color: $clr-primary;
 }
 
 @media screen and (max-width: 598px) {
