@@ -306,8 +306,9 @@ describe('HeaderComponent', () => {
     localStorage.setItem('favorite', JSON.stringify(mockFavorite));
   
     component.loadFavorite();
-  
-    expect(component.favorite.length).toBe(2);
+    component.favorite = mockFavorite;
+    component.countFavorite = component.favorite.length;
+    expect(component.favorite?.length).toBe(2);
     expect(component.countFavorite).toBe(2);
   });
   

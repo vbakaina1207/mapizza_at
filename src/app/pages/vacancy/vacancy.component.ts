@@ -15,7 +15,7 @@ export class VacancyComponent implements OnInit {
   public eventSubscription!: Subscription;
 
   constructor( private vacancyService: VacancyService,
-    private activatedRoute: ActivatedRoute,
+    
     private router: Router
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {

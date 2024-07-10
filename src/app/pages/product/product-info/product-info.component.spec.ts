@@ -5,11 +5,28 @@ import { ProductInfoComponent } from './product-info.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProductService } from '../../../shared/services/product/product.service';
 import { OrderService } from '../../../shared/services/order/order.service';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../../../../environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 describe('ProductInfoComponent', () => {
   let component: ProductInfoComponent;
@@ -104,11 +121,16 @@ const toastrServiceStub = {
         { provide: MatDialogRef, useValue: {} },
         { provide: Firestore, useValue: mockFirestore },
         { provide: ToastrService, useValue: toastrServiceStub },
+        provideRouter(routes)
       ]  ,    
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        MatDialogModule
+        HttpClientTestingModule,        
+        MatDialogModule,
+        AngularFireStorageModule,
+        RouterModule.forRoot( routes ),   
+        AngularFireModule.initializeApp(environment.firebase),       
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore())  
       ],
       schemas: [
           NO_ERRORS_SCHEMA

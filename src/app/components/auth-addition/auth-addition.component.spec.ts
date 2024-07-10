@@ -12,6 +12,24 @@ import { AdditionProductService } from '../../shared/services/addition-product/a
 import { ProductService } from '../../shared/services/product/product.service';
 import { OrderService } from '../../shared/services/order/order.service';
 import { ITypeAdditionResponse } from '../../shared/interfaces/type-addition/type-addition.interfaces';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../../../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
+import { Component } from '@angular/core';
+
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 
 describe('AuthAdditionComponent', () => {
@@ -110,7 +128,10 @@ describe('AuthAdditionComponent', () => {
       declarations: [AuthAdditionComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot( routes ),   
+        AngularFireModule.initializeApp(environment.firebase),       
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore())  ,
         ReactiveFormsModule,
         AngularFireStorageModule
       ],
@@ -119,7 +140,8 @@ describe('AuthAdditionComponent', () => {
         { provide: ToastrService, useValue: {} },
         { provide: AdditionProductService, useValue: serviceAdditionProductStub },
         { provide: OrderService, useValue: orderServiceStub },
-        { provide: ProductService, useValue: productServiceStub }
+        { provide: ProductService, useValue: productServiceStub },
+        provideRouter(routes)
       ]
     })
     .compileComponents();

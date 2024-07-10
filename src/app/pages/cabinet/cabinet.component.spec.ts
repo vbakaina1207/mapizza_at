@@ -3,9 +3,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CabinetComponent } from './cabinet.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { OrderService } from '../../shared/services/order/order.service';
+import { Component } from '@angular/core';
+import { RouterModule, Routes, provideRouter } from '@angular/router';
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 
 describe('CabinetComponent', () => {
@@ -63,10 +76,11 @@ describe('CabinetComponent', () => {
       declarations: [CabinetComponent],
       providers: [
         { provide: OrderService, useValue: orderServiceStub },
+        provideRouter(routes)
       ],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot( routes ), 
       ]
     })
     .compileComponents();

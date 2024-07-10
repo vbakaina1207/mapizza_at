@@ -121,13 +121,11 @@ xdescribe('MapComponent', () => {
   // const mockGoogle = jasmine.createSpyObj('google', ['maps']);
     TestBed.configureTestingModule({
       declarations: [MapComponent],
-      imports: [
-        // MatDialogModule,        
+      imports: [       
         HttpClientTestingModule,
         GoogleMapsModule,       
       ],
       providers: [
-        // { provide: MatDialogRef, useValue: {} },
         { provide: ToastrService, useValue: {} },
         // { provide: GOOGLE, useFactory: googleFactory},
         // { provide: GOOGLE, useValue: mockGoogle},

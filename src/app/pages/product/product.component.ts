@@ -129,19 +129,36 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
       this.isInfoBlock = false;
   }
 
-  loadFavoriteProducts(): void{
+  
+async getFavorite() {
+  if (this.currentUser) {
+    try {
+      const userDoc = await getDoc(doc(this.afs, "users", this.currentUser.uid));
+      this.favorite = userDoc.get('favorite') || [];
+      // this.cdr.detectChanges(); // Explicitly trigger change detection
+    } catch (error) {
+      console.error('Failed to get favorite products', error);
+    }
+  }
+  
+}
+
+  loadFavoriteProducts(): void{    
+    this.getFavorite();
+    if (this.favorite.length === 0 && this.currentUser?.favorite?.length )
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
       if (this.favorite?.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
-    }
-      for (let i = 0; i < this.userProducts.length; i++) {
+    } else 
+      localStorage.setItem('favorite', JSON.stringify(this.favorite));
+    for (let i = 0; i < this.userProducts.length; i++) {
       this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
     }    
   }
 
   loadUser(): void {
-    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
-      this.favorite = this.currentUser.favorite;
+    if(localStorage.length > 0 && localStorage.getItem('currentUser') !== undefined) {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);       
+      // this.favorite = this.currentUser.favorite;
     }
   }
 
@@ -220,17 +237,25 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
           this.currentUser.favorite = this.favorite;
           localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
         }
+        this.updateDoc();
   }
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
-      this.loadFavoriteProducts;      
+      this.loadFavoriteProducts;         
     });
     this.accountService.changeCurrentUser.subscribe(() => {
       this.loadUser();
     })
   }
 
+  async updateDoc(): Promise<any> {
+    this.currentUser.favorite = this.favorite;
+    const user = this.currentUser;
+    setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
+    localStorage.setItem('currentUser', JSON.stringify( user));
+  }
+  
   toogleRead(): void {
     this.isRead = !this.isRead;
   }

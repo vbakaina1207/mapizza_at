@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ROLE } from './../../shared/constants/role.constant';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ICategoryResponse } from '../../shared/interfaces/category/category.interface';
 import { IProductResponse } from '../../shared/interfaces/product/product.interface';
 import { CategoryService } from '../../shared/services/category/category.service';
@@ -9,6 +9,8 @@ import { OrderService } from '../../shared/services/order/order.service';
 import { AccountService } from '../../shared/services/account/account.service';
 import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
 import { BasketComponent } from '../basket/basket.component';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +29,7 @@ export class HeaderComponent implements OnInit {
   public basket: Array<IProductResponse> = [];
   public favorite: Array<IProductResponse> = []; 
   public countFavorite: number = 0;
-
+  private eventSubscription!: Subscription;
   public currentUser!: any;
   public isOpenmenu: boolean = false;
   public isOpenMobileMenu: boolean = false;
@@ -39,8 +41,19 @@ export class HeaderComponent implements OnInit {
     private orderService: OrderService,
     public accountService: AccountService,
     public dialog: MatDialog,
-    public router: Router
-  ) { }
+    public router: Router,
+    public afs: Firestore,
+    private cdr: ChangeDetectorRef
+  ) { 
+    this.eventSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // this.initializeFavorites();
+        this.loadUser();
+    this.loadFavorite();
+    this.updateFavorite(); 
+      }
+    });
+  }
 
   ngOnInit() {
     this.getCategories();
@@ -48,6 +61,8 @@ export class HeaderComponent implements OnInit {
     this.updateBasket();
     this.checkUserLogin();
     this.checkUpdatesUserLogin();
+    // this.initializeFavorites();
+    this.loadUser();
     this.loadFavorite();
     this.updateFavorite();    
   }
@@ -67,24 +82,71 @@ export class HeaderComponent implements OnInit {
     this.getTotalPrice();
   }
 
+  // loadUser(): void {
+  //   if(localStorage.length > 0 && localStorage.getItem('currentUser')){
+  //     this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
+  //     this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'];
+  //   }    
+  // }
+
   loadUser(): void {
-    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
-      this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'];
-    }
-    
+    const currentUserStr = localStorage.getItem('currentUser') as string;
+    if (currentUserStr && currentUserStr !== 'undefined') {
+      try {
+        this.currentUser = JSON.parse(currentUserStr);
+        this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'];
+        this.favorite = this.currentUser.favorite;
+      } catch (error) {
+        console.error('Failed to parse currentUser from localStorage', error);        
+      }
+    } 
   }
 
-  loadFavorite(): void {
-    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
-    };  
-    this.countFavorite = this.favorite.length;
+    
+async getFavorite(): Promise<void> {
+  if (this.currentUser) {
+    try {
+      const userDoc = await getDoc(doc(this.afs, "users", this.currentUser.uid));
+      this.favorite = userDoc.get('favorite') || [];
+      this.cdr.detectChanges(); // Explicitly trigger change detection
+      this.countFavorite = this.favorite?.length;
+      console.log(this.countFavorite, 'countFavorite1');
+    } catch (error) {
+      console.error('Failed to get favorite products', error);
+    }
   }
+  
+}
+loadFavorite(): void {
+    // this.getFavorite();
+    if (this.favorite?.length === 0 && this.currentUser?.favorite)
+    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      if (this.currentUser) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+    }  else 
+      localStorage.setItem('favorite', JSON.stringify(this.favorite));  
+    this.countFavorite = this.favorite?.length;
+    console.log(this.countFavorite, 'countFavorite');
+  }
+
+  // async initializeFavorites(): Promise<void> {
+  //   this.loadUser();
+  //   if (this.currentUser) {
+  //     await this.loadFavorite();
+  //   }
+  // }
+
+//   getFavorite():void{
+//     if ( this.currentUser) {
+//     getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {                
+//         this.favorite = user_doc.get('favorite');        
+//       })
+//     }
+// }
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
       this.loadFavorite();
+      // this.initializeFavorites();
     })
   }
 
@@ -104,7 +166,9 @@ export class HeaderComponent implements OnInit {
   }
 
     checkUserLogin(): void {
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
+      const currentUserStr = localStorage.getItem('currentUser');
+      if (currentUserStr && currentUserStr !== 'undefined') 
+         this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
       if(this.currentUser && this.currentUser.role === ROLE.ADMIN){
         this.isLogin = true;
         this.loginUrl = 'admin';

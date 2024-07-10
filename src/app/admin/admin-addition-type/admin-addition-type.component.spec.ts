@@ -124,7 +124,6 @@ describe('AdminAdditionTypeComponent', () => {
     component.typeAdditionForm.setValue(additionProduct);    
     expect(component.typeAdditionForm.valid).toBeTrue();
     component.addAdditionProduct();   
-    // expect(component.toastr.showSuccess).toHaveBeenCalled(); 
 
     expect(component.isAdd).toBe(false);
     component.typeAdditionForm.reset();

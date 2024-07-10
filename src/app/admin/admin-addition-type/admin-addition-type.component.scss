@@ -11,13 +11,11 @@ body{
 thead{
     border-bottom: 2px solid $clr-primary;  
     font-size: 16px;
-    //@include body($clr-black, 'MontBlancBold', 700);
     padding: 0;
 }
 
 
 tbody{
-    //@include body($clr-black, 'MontBlanc', 400);
     font-size: 16px;
 }
 

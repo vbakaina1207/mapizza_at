@@ -3,10 +3,26 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoriteComponent } from './favorite.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import { Router, RouterModule, Routes, provideRouter } from '@angular/router';
 import { IProductResponse } from '../../../shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from '../../../shared/interfaces/type-addition/type-addition.interfaces';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../../../../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { Component } from '@angular/core';
 
+
+@Component({
+  selector: 'app-blank',
+  template: '<p>Blank Component</p>'
+})
+class BlankComponent {}
+
+const routes: Routes = [
+  { path: '', component: BlankComponent },
+  { path: 'test', component: BlankComponent }
+];
 
 describe('FavoriteComponent', () => {
   let component: FavoriteComponent;
@@ -33,7 +49,13 @@ describe('FavoriteComponent', () => {
       declarations: [FavoriteComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot( routes ),   
+        AngularFireModule.initializeApp(environment.firebase),       
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore())  ,
+      ],
+      providers: [
+        provideRouter(routes)
       ]
     })
     .compileComponents();

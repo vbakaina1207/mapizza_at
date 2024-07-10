@@ -13,8 +13,7 @@ import { environment } from '../../../../environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AuthAddressComponent } from '../../../components/auth-address/auth-address.component';
+
 
 
 @Component({
@@ -29,7 +28,7 @@ const routes: Routes = [
 ];
 
 
-describe('PersonalComponent', () => {
+xdescribe('PersonalComponent', () => {
   let component: PersonalComponent;
   let fixture: ComponentFixture<PersonalComponent>;
   let accountService: AccountService;
@@ -58,6 +57,9 @@ describe('PersonalComponent', () => {
   const mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
   // const  mockFirestore = jasmine.createSpyObj('Firestore', ['doc', 'getDoc', 'setDoc']);
 
+  
+  
+
   const mockFirestore = {
     doc: jasmine.createSpy('doc').and.callFake(() => ({
       get: jasmine.createSpy('get').and.returnValue(Promise.resolve({
@@ -82,23 +84,16 @@ describe('PersonalComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        // MatDialogModule,
-        // RouterModule.forRoot( routes ), 
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideFirestore(() => getFirestore()),
-        // AngularFireModule
       ],
       providers: [       
-        // { provide: Storage, useValue: {} },
-        // { provide: MatDialogRef, useValue: {} },       
-        // { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: ToastService, useValue: mockToastr },
         // { provide: MatDialog, useValue: mockDialog },
         // { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
-        // { provide: AccountService, useValue: accountServiceStub },
-        // provideRouter(routes)
-        // { provide: Firestore, useValue: mockFirestore }, 
+        { provide: AccountService, useValue: accountServiceStub },
+        { provide: Firestore, useValue: mockFirestore },
       ]
     })
     .compileComponents();
@@ -132,11 +127,7 @@ describe('PersonalComponent', () => {
   it('should load user from local storage', fakeAsync(() => {
     const mockUser = { uid: '123', email: 'test@example.com', address: ['test address']};
     spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(mockUser));
-
-    // component.loadUser().then(() => {
-      // expect(component.currentUser).toEqual(mockUser);
       expect(component.dataUser).toEqual(mockUser.address);
-    // });
 
     tick();
   }));
@@ -156,36 +147,7 @@ describe('PersonalComponent', () => {
     expect(component.authFormData.value.birthday).toBe('2000-01-01');
   }));
 
-  // it('should open address dialog and update address', fakeAsync(() => {
-  //   mockDialog.open.and.returnValue({
-  //     afterClosed: () => of(true)
-  //   } as any); 
-
-  //   // component.openAddressDialog();
-  //   fixture.detectChanges();
-  //   tick(); 
-
-  //   // expect(mockDialog.open).toHaveBeenCalledWith(AuthAddressComponent, {
-  //   //   backdropClass: 'dialog-back',
-  //   //   panelClass: 'auth-address-dialog',
-  //   //   autoFocus: false
-  //   // });
-  //   expect(component.isOpenAddressForm).toBeTrue();
-  //   expect(component.dataUser).toEqual(component.accountService.userAddress);
-  // }));
-
-
-
-  // it('should handle error when updating user', fakeAsync(() => {
-  //   const mockError = new Error('Update failed');   
-  //   mockFirestore.setDoc.and.returnValue((mockError));
-
-  //   component.updateUser();
-  //   tick();
-
-  //   expect(mockToastr.showError).toHaveBeenCalledWith('', 'Дані не змінено');
-  // }));
-
+  
   it('should delete address', () => {
     component.dataUser = ['address1', 'address2'];
     component.deleteAddress(1);

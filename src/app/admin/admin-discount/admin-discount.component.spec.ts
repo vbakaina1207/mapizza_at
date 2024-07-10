@@ -62,7 +62,6 @@ describe('AdminDiscountComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        // MatDialogModule,
         SharedModule   
       ],
       providers: [

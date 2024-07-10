@@ -53,10 +53,8 @@ describe('AdminCategoryComponent', () => {
       imports: [
         ReactiveFormsModule, 
         HttpClientTestingModule, 
-        // MatDialogModule
       ],
       providers: [
-        // { provide: MatDialogRef, useValue: {} },
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: CategoryService, useValue: categoryServiceStub },

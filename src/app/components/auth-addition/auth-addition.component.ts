@@ -47,7 +47,8 @@ export class AuthAdditionComponent implements OnInit {
     private orderService: OrderService,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastService
+    private toastr: ToastService,
+    private afs: Firestore,
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
@@ -266,9 +267,16 @@ additionDeleteAllClick(): void {
       this.accountService.changeFavorite.next(true);
       this.currentUser.favorite = this.favorite;
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser)); 
-      console.log(this.isFavorite, this.favorite, );
+      this.updateDoc();
   }
 
+
+  async updateDoc(): Promise<any> {
+    this.currentUser.favorite = this.favorite;
+    const user = this.currentUser;
+    setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
+    localStorage.setItem('currentUser', JSON.stringify( user));
+  }
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {

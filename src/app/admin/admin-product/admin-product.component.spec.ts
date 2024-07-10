@@ -136,12 +136,9 @@ describe('AdminProductComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        // AngularFireModule,
-        // MatDialogModule
       ],
       providers: [
         { provide: Storage, useValue: {} },
-        // { provide: MatDialogRef, useValue: {} },
         { provide: ToastrService, useValue: toastrServiceStub },
         { provide: ProductService, useValue: productServiceStub },
         { provide: CategoryService, useValue: categoryServiceStub },

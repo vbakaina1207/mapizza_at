@@ -51,7 +51,6 @@ describe('PasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PasswordComponent);
     component = fixture.componentInstance;
-    // router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 

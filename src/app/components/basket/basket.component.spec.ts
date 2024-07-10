@@ -139,13 +139,11 @@ const storage: Record<string, string> = {};
       declarations: [BasketComponent],
       imports:[
         HttpClientTestingModule,   
-        // MatDialogModule,
         RouterModule.forRoot( routes ), 
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideFirestore(() => getFirestore()),
       ],
       providers: [
-        // { provide: MatDialogRef, useValue: {} },
         { provide: OrderService, useValue: orderServiceStub },
         { provide: ProductService, useValue: serviceStub },
         { provide: Firestore, useValue: mockFirestore },

@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, DoCheck, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { user } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IProductResponse } from '../../shared/interfaces/product/product.interface';
@@ -32,7 +32,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   public basket: Array<IProductResponse> = [];
   public isFavorite!: boolean;
   // public favoriteProducts: Array<IProductResponse> = [];
-  public currentUser: any;
+  public currentUser!: any;
   public favorite!: any;
   public btnName: string = 'order';
   public isOrder: boolean = false;
@@ -119,11 +119,23 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     
   }
   
+  // loadUser(): void {
+  //   if(localStorage.length > 0 && localStorage.getItem('currentUser')){
+  //     this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+  //   } else this.currentUser = '';
+  // }
   loadUser(): void {
-    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+    const currentUserStr = localStorage.getItem('currentUser') as string;
+    if (currentUserStr && currentUserStr !== 'undefined') {
+      try {
+        this.currentUser = JSON.parse(currentUserStr);
+        this.favorite = this.currentUser.favorite;
+      } catch (error) {
+        console.error('Failed to parse currentUser from localStorage', error);       
+      }
     }
   }
+  
 
   
   ngOnDestroy(): void {
@@ -189,8 +201,9 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
       
     localStorage.setItem('favorite', JSON.stringify(this.favorite));
     this.accountService.changeFavorite.next(true);
-    this.currentUser.favorite = this.favorite;
+    if (this.currentUser) this.currentUser.favorite = this.favorite;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    this.updateDoc();
   }
 
   isProductFavorite(product: IProductResponse): boolean {
@@ -198,7 +211,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   loadFaviriteProducts(): void{
-      if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      if (localStorage?.length > 0 && localStorage.getItem('favorite') !== 'undefined') {
         this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
       }
     for (let i = 0; i < this.userProducts.length; i++) {
@@ -206,11 +219,19 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     }         
   }
 
+  async updateDoc(): Promise<any> {
+    this.currentUser.favorite = this.favorite;
+    const user = this.currentUser;
+    setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
+    localStorage.setItem('currentUser', JSON.stringify( user));
+  }
+
+
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
-      this.loadProducts();
+      // this.loadProducts();
       this.loadFaviriteProducts();
-      this.loadUser();      
+      // this.loadUser();      
     })
   }
   
