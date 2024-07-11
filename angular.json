@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/mapizza",
+            "outputPath": "dist/mapizzaat",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -56,19 +56,33 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5000kb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kb",
-                  "maximumError": "40kb"
+                  "maximumWarning": "5000kb",
+                  "maximumError": "2mb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+    "scripts": true,
+    "styles": {
+        "minify": true,
+        "inlineCritical": false
+    }
+}
             },
             "development": {
-              "optimization": false,
+              "optimization": {
+                  "scripts": true,
+                  "styles": {
+                       "minify": true,
+                       "inlineCritical": false
+                       },
+                  "fonts": true
+              },
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [

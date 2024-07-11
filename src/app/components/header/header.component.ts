@@ -45,14 +45,13 @@ export class HeaderComponent implements OnInit {
     public afs: Firestore,
     private cdr: ChangeDetectorRef
   ) { 
-    this.eventSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        // this.initializeFavorites();
-        this.loadUser();
-    this.loadFavorite();
-    this.updateFavorite(); 
-      }
-    });
+    // this.eventSubscription = this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.loadUser();
+    //   this.loadFavorite();
+    //   this.updateFavorite(); 
+    //   }
+    // });
   }
 
   ngOnInit() {
@@ -61,7 +60,6 @@ export class HeaderComponent implements OnInit {
     this.updateBasket();
     this.checkUserLogin();
     this.checkUpdatesUserLogin();
-    // this.initializeFavorites();
     this.loadUser();
     this.loadFavorite();
     this.updateFavorite();    
@@ -96,57 +94,29 @@ export class HeaderComponent implements OnInit {
         this.currentUser = JSON.parse(currentUserStr);
         this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'];
         this.favorite = this.currentUser.favorite;
+        this.countFavorite = this.favorite?.length;
       } catch (error) {
         console.error('Failed to parse currentUser from localStorage', error);        
       }
     } 
   }
 
-    
-async getFavorite(): Promise<void> {
-  if (this.currentUser) {
-    try {
-      const userDoc = await getDoc(doc(this.afs, "users", this.currentUser.uid));
-      this.favorite = userDoc.get('favorite') || [];
-      this.cdr.detectChanges(); // Explicitly trigger change detection
-      this.countFavorite = this.favorite?.length;
-      console.log(this.countFavorite, 'countFavorite1');
-    } catch (error) {
-      console.error('Failed to get favorite products', error);
-    }
-  }
-  
-}
+
+
 loadFavorite(): void {
-    // this.getFavorite();
     if (this.favorite?.length === 0 && this.currentUser?.favorite)
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
       if (this.currentUser) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     }  else 
       localStorage.setItem('favorite', JSON.stringify(this.favorite));  
-    this.countFavorite = this.favorite?.length;
-    console.log(this.countFavorite, 'countFavorite');
+    this.countFavorite = this.favorite?.length;    
   }
 
-  // async initializeFavorites(): Promise<void> {
-  //   this.loadUser();
-  //   if (this.currentUser) {
-  //     await this.loadFavorite();
-  //   }
-  // }
-
-//   getFavorite():void{
-//     if ( this.currentUser) {
-//     getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {                
-//         this.favorite = user_doc.get('favorite');        
-//       })
-//     }
-// }
+  
 
   updateFavorite(): void {
-    this.accountService.changeFavorite.subscribe(() => {
-      this.loadFavorite();
-      // this.initializeFavorites();
+    this.accountService.changeFavorite.subscribe(() => {    
+      this.loadFavorite();     
     })
   }
 
