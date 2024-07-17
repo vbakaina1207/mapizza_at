@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/mapizzaat",
+            "outputPath": "dist/mapizzaat/browser/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -75,14 +75,7 @@
 }
             },
             "development": {
-              "optimization": {
-                  "scripts": true,
-                  "styles": {
-                       "minify": true,
-                       "inlineCritical": false
-                       },
-                  "fonts": true
-              },
+              "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [

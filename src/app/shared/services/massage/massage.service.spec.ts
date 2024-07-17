@@ -15,7 +15,7 @@ describe('Service: Message', () => {
 
   const data = [
     {
-      id: 1, name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      id: 1, name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),  status: false
     }
   ];
 
@@ -55,7 +55,7 @@ describe('Service: Message', () => {
   it('can test getAllFirebase', () => {
     const expectedData = [
       {
-        id: 1, name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+        id: 1, name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),  status: false
       }
     ];    
     massageService.getAllFirebase().subscribe((response: any) => expect(response).toEqual(expectedData));
@@ -63,12 +63,12 @@ describe('Service: Message', () => {
 
   it('should send create request and return new message', () => {
     const productRequest: IMassageRequest = {      
-      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),  status: false
     };
 
     const expectedProduct: IMassageResponse = {
       id: '1',
-      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),  status: false
     };
 
     massageService.createFirebase(productRequest).then((result: any) => {
@@ -104,7 +104,7 @@ describe('Service: Message', () => {
 
   it('should update existing news by ID', async () => {
     const newsUpdate: IMassageRequest = {
-      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      name: 'Ivan', phone: '1231234569', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),  status: false
     };
 
     await massageService.updateFirebase(newsUpdate, '1');

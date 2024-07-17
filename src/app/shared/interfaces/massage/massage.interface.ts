@@ -7,6 +7,7 @@ export interface IMassageRequest {
     description: string;
     imagePath: string;
     date_massage: Timestamp;
+    status: boolean;
 }
 
 export interface IMassageResponse extends IMassageRequest {

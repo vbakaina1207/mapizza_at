@@ -207,7 +207,8 @@ describe('VacancyInfoComponent', () => {
       email: 'test@example.com',
       description: 'Test Description',
       imagePath: 'some-image-path',
-      date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
+      status: false
     };
 
     const expectData: IMassageResponse = {
@@ -217,7 +218,8 @@ describe('VacancyInfoComponent', () => {
       email: 'test@example.com',
       description: 'Test Description',
       imagePath: 'some-image-path',
-      date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z'))
+      date_massage: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
+      status: false
     };
 
     const mockDocumentReference = {

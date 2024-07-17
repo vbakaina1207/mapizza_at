@@ -1,0 +1,54 @@
+
+
+<div class="col-12 d-flex justify-center table-width">
+    <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
+      <thead class="table-category">
+      <tr>
+        <th scope="col">Date and time</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">E-Mail</th>
+        <th scope="col">Description</th>   
+        <th scope="col">File</th>    
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+  
+  
+      <tbody>
+  
+      <tr *ngFor="let order of messages; let i=index">
+        <td>{{ order.date_message | formatDates: 'yyyy/MM/dd h:mm:ss a' }}</td>
+        <td>{{ order.name }}</td>
+        <td>{{ order.phone }}</td>
+        <td>{{ order.email }}</td>
+        
+        
+        <td>{{ order.description }}</td>
+        <td>      
+            <ng-container *ngIf="order.imagePath">
+                <div class="text-center" *ngIf="isImage(order.imagePath) == 'png'; else fileLink">
+                  
+                  <a [href]="order.imagePath" target="_blank"><img [src]="order.imagePath" alt="Image" height="50px"></a>
+                </div>
+                <ng-template #fileLink>
+                  <a [href]="order.imagePath" target="_blank">{{ getFileName(order.imagePath) }}</a>
+                </ng-template>
+              </ng-container>            
+        </td>
+       
+        <td class="td-color">
+          <form [formGroup]="messageForm" (ngSubmit)="changeOrder(order)">              
+          <p class="status btn-status" [ngClass]="{'btn-status': !order?.status}" [ngClass]="{'done-status': order?.status}">{{ order.status ?  'done' : 'not done'}} </p>
+          <button type="submit">change</button>
+          </form>       
+        </td>
+      </tr>
+  
+      </tbody>
+    </table>
+  </div>
+  
+  
+  
+  
