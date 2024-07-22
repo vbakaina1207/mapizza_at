@@ -74,7 +74,7 @@ export class ContactFormComponent implements OnInit {
       this.workTime = 'Mon-Sun 10:00 - 22:30';      
       this.placeholderDescription = 'Massage...';
     }
-    if ( this.route.component?.name === '_AboutComponent' ) {      
+    if ( this.router.url === '/about' ) {      
       this.isAbout = true;
     }
     this.mailto = 'mailto:' + this.email;
