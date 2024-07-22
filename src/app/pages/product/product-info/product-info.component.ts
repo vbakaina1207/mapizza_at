@@ -114,7 +114,7 @@ async getFavorite() {
     if (currentUserStr && currentUserStr !== 'undefined') {
       try {
         this.currentUser = JSON.parse(currentUserStr);
-        this.favorite = this.currentUser.favorite;
+        if (this.currentUser) this.favorite = this.currentUser.favorite;
       } catch (error) {
         console.error('Failed to parse currentUser from localStorage', error);      
       }

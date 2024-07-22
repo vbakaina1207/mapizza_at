@@ -129,7 +129,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     if (currentUserStr && currentUserStr !== 'undefined') {
       try {
         this.currentUser = JSON.parse(currentUserStr);
-        this.favorite = this.currentUser.favorite;
+        if (this.currentUser) this.favorite = this.currentUser.favorite;
       } catch (error) {
         console.error('Failed to parse currentUser from localStorage', error);       
       }
@@ -220,9 +220,9 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   async updateDoc(): Promise<any> {
-    this.currentUser.favorite = this.favorite;
+    if (this.currentUser) this.currentUser.favorite = this.favorite;
     const user = this.currentUser;
-    setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
+    if (this.currentUser?.uid) setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
     localStorage.setItem('currentUser', JSON.stringify( user));
   }
 

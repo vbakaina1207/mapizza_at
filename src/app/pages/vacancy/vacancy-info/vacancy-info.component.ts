@@ -10,6 +10,8 @@ import { VacancyService } from '../../../shared/services/vacancy/vacancy.service
 import { AccountService } from '../../../shared/services/account/account.service';
 import DOMPurify from 'dompurify';
 import { Timestamp } from '@angular/fire/firestore';
+import { AlertDialogComponent } from '../../../components/alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-vacancy-info',
@@ -44,6 +46,7 @@ export class VacancyInfoComponent implements OnInit {
     private imageService: ImageService,
     private toastr: ToastrService,
     private router: Router,
+    public dialog: MatDialog
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {        
@@ -110,19 +113,46 @@ export class VacancyInfoComponent implements OnInit {
     return this.massageForm.get(control)?.value;
   }
 
+  // addMassage(): void {
+  //   this.isValid = true;
+  //   if (this.massageForm.valid) {
+  //     this.massageService.createFirebase(this.massageForm.value).then(() => {
+  //       this.toastr.success('Massage successfully created');
+  //     })
+  //     this.massageForm.reset();
+  //     this.isUploaded = false;
+  //     this.uploadPercent = 0;
+  //   }
+  // }
+
+  
   addMassage(): void {
     this.isValid = true;
+    Object.keys(this.massageForm.controls).forEach(field => {
+      const control = this.massageForm.get(field);
+      if (control && control.invalid) {
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
     if (this.massageForm.valid) {
       this.massageService.createFirebase(this.massageForm.value).then(() => {
+        this.dialog.open(AlertDialogComponent, {
+          backdropClass: 'dialog-back',
+          panelClass: 'alert-dialog',
+          autoFocus: false,
+          data: {
+            message: 'Massage successfully created ',
+            icon: '',
+            isError: false
+          }
+        });
         this.toastr.success('Massage successfully created');
+        this.isValid = false;
       })
       this.massageForm.reset();
       this.isUploaded = false;
       this.uploadPercent = 0;
     }
   }
-
-  
-    
 
 }

@@ -32,7 +32,7 @@
                     </a>                    
                     <button class="btn-close remove-product" (click)="removeFromBasket(product)"></button>
                     <ng-container *ngIf="product.selected_addition.length>0">
-                        <div class="added_ing-wrap">
+                    <div class="added_ing-wrap">
                       <div class="ing_output-inner">
                         <div class="ing_control" *ngFor="let addProduct of product.selected_addition; let id = index">
                             <div class="ing_control-title">
@@ -357,7 +357,7 @@
 
                         <div class="thank-total-item product_price_total">
                           <div>Order amount:</div>
-                          <div><b class="all-product-price-el">{{ total }}</b>  €</div>
+                          <div><b class="all-product-price-el">{{ total.toFixed(2) }}</b>  €</div>
                         </div>
 
                         <div class="thank-total-item last-item-border price-delivery" *ngIf="sum_delivery">
@@ -377,7 +377,7 @@
 
                         <div class="thank-total-item  thank-total-cost not_visble_border">
                           <div>The total cost:</div>
-                          <div><b class="all-product-price">{{ sum_order + sum_delivery }}</b> €</div> 
+                          <div><b class="all-product-price">{{ (sum_order + sum_delivery).toFixed(2) }}</b> €</div> 
                         </div>
 
                         <div class="thank-total-item thank-total-bonus ">

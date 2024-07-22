@@ -89,21 +89,45 @@ export class PersonalComponent implements OnInit {
     //this.dataUser = this.accountService.userAddress;    
   }
 
-  getUser():void{
-    if ( this.currentUser) {
-    getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {        
-        this.authFormData = this.fb.group({
-          email: [this.currentUser['email'], [Validators.required, Validators.email]],          
-          password: [null, [Validators.required]],
-          firstName: [this.currentUser['firstName'], [Validators.required]],
-          lastName: [this.currentUser['lastName'], [Validators.required]],
-          phoneNumber: [this.currentUser['phoneNumber'], [Validators.required]],
-          birthday: [this.currentUser['birthday']]
-        });    
-        this.dataUser = user_doc.get('address');        
-      })
-    }
+//   getUser():void{
+//     if ( this.currentUser) {
+//     getDoc(doc(this.afs, "users", this.currentUser?.uid)).then((user_doc) => {        
+//         this.authFormData = this.fb.group({
+//           email: [this.currentUser['email'], [Validators.required, Validators.email]],          
+//           password: [null, [Validators.required]],
+//           firstName: [this.currentUser['firstName'], [Validators.required]],
+//           lastName: [this.currentUser['lastName'], [Validators.required]],
+//           phoneNumber: [this.currentUser['phoneNumber'], [Validators.required]],
+//           birthday: [this.currentUser['birthday']]
+//         });    
+//         this.dataUser = user_doc?.get('address');        
+//       })
+//     }
+// }
+
+getUser(): void {
+  if (this.currentUser && this.currentUser.uid) {
+      const userDocRef = doc(this.afs, "users", this.currentUser?.uid);
+      if (userDocRef) {
+          getDoc(userDocRef).then((user_doc) => {
+              this.authFormData = this.fb.group({
+                  email: [this.currentUser['email'], [Validators.required, Validators.email]],
+                  password: [null, [Validators.required]],
+                  firstName: [this.currentUser['firstName'], [Validators.required]],
+                  lastName: [this.currentUser['lastName'], [Validators.required]],
+                  phoneNumber: [this.currentUser['phoneNumber'], [Validators.required]],
+                  birthday: [this.currentUser['birthday']]
+              });
+              this.dataUser = user_doc?.get('address');
+          }).catch(error => {
+              console.error("Error fetching user document: ", error);
+          });
+      } else {
+          console.error("userDocRef is undefined");
+      }
+  }
 }
+
 
   updateUser():void{        
     this.updateDoc().then(() => {

@@ -56,7 +56,8 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
         this.loadUser();
         this.loadProducts();
         this.getTypeProducts();           
-        this.loadFavoriteProducts();        
+        this.loadFavoriteProducts();       
+        this.updateFavorite(); 
       }
     })
   }
@@ -65,7 +66,8 @@ export class ProductComponent implements OnInit,/*  DoCheck, AfterContentInit, *
       this.loadUser();
       this.loadProducts();
       this.getTypeProducts();   
-      this.loadFavoriteProducts();      
+      this.loadFavoriteProducts();   
+      this.updateFavorite();   
   }
 
 
@@ -145,7 +147,7 @@ async getFavorite() {
 
   loadFavoriteProducts(): void{    
     this.getFavorite();
-    if (this.favorite.length === 0 && this.currentUser?.favorite?.length )
+    // if (this.favorite.length === 0 && this.currentUser?.favorite?.length )
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
       if (this.favorite?.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     } else 
@@ -250,9 +252,10 @@ async getFavorite() {
   }
 
   async updateDoc(): Promise<any> {
+    if (this.currentUser)
     this.currentUser.favorite = this.favorite;
     const user = this.currentUser;
-    setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
+    if (this.currentUser?.uid) setDoc(doc(this.afs, 'users', this.currentUser.uid), user, { merge: true });
     localStorage.setItem('currentUser', JSON.stringify( user));
   }
   

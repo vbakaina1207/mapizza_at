@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { ToastService } from '../../shared/services/toast/toast.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../shared/services/account/account.service';
 
 
@@ -19,7 +19,8 @@ export class MapComponent implements OnInit{
     private dialog: MatDialog,
     private toastr: ToastService,
     private route: ActivatedRoute,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router,
   ){}
 
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
@@ -142,10 +143,13 @@ export class MapComponent implements OnInit{
 
   
   initForm(): void{
-    console.log(this.route.component?.name);
-    if ( this.route.component?.name === '_DeliveryComponent') {
-      this.isCheckout = true;
-    }    
+    // console.log(this.route.component?.name);
+    // if ( this.route.component?.name === '_DeliveryComponent') {
+    //   this.isCheckout = true;
+    // }  
+  if (this.router.url === '/delivery') {
+    this.isCheckout = true;
+  }  
   }
 
   

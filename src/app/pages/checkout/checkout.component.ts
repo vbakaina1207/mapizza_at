@@ -319,6 +319,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
       total: this.sum_order,
       product: products       
     };
+    if (!this.isInGreenZone && !this.isInYellowZone && this.orderForm?.get('delivery_method')?.value == 'courier') {
+      this.dialog.open(AlertDialogComponent, {
+        data: {
+          icon: 'Sorry, your address is not in the delivery zone',
+          message: `Please change your delivery address`
+        }
+    })
+    } else {
     this.currentUser?.orders?.push(order);
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     if (this.currentUser) {        
@@ -345,6 +353,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit{
             this.toastr.showError('Failed to create order.', 'Error');
         });
     }
+  }
 }
 
   removeAllFromBasket(): void {
@@ -672,8 +681,7 @@ setDefaultAddress():void {
         }
       }).afterClosed().subscribe(result => {
         console.log(result);   
-        if (result) {          
-          console.log(this.minPriceProduct, this.minPrice, 'minPrice')   ;              
+        if (result) {                                
           if (this.minPriceProduct) this.addToBasket(this.minPriceProduct, true);                     
         }
       });

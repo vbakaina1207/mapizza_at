@@ -239,6 +239,7 @@ additionDeleteAllClick(): void {
     product = product;
     this.isAddition = false;
     this.btnName = '';
+    
     setTimeout(() => { this.btnName = 'order', this.isOrder = false }, 2000 );
   }
 

@@ -91,9 +91,9 @@ export class HeaderComponent implements OnInit {
     const currentUserStr = localStorage.getItem('currentUser') as string;
     if (currentUserStr && currentUserStr !== 'undefined') {
       try {
-        this.currentUser = JSON.parse(currentUserStr);
-        this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'];
-        this.favorite = this.currentUser.favorite;
+        this.currentUser = JSON.parse(currentUserStr) || '';
+        this.userName = this.currentUser['firstName']+' ' +  this.currentUser['lastName'] || '';
+        if (this.currentUser) this.favorite = this.currentUser.favorite;
         this.countFavorite = this.favorite?.length;
       } catch (error) {
         console.error('Failed to parse currentUser from localStorage', error);        
@@ -104,9 +104,10 @@ export class HeaderComponent implements OnInit {
 
 
 loadFavorite(): void {
-    if (this.favorite?.length === 0 && this.currentUser?.favorite)
+    // if (this.favorite?.length === 0 && this.currentUser?.favorite)
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      if (this.currentUser) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+      // if (this.currentUser) 
+        this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     }  else 
       localStorage.setItem('favorite', JSON.stringify(this.favorite));  
     this.countFavorite = this.favorite?.length;    

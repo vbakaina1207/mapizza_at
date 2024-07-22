@@ -56,9 +56,9 @@ export class FavoriteComponent implements OnInit {
 // }
 
 async getFavorite() {
-  if (this.currentUser) {
+  if (this.currentUser && this.currentUser.uid) {
     try {
-      const userDoc = await getDoc(doc(this.afs, "users", this.currentUser.uid));
+      const userDoc = await getDoc(doc(this.afs, "users", this.currentUser?.uid));
       this.favoriteProducts = userDoc.get('favorite') || [];
       this.cdr.detectChanges(); // Explicitly trigger change detection
     } catch (error) {

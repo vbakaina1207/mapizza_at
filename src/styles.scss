@@ -1014,10 +1014,14 @@ form .input:focus {
     border-top: 1px solid $clr-border;
 }
 
+.primary {
+    color: $clr-white !important;  
+}
 
 .primary::before {
     content: '\2714';
-    font-size: 18px;
+    font-size: 18px; 
+    color: $clr-white !important;       
 }
 
 .hide{
@@ -1133,7 +1137,7 @@ form .input:focus {
 
     .btn-primary i:before {
         width: 5px;
-        height: 5px;
+        height: 5px;        
     }
 
     .text>* {

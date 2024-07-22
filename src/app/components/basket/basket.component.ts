@@ -39,7 +39,7 @@ public total = 0;
       this.basket = JSON.parse(localStorage.getItem('basket') as string);
     }
     this.getTotalPrice();
-    console.log(this.basket);
+   
   }
 
   getTotalPrice(): void {
